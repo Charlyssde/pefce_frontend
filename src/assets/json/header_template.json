@@ -1,0 +1,34 @@
+{
+  "data": {
+    "txt_mail": "email@email.com",
+    "txt_phone": "+1 228 XXX XXXX",
+    "url_twitter": "https://twitter.com/sedecopver/status/859089425489199104?lang=es",
+    "url_facebook": "https://www.facebook.com/SEDECOPVer",
+    "url_instagram": null,
+    "url_skype": null,
+    "url_linkedin": null
+  },
+  "lang": {
+    "es": {
+      "lbl_inicio": "Inicio",
+      "lbl_atinv": "Atracción de inversiones",
+      "lbl_comext": "Comercio exterior",
+      "lbl_proest": "Proyectos estratégicos",
+      "lbl_login": "Ingresar"
+    },
+    "en": {
+      "lbl_inicio": "Home",
+      "lbl_atinv": "Investment attraction",
+      "lbl_comext": "Foreign trade",
+      "lbl_proest": "Strategic projects",
+      "lbl_login": "Login"
+    }
+  },
+  "multimedia": {
+    "logotipo": {
+      "nombre": "Logotipo estado de Veracruz",
+      "pathfile": "portal/header/veracruz_c.png",
+      "url": "http://www.veracruz.gob.mx/"
+    }
+  }
+}

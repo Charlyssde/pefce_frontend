@@ -1,0 +1,45 @@
+<!-- HEADER -->
+<div class="container-fluid" id="containerTopHeader" *ngIf="header !== null">
+    <div class="row site-content-header-head">
+        <div class="col-12 col-md-6">
+            <div class="contact-icons float-left">
+            </div>
+        </div>
+        <div class="col-12 col-md-6 float-right">
+            <div class="rs-icons float-right form-inline">
+                <a target="_BLANK" *ngIf="header.data.url_twitter" href="{{header.data.url_twitter}}"><i class="fab fa-twitter"></i></a>
+                <a target="_BLANK" *ngIf="header.data.url_facebook" href="{{header.data.url_facebook}}"><i class="fab fa-facebook-f"></i></a>
+                <a target="_BLANK" *ngIf="header.data.url_instagram" href="{{header.data.url_instagram}}"><i class="fab fa-instagram"></i></a>
+                <a target="_BLANK" *ngIf="header.data.url_skype" href="{{header.data.url_skype}}"><i class="fab fa-skype"></i></a>
+                <a target="_BLANK" *ngIf="header.data.url_linkedin" href="{{header.data.url_linkedin}}"><i class="fab fa-linkedin-in"></i></a>
+                <button mat-icon-button [matMenuTriggerFor]="language">
+          <mat-icon>language</mat-icon>
+        </button>
+                <mat-menu #language="matMenu" overlapTrigger="false">
+                    <button mat-menu-item *ngFor="let l of languages;" (click)="changeLang(l.tag)">
+            <span class="material-icons">flag</span> <span>{{l.tag | uppercase}}</span>
+          </button>
+                </mat-menu>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="containerMenu" *ngIf="header !== null">
+    <div class="row">
+        <div class="col-md-3" id="actions">
+            <button id="menuButton" mat-icon-button (click)="toggleMenu('null')" aria-label="">
+        <mat-icon>menu</mat-icon>
+      </button>
+            <img class="logo" *ngIf="multimedia.logotipo.pathfile" [src]="multimedia.logotipo.pathfile" alt="{{multimedia.logotipo.nombre}}" (click)="openTab(multimedia.logotipo.url);" />
+        </div>
+        <div id="menuContainer" class="col-md-9 menu-container">
+            <a (click)="toggleMenu('null')" class="btn-menu" id="closeMenu"><span class="material-icons">close</span><span>Cerrar menú</span></a>
+            <a (click)="toggleMenu('inicio')" routerLink="/inicio" class="btn-menu {{pageName === 'inicio' || pageName === '' ? 'active' : ''}}">{{header.lang[layout.lang].lbl_inicio}}</a>
+            <a (click)="toggleMenu('atraccionInversiones')" routerLink="/atraccionInversiones" class="btn-menu {{pageName === 'atraccionInversiones' ? 'active' : ''}}" mat-button>{{header.lang[layout.lang].lbl_atinv}}</a>
+            <a (click)="toggleMenu('comercioExterior')" routerLink="/comercioExterior" class="btn-menu {{pageName === 'comercioExterior' ? 'active' : ''}}" mat-button>{{header.lang[layout.lang].lbl_comext}}</a>
+            <a (click)="toggleMenu('proyectosEstrategicos')" routerLink="/proyectosEstrategicos" class="btn-menu {{pageName === 'proyectosEstrategicos' ? 'active' : ''}}" mat-button>{{header.lang[layout.lang].lbl_proest}}</a>
+            <a (click)="toggleMenu('loginEmpresas')" routerLink="/loginEmpresas" class="btn-menu {{pageName === 'login' ? 'active' : ''}}" mat-button>{{header.lang[layout.lang].lbl_login}}</a>
+        </div>
+    </div>
+</div>

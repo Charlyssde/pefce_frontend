@@ -1,0 +1,49 @@
+<div *ngIf="verModulos">
+  <mat-card class="formHeader">
+    <mat-card-title>{{capacitacion.nombre}}</mat-card-title>
+  </mat-card>
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12">
+          <p align="justify">{{capacitacion.descripcion}}</p>
+        </div>
+        <div class="col-12" *ngIf="estaTerminada" align="end" style="margin-bottom: 15px; margin-right: 15px;">
+          <button *ngIf="faltaUUID" mat-raised-button color="primary" (click)="finalizarCurso()">Finalizar curso</button>
+          <button *ngIf="!faltaUUID && constancia" mat-raised-button color="primary" (click)="descargarConstancia()">Descargar constancia</button>
+          <p *ngIf="!constancia">Para poder descargar su constancia cuando finalice, envíe su encuesta de satisfacción al organizador de la capacitación.</p>
+        </div>
+      </div>
+
+      <mat-divider inset></mat-divider>
+
+      <mat-tab-group>
+
+        <mat-tab label="Contenido de la capacitación">
+          <small align="justify">*Click en cada barra de módulo para ver su contenido</small>
+          <mat-accordion>
+            <app-aula-modulo *ngFor="let modulo of modulos; let i = index" [modulo]="modulo"
+              (cambiarATema)=cambiarATema($event)></app-aula-modulo>
+          </mat-accordion>
+        </mat-tab>
+
+        <mat-tab label="Progreso">
+          <small align="justify">*Este es un resumen de tu progreso, da click en cada módulo para verificar tu avance</small>
+          <p>
+            <app-aula-progreso [modulos]="modulos"></app-aula-progreso>
+          </p>
+        </mat-tab>
+      </mat-tab-group>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<a *ngIf="!verTema" mat-fab color="warn" class="mat-stroked-button btn-regresar" style="right:10px !important;" [routerLink]="['/audienciaCapacitaciones']">
+  <mat-icon>arrow_back_ios_new</mat-icon>
+</a>
+
+<div *ngIf="verTema">
+  <app-aula-tema [capacitacion]="capacitacion" [tema]="temaActual" [permitirResponder]="permitirResponder" (cambiarAModulos)=cambiarAModulos()>
+  </app-aula-tema>
+</div>

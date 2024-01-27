@@ -1,0 +1,73 @@
+.mat-elevation-z8 {
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 10px 10px -1px rgb(0 0 0 / 20%) !important;
+    margin-bottom: 2rem;
+    overflow-x: hidden;
+}
+
+.mat-elevation-z8::-webkit-scrollbar {
+    width: 0px;
+}
+
+.mat-elevation-z8>.mat-card {
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.mat-elevation-z8>.row {
+    margin: auto !important;
+}
+
+.mat-elevation-z8>table {
+    width: calc(100% - 20px) !important;
+    margin: 5px auto !important;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center a {
+    margin: auto 2px;
+}
+
+.multimedia-container{
+    text-align: center;
+}
+
+.multimedia-content{
+    width: 80%;
+    padding:10px;
+    align-items: center;
+}
+
+.multimedia-content img,
+.multimedia-content video{
+    width: 80%;
+    height: auto;
+}
+
+::ng-deep .ql-container{
+    height: auto !important;
+}
+::ng-deep .ql-editor{
+    background-color: rgba(0,0,0,.04);
+}
+
+.pdf-container,
+.image-container,
+.video-container{
+    background-color: white;
+    text-align:center;
+    width: 100%; 
+    max-height: 350px;
+    box-shadow: 0px 10px 15px -5px #575656;
+    padding: 5px;
+    overflow-x: hidden !important;
+}
+.image-container::-webkit-scrollbar,
+.video-container::-webkit-scrollbar,
+.pdf-container::-webkit-scrollbar{
+    width: 5px;
+}

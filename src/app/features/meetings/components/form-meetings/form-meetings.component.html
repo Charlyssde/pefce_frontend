@@ -1,0 +1,147 @@
+<div>
+  <form [formGroup]="formulario">
+    <div class="row" formGroupName="meetingZoom">
+      <div class="col-12">
+        <h4>Datos para generar meeting/webinar</h4>
+        <hr>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Tipo de reunión</mat-label>
+          <mat-select formControlName="type" placeholder="Selecciona uno" (selectionChange)="zoomMeetingTypeChange($event.value)" [compareWith]="lib.objectComparisonFunction" required>
+              <mat-option [value]="null" disabled>Ninguno</mat-option>
+              <mat-option *ngFor="let tipoMeeting of tiposMeeting;" [value]="tipoMeeting.key">{{ tipoMeeting.value }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="agenda" type="text" placeholder="Nombre" title="Nombre" required>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="topic" rows="5" maxlength="1000" placeholder="Descripción" title="Descripción" required></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4" *ngIf="showZoomMeetingStartTime">
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha y hora de inicio</mat-label>
+          <input matInput type="datetime-local" step="1" [min]="minDate" [(ngModel)]="startTime" (ngModelChange)="startTimeChange($event)" [ngModelOptions]="{standalone: true}">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-4" *ngIf="showZoomMeetingDuration">
+        <mat-form-field appearance="fill">
+          <mat-label>Duración (minutos)</mat-label>
+          <input matInput type="number" formControlName="duration" min="0" step="1" placeholder="Duración" title="Duración">
+        </mat-form-field>
+      </div>
+
+
+      <!-- Recurrent meetings/webinars block -->
+      <div class="col-12" *ngIf="showZoomMeetingRecurrenceForm">
+        <div class="row" formGroupName="recurrence">
+          <div class="col-12">
+            <h5>Meeting/Webinar recurrente</h5>
+            <hr>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo de recurrencia</mat-label>
+              <mat-select formControlName="type" (selectionChange)="zoomMeetingRecurrenceTypeChange($event.value)">
+                <mat-option [value]="" disabled selected>Seleccione</mat-option>
+                <mat-option *ngFor="let tipoRecurrencia of tipoRecurrenciaMeeting;" [value]="tipoRecurrencia.key">{{ tipoRecurrencia.value }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <label style="text-align:justify;">Selecciona la modalidad de cancelación posterior a la fecha de inicio</label>
+            <mat-radio-group class="radiobutton-block" [(ngModel)]="endRecurrenceMode" (ngModelChange)="endRecurrenceModeChange($event.value)" [ngModelOptions]="{standalone: true}">
+              <mat-radio-button class="radiobutton-yspace" [value]="'end_date_time'">Por fecha</mat-radio-button>
+              <mat-radio-button class="radiobutton-yspace" [value]="'end_times'">Por días</mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="endRecurrenceMode && endRecurrenceMode === 'end_date_time'">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de finalización</mat-label>
+              <input matInput type="datetime-local" step="1" [min]="minDate" [(ngModel)]="endDateTime" (ngModelChange)="endDateTimeChange($event)" [ngModelOptions]="{standalone: true}">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="endRecurrenceMode && endRecurrenceMode === 'end_times'">
+            <mat-form-field appearance="fill">
+              <mat-label>Días por transcurrir</mat-label>
+              <input matInput formControlName="end_times" type="number" step="1" min="0" max="365" placeholder="Días"  />
+            </mat-form-field>
+            <small>* Máximo: 365</small>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Intervalo de repetición</mat-label>
+              <input matInput type="number" min="0" max="{{maxRepeatInterval}}" step="1" placeholder="Máximo ({{ maxRepeatInterval}} )" title="Ingresa el intervalo de repetición (máximo: {{maxRepeatInterval}})">
+            </mat-form-field>
+            <small>* Máximo: {{ maxRepeatInterval }}</small>
+          </div>
+
+          <div class="col-12" *ngIf="showRecurrenceTypeSettings">
+            <div class="row">
+              <div class="col-12">
+                <h5>* Configuación de tipo de recurrencia {{ recurrenceTypeMode }}</h5>
+              </div>
+              <div class="col-12 col-md-4" *ngIf="showMonthlyRecurrenceTypeSettings">
+                <label style="text-align:justify;">Selecciona la modalidad de recurrencia mesual</label>
+                <mat-radio-group class="radiobutton-block" [(ngModel)]="monthlyRecurrencyMode" (ngModelChange)="monthlyRecurrencyModeChange($event.value)" [ngModelOptions]="{standalone: true}">
+                  <mat-radio-button class="radiobutton-yspace" [value]="'specific_day'">Por día específico</mat-radio-button>
+                  <mat-radio-button class="radiobutton-yspace" [value]="'specific_week_day'">Por semana y día específicos</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div class="col-12 col-md-4" *ngIf="showMonthlyRecurrenceTypeSettings && (monthlyRecurrencyMode && monthlyRecurrencyMode==='specific_day')">
+                <label>Por día del mes</label>
+                <mat-form-field appearance="fill">
+                  <mat-label>Día del mes (1-31)</mat-label>
+                  <input matInput type="number" min="1" max="31" step="1" placeholder="Día" title="Ingresa el número del día del mes (1-31)">
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4" *ngIf="showMonthlyRecurrenceTypeSettings && (monthlyRecurrencyMode && monthlyRecurrencyMode==='specific_week_day')">
+                <label>Por semana y día</label>
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Semana del mes</mat-label>
+                      <mat-select placeholder="Selecciona">
+                        <mat-option [value]="" disabled selected>Selecciona</mat-option>
+                        <mat-option [value]="-1">Última semana del mes</mat-option>
+                        <mat-option [value]="1">Primera semana del mes</mat-option>
+                        <mat-option [value]="2">Segunda semana del mes</mat-option>
+                        <mat-option [value]="3">Tercera semana del mes</mat-option>
+                        <mat-option [value]="4">Cuarta semana del mes</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Día de la semana </mat-label>
+                      <mat-select placeholder="Selecciona">
+                        <mat-option [value]=""  selected>Selecciona</mat-option>
+                        <mat-option *ngFor="let day of daysList;" [value]="day.key">{{ day.value }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 col-md-4" *ngIf="showWeeklyRecurrenceTypeSettings">
+                <label>Días de la semana</label>
+                <ul>
+                  <li class="checkbox-list" *ngFor="let dayCheckbox of dayCheckboxList;">
+                    <mat-checkbox [(ngModel)]="dayCheckbox.checked" (ngModelChange)="dayCheckboxListChange()" [ngModelOptions]="{standalone: true}">{{ dayCheckbox.value }}</mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

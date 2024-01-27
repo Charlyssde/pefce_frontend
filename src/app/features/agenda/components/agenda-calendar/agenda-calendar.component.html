@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-12 mb-1">
+    <span class="p-2" matTooltip="Evento pasado"><span
+        class="material-symbols-outlined helpIcon oldEventIcon">event</span> Evento pasado</span>
+    <span class="p-2" matTooltip="Evento actual"><span
+        class="material-symbols-outlined helpIcon todayEventIcon">event</span> Evento actual</span>
+    <span class="p-2" matTooltip="Evento futuro próximo"><span
+        class="material-symbols-outlined helpIcon dangerEventIcon">event</span> Evento futuro
+      próximo</span>
+    <span class="p-2" matTooltip="Evento futuro cercano"><span
+        class="material-symbols-outlined helpIcon warningEventIcon">event</span> Evento futuro
+      cercano</span>
+    <span class="p-2" matTooltip="Evento futuro en tiempo"><span
+        class="material-symbols-outlined helpIcon inTimeEventIcon">event</span> Evento futuro en
+      tiempo</span>
+  </div>
+</div>
+<full-calendar #calendar deepChangeDetection="true" defaultView="dayGridMonth" [locales]="locales" [locale]="locale"
+  [plugins]="plugins" [height]="height" [header]="header" [buttonText]="buttonText" [titleFormat]="titleFormat"
+  [allDayText]="allDayText" [handleWindowResize]="true" [aspectRatio]="2" [events]="events"
+  [eventStartEditable]="eventStartEditable" (dateClick)="dateClick($event)" (eventDrop)="eventDrop($event)"
+  (eventResize)="eventResize($event)" (eventClick)="eventClick($event)" (datesRender)="datesRender($event)">
+</full-calendar>

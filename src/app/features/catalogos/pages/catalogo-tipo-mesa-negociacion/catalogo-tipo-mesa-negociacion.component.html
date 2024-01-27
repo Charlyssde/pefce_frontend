@@ -1,0 +1,5 @@
+<div>
+    <shared-dashboard-title [title]="helpsSettings.module_name"></shared-dashboard-title>
+    <shared-page-form-table [helpsSettings]="helpsSettings" [hasChildren]="hasChildren" [tableSettings]="tableSettings" [pageDataset]="pageDataset" [create]="true" [update]="true" [deleteIn]="false" [report]="false" (queryParamsOut)="setQueryParamsRequest($event)"
+        (newRegistrationOut)="newRegistration($event)" (editRegistrationOut)="editRegistration($event)" (deleteRegistrationOut)="deleteRegistration($event)"></shared-page-form-table>
+</div>

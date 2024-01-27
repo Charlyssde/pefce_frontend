@@ -1,0 +1,30 @@
+<div>
+  <shared-dashboard-title [title]="'Agenda personal'"></shared-dashboard-title>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+      <div class="col-12" align="end">
+        <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+      </div>
+      <div class="col-12">
+        <h3>Agenda </h3>
+        <hr>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <shared-user-type-filter [myDataLabel]="'Mi agenda'" (emitUserId)="emitUserId($event)"></shared-user-type-filter>
+      </div>
+      <div class="col-12">
+        <div id="calendar-container">
+          <app-agenda-calendar [calendarHeight]="calendarHeight" (eventsRequest)="eventsRequest($event)"
+            [eventsList]="eventsList" (postEventRequest)="postEventRequest($event)"
+            (putEventRequest)="putEventRequest($event)"
+            (deleteEventRequest)="deleteEventRequest($event)"></app-agenda-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

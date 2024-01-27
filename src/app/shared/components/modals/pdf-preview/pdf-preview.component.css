@@ -1,0 +1,10 @@
+.pdf-container{
+    background-color: white;
+    text-align:center;
+    max-height: 60vh;
+    height: auto;
+    padding: 15px 10px;
+}
+.pdf-container::-webkit-scrollbar{
+    width: 5px;
+}

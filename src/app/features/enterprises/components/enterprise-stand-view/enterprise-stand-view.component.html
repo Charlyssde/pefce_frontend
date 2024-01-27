@@ -1,0 +1,94 @@
+<div class="wallpaper"></div>
+
+<div class="content">
+    <div class="institution-trade-image">
+        <div class="row justify-content-between">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <div *ngIf="isAdminIn">
+                            <shared-dashboard-title [title]="'Revisión de stand empresarial'"></shared-dashboard-title>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6" align="right">
+                        <mat-checkbox *ngIf="isAdminIn" matTooltip="Cambiar el estatus de disponibilidad del stand" color="primary" [(ngModel)]="availableEnterpriseStand" (ngModelChange)="onChangeAvailableEnterpriseStand()">Disponible</mat-checkbox>
+                        <button type="button" mat-button matTooltip="Mostrar ayudas" (click)="showHelpSection()"><mat-icon>help</mat-icon> Ayuda</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3" align="left">
+                <img src="assets/img/default/logos/sedecop-logo.png" alt="logo" class="logo">
+            </div>
+            <div class="col-6 col-md-3" align="right">
+                <img src="assets/img/default/logos/tu-estado-industrial-logo.png" alt="logo" class="logo">
+            </div>
+        </div>
+    </div>
+
+    <div class="enterprise-trade-image">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6">
+                <h3 class="enterprise-title">{{ enterpriseIn?.empresa }}</h3>
+                <div class="enterprise-slogan">
+                    <i>{{ enterpriseIn?.imagenEmpresarial[0].slogan }}</i>
+                </div>
+                <div class="enterprise-banners">
+                    <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="8000" color="black" slides="2"
+                        [loop]="true" [hideArrows]="true" [hideIndicators]="true" [useKeyboard]="true"
+                        [useMouseWheel]="false">
+                        <mat-carousel-slide #matCarouselSlide [hideOverlay]="true">
+                            <div align="center">
+                                <small><i>{{ enterpriseIn?.imagenEmpresarial[0].banner1 }}</i></small>
+                            </div>
+                        </mat-carousel-slide>
+                        <mat-carousel-slide #matCarouselSlide [hideOverlay]="true">
+                            <div align="center">
+                                <small><i>{{ enterpriseIn?.imagenEmpresarial[0].banner2 }}</i></small>
+                            </div>
+                        </mat-carousel-slide>
+                    </mat-carousel>
+                </div>
+                <div class="enterprise-logo">
+                    <img *ngIf="enterpriseIn" [src]="setURI(enterpriseIn?.imagenEmpresarial[0].logotipoId.url)"
+                        alt="enterpriseLogo" [matTooltip]="'Logotipo de '+enterpriseIn?.empresa">
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-between">
+            <div id="video-player" class="col-12 col-md-6 col-xl-6" align="center">
+                <video *ngIf="enterpriseIn" [src]="setURI(enterpriseIn?.imagenEmpresarial[0].videoId.url)" [controls]="true" [autoplay]="false" [matTooltip]="'Video de '+enterpriseIn?.empresa"></video>
+            </div>
+            <div id="products-container" class="col-12 col-md-6 col-xl-6" align="center">
+                <mat-carousel *ngIf="enterpriseIn" timings="250ms ease-in" [autoplay]="true" interval="5000"
+                    color="black" slides="enterpriseIn.productos.length" [loop]="true" [hideArrows]="enterpriseIn.productos.length == 0"
+                    [hideIndicators]="enterpriseIn.productos.length == 0" [useKeyboard]="true" [useMouseWheel]="false" maxHeight="35vh"
+                    orientation="ltr">
+                    <mat-carousel-slide #matCarouselSlide *ngFor="let product of enterpriseIn.productos"
+                        [hideOverlay]="true">
+                        <div style="height:35vh;width:100%;display:flex;">
+                            <img [src]="setURI(product.imagenes[0].url)" alt="image" style="left:-50px;right:-50%;margin:auto;height:auto;width:100%;opacity:0.5;">
+                            <div
+                                style="overflow-y: scroll;display:flex;position:absolute;width:100%;height:35vh;margin:auto;background-color: rgba(255,255,255,0.5);z-index:2!important;">
+                                <div style="margin:auto;text-align:center;padding:10px 20px;">
+                                    <h4>{{ product.nombre }}</h4>
+                                    <div class="d-none d-md-block" [innerHTML]="product.descripcion"></div>
+                                    <small>
+                                        <span>Origen:</span>
+                                        <br>
+                                        {{ product.lugarOrigen }}
+                                    </small>
+                                    <br>
+                                    <br>
+                                    <div>
+                                        <button type="button" mat-button color="warn" (click)="showProductDetails(product)" [matTooltip]="'Ver más detalles del producto '+product.nombre">Ver detalles</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </mat-carousel-slide>
+                </mat-carousel>
+            </div>
+        </div>
+    </div>
+</div>

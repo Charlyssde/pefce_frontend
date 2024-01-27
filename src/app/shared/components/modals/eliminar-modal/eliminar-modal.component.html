@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Eliminar {{data.etiqueta}}</h1>
+<mat-dialog-content>
+  ¿Realmente desea eliminar el/la {{data.etiqueta}} <strong>{{data.nombre}}</strong> dentro de la plataforma?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button color="warn" [mat-dialog-close]="true">Eliminar</button>
+</mat-dialog-actions>

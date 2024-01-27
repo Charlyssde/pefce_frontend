@@ -1,0 +1,179 @@
+<div class="mat-elevation-z8">
+  <div class="row">
+    <div class="col-12" align="right">
+      <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+        <mat-icon>help</mat-icon></button>
+    </div>
+    
+    <div class="col-12">
+      <small>Los campos marcados con <b>(*)</b> son requeridos</small>
+    </div>
+    <div class="col-12">
+      <mat-vertical-stepper orientation="vertical" [linear]="true" #stepper>
+        <mat-step [stepControl]="firstFormGroup">
+          <form [formGroup]="firstFormGroup">
+            <ng-template matStepLabel>Datos generales de la empresa</ng-template>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field appearance="fill">
+                  <mat-label>Nombre/Razón social</mat-label>
+                  <textarea formControlName="empresa" rows="2" matInput type="text" placeholder="Nombre/Razón social"
+                    required></textarea>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>RFC</mat-label>
+                  <input formControlName="rfc" matInput type="text" minlength="11" maxlength="14" placeholder="RFC"
+                    required />
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Régimen fiscal</mat-label>
+                  <mat-select formControlName="regimenFiscal" required [compareWith]="utils.objectComparisonFunction">
+                    <mat-option disabled>Régimen fiscal</mat-option>
+                    <mat-option *ngFor="let regimenFiscal of regimenesFiscales" [value]="regimenFiscal">{{
+                      regimenFiscal.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Categoría</mat-label>
+                  <mat-select formControlName="categoria" required [compareWith]="utils.objectComparisonFunction">
+                    <mat-option disabled>Categoría</mat-option>
+                    <mat-option *ngFor="let categoria of categorias" [value]="categoria">{{
+                      categoria.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Sector principal</mat-label>
+                  <mat-select formControlName="sector" (selectionChange)="onChangeSector($event.value)" [compareWith]="utils.objectComparisonFunction" required>
+                    <mat-option disabled>Sector principal</mat-option>
+                    <mat-option *ngFor="let sector of sectores" [value]="sector">{{ sector.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Subsector</mat-label>
+                  <mat-select formControlName="subsector" [compareWith]="utils.objectComparisonFunction" required>
+                    <mat-option disabled>Subsector</mat-option>
+                    <mat-option *ngFor="let subsector of subsectoresSector" [value]="subsector">{{
+                      subsector.nombre}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <shared-address-component [addressIn]="address" (addressOut)="updateEnterpriseAddressData($event)"></shared-address-component>
+            <div class="row">
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Teléfono de la empresa</mat-label>
+                  <input formControlName="telefono" matInput minlength="10" maxlength="15" type="text"
+                    placeholder="Teléfono de la empresa" required />
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Email de la empresa</mat-label>
+                  <input formControlName="email" matInput type="text" placeholder="Email de la empresa" required />
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Sitio web</mat-label>
+                  <input formControlName="website" matInput type="text" placeholder="Sitio web" />
+                </mat-form-field>
+              </div>
+              <div class="col-12">
+                <mat-form-field appearance="fill">
+                  <mat-label>Descripción de la empresa</mat-label>
+                  <textarea formControlName="descripcion" rows="5" maxlength="1000" matInput type="text"
+                    placeholder="Descripción de la empresa"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button [disabled]="firstFormGroup.invalid" mat-button color="primary" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup">
+          <form [formGroup]="secondFormGroup">
+            <ng-template matStepLabel>Datos adicionales de la empresa</ng-template>
+            <div class="row">
+              <div class="col-12">
+                <mat-form-field appearance="fill">
+                  <mat-label>Representante legal</mat-label>
+                  <input formControlName="representanteLegal" matInput type="text" placeholder="Representante legal">
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Número de colaboradores masculinos</mat-label>
+                  <input formControlName="numeroColaboradoresMasculinos" matInput type="number" min="0"
+                    placeholder="Número de colaboradores masculinos">
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Número de colaboradores femeninos</mat-label>
+                  <input formControlName="numeroColaboradoresFemeninos" matInput type="number" min="0"
+                    placeholder="Número de colaboradores femeninos">
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Número de colaboradores con capacidades diferentes</mat-label>
+                  <input formControlName="numeroColaboradoresCapacidadesDiferentes" matInput type="number" min="0"
+                    placeholder="Número de colaboradores con capacidades diferentes">
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Total de colaboradores</mat-label>
+                  <input formControlName="totalColaboradores" matInput type="number" min="0"
+                    placeholder="Total de colaboradores">
+                </mat-form-field>
+              </div>
+            </div>
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Atrás</button>
+              <button [disabled]="secondFormGroup.invalid" mat-button color="primary" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step *ngIf="enterpriseId === 0" [stepControl]="thirdFormGroup">
+          <form [formGroup]="thirdFormGroup">
+            <ng-template matStepLabel>Usuario contacto de la empresa</ng-template>
+            <component-form-contacts [contactIn]="contact" (contactOut)="updateContactData($event)"></component-form-contacts>
+            <div>
+              <button mat-button color="warn" matStepperPrevious>Atrás</button>
+              <button [disabled]="thirdFormGroup.invalid" mat-button color="primary" matStepperNext>Siguiente</button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Al presionar el botón guardar se enviará su información,<br/> acción con la cuál usted acepta que ha leído y está conforme<br/> con lo estipulado en los<br/><a href="http://www.veracruz.gob.mx/desarrolloeconomico/avisos-de-privacidad/" target="_blank"> Aviso de privacidad, términos y condiciones, <br/>los cuales puede visitar dando clic aquí.</a>
+          </ng-template>
+          <h3>Formulario completado</h3>
+          <div>
+            <button mat-button color="warn" matStepperPrevious>Atrás</button>
+            <button [disabled]="!firstFormGroup.valid && !secondFormGroup.valid && !thirdFormGroup.valid" mat-button
+              color="primary" (click)="onSubmitStepper()">Guardar</button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+    
+    <div class="col-12">
+      <div style="text-align: right;">
+        <a [routerLink]="['/empresas']" mat-button color="warn">Cancelar</a>
+      </div>
+    </div>
+  </div>
+</div>

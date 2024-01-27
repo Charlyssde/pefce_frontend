@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-12">
+    <span>Opciones para el colaborador del panel</span>
+    <hr>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <mat-checkbox 
+        color="primary" 
+        [(ngModel)]="editarRegistro" 
+        *ngIf="(proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado')">Editar el registro</mat-checkbox>
+      </div>
+      <div class="col-12">
+          <shared-select-with-filter *ngIf="(proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado') ; else responsableInteresado;"
+          [placeholder]="'Usuarios'"
+          [keyName]="'nombre'" [valueSetted]="proyectoColaborador?.usuarioId" [optionsList]="usersList"
+          (emitSelectedValue)="setSelectedUser($event)"></shared-select-with-filter>
+          <ng-template  #responsableInteresado>
+            <h2>{{proyectoColaborador?.usuarioId.nombre}}</h2>
+          </ng-template>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill" *ngIf="(proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado') ; else rol;">
+          <mat-label>Seleccione un rol</mat-label>
+          <mat-select [disabled]="!editarRegistro" [(ngModel)]="proyectoColaborador.rol" placeholder="Seleccione uno">
+            <mat-option [value]="null" disabled selected>Seleccione uno</mat-option>
+            <mat-option *ngFor="let rol of rolesList | keyvalue; let i = index;" [value]="rol.key">{{rol.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <ng-template  #rol>
+          <h3>{{ rolesList[proyectoColaborador.rol] }}</h3>
+        </ng-template>
+      </div>
+    </div>
+
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button 
+    mat-raised-button 
+    color="primary" 
+    *ngIf="editarRegistro && (proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado')" 
+    (click)="updateColaboradorProyecto()" 
+    [disabled]="proyectoColaborador.usuarioId === null && proyectoColaborador.rol === null">Editar</button>
+    
+    <button 
+    mat-raised-button 
+    color="primary" 
+    *ngIf="!editarRegistro && (proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado')" 
+    (click)="deleteColaboradorProyecto()" 
+    [disabled]="editarRegistro">Eliminar</button>
+    
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>

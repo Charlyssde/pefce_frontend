@@ -1,0 +1,15 @@
+<mat-card class="formHeader">
+  <mat-card-title>Cuestionario del tema: {{tema.nombre}}</mat-card-title>
+</mat-card>
+<mat-card>
+  <mat-card-content><p align="justify">{{tema.descripcion}}</p></mat-card-content>
+  <app-cuestionario-pregunta *ngFor="let pregunta of preguntas; let i = index" [pregunta]="pregunta" #cuestionarioPreguntas></app-cuestionario-pregunta>
+  <br>
+  <mat-card-actions align="end">
+    <button mat-button color="primary" (click)="guardarRespuestas()">Guardar respuestas</button>
+  </mat-card-actions>
+</mat-card>
+
+<a mat-fab color="warn" class="mat-stroked-button btn-regresar" style="right:10px !important;" [routerLink]="['/audienciaCapacitaciones/aula/'+idAula]">
+  <mat-icon>arrow_back_ios_new</mat-icon>
+</a>

@@ -1,0 +1,13 @@
+.radiobutton-block{
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+.radiobutton-yspace{
+  margin: 5px 0px;
+}
+.checkbox-list{
+  list-style-type: none;
+  margin-top: 4px;
+}

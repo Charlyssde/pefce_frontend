@@ -1,0 +1,16 @@
+<div class="container contentPageContainer" style="padding-top:30px;padding-bottom:30px;">
+  <div class="row" style="text-align:center;padding-top:10px;padding-bottom:10px;">
+    <div class="col-12">
+      <h3 style="margin:0px;">{{ 'interesting-sites.title' | translate }}</h3>
+    </div>
+  </div>
+  <div class="row justify-content-center" style="padding-top:10px;padding-bottom:10px;">
+    <div *ngFor="let interestingSite of interestingSites;" class="col-6 col-md-3 col-lg-2" style="padding-top:30px;padding-bottom:30px;">
+      <img class="zoom"
+        [src]="interestingSite.pathfile"
+        (click)="openSite(interestingSite.url)"
+        alt="{{ interestingSite.alt }}"
+        style="height:65px; display: block; margin: auto; text-align: center;">
+    </div>
+  </div>
+</div>

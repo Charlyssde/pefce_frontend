@@ -1,0 +1,107 @@
+body {
+    color: #575756;
+}
+
+.mat-toolbar {
+    position: fixed;
+    width: 100vw;
+    z-index: 2;
+    background-color: #b03e36 !important;
+    color: white !important;
+    box-shadow: -0px 8px 20px -1px rgba(0, 0, 0, 0.8);
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+::ng-deep .mat-menu-content:not(:empty) {
+    padding-top: 0px !important;
+}
+
+.user-card {
+    padding: 5px;
+    text-align: center;
+    background-color: #efefef !important;
+    color: #575756 !important;
+    min-width: 200px !important;
+}
+
+.user-card>.mat-icon {
+    font-size: 5rem !important;
+    width: auto;
+}
+
+.user-card>h5,
+.user-card>small {
+    margin: 2px 5px !important;
+}
+
+::ng-deep .mat-drawer-container {
+    background-color: #eee !important;
+}
+
+::ng-deep .mat-drawer-content {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll !important;
+}
+
+::ng-deep .mat-drawer-content::-webkit-scrollbar {
+    width: 0px;
+}
+
+.sidebar-container {
+    height: calc(100vh - 64px);
+    width: 100vw;
+    top: 64px;
+}
+
+.sidenav {
+    padding: 20px;
+    box-shadow: 5px 4px 24px -1px rgba(0, 0, 0, 0.8);
+}
+
+.sidenav-logo {
+    min-width: 250px;
+    max-width: 250px;
+    display: flex;
+    padding: 10px;
+    margin: auto;
+}
+
+.sidenav-logo img {
+    width: 80%;
+    height: auto;
+    margin: auto;
+    cursor: pointer;
+}
+
+::ng-deep .mat-drawer-inner-container {
+    border: none !important;
+}
+
+.sidenav-content {
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    padding-bottom: 65px;
+}
+
+.dashboard-footer {
+    z-index: 2 !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 40px !important;
+    bottom: 0px !important;
+    text-align: center !important;
+    box-shadow: 0px -10px 20px -10px rgba(0, 0, 0, 0.8) !important;
+    background-color: #575756;
+    color: white;
+    padding: 0px !important;
+    display: flex !important;
+}
+
+.dashboard-footer>* {
+    margin: auto !important;
+}

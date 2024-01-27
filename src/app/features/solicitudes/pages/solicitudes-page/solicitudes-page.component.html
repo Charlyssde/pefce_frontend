@@ -1,0 +1,105 @@
+<div>
+  
+  <shared-dashboard-title [title]="'Solicitudes'"></shared-dashboard-title>
+  
+  <a [routerLink]="['/solicitudes/nuevo']" routerLinkActive="router-link-active" mat-fab color="primary"
+  class="btn-registrar" *ngIf="lib.getCanCreateRol('/solicitudes')">
+  <mat-icon>add</mat-icon>
+  </a>
+
+  <button *ngIf="perfilUsuario !== 'Empresa'" mat-raised-button color="primary" (click)="crearReporte()">Reporte</button>
+
+  <mat-card class="formHeader">
+    <mat-card-title>{{perfilUsuario === "Empresa" ? "Mis solicitudes" : "Administrador de solicitudes" }} </mat-card-title>
+  </mat-card>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+      <div class="col-12" align="end">
+        <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <mat-form-field appearance="fill">
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-label>Buscar</mat-label>
+          <input matInput [(ngModel)]="descripcion" type="text" placeholder="Buscar" autocomplete="off"
+            (ngModelChange)="handleFilter()">
+        </mat-form-field>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Comentarios</th>
+              <th>Inicio</th>
+              <th>Estado</th>
+              <th>Solicitante</th>
+              <th>Correo</th>
+              <th>Teléfono</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="dataset && dataset.length === 0">
+              <td style="text-align:center;" colspan="9">
+                <h4>No hay registros para mostrar</h4>
+              </td>
+            </tr>
+            <tr *ngFor="let data of dataset; let index1 = index;">
+              <td>{{ data.descripcion }}</td>           
+              <td>{{ data.comentario }}</td>
+              <td>{{ data.createdAt | date: "dd/MM/y" }}</td>
+              <td>{{ data.comentario == "Cancelada por el usuario" ? "Cancelada" : ( data.estatus ? 'Terminada' : 'Pendiente' ) }}</td>
+              <td>{{ data.usuarioSolicitanteId.nombre }}</td>
+              <td>{{ data.usuarioSolicitanteId.email }}</td>
+              <td>{{ data.usuarioSolicitanteId.telefono }}</td>
+              <td style="text-align:center !important;">
+                <button mat-icon-button [matMenuTriggerFor]="options"
+                  matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
+                <mat-menu #options="matMenu" xPosition="before">
+                  <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                  
+                  <mat-divider></mat-divider>
+                  <button *ngIf="perfilUsuario !== 'Empresa'" 
+                    [routerLink]="['/solicitudes/editar/'+data.id]" 
+                    routerLinkActive="router-link-active" 
+                    mat-menu-item>
+                      Dar seguimiento
+                  </button>
+                  <mat-divider></mat-divider>
+
+                  <mat-divider *ngIf="!data.estatus"></mat-divider>
+
+                  <button *ngIf="!data.estatus && perfilUsuario !== 'Empresa'" mat-menu-item (click)="openSolicitudesFinalizar(data, false)">Finalizar solicitud</button>
+                  <button *ngIf="!data.estatus && perfilUsuario === 'Empresa' && data.comentario !== 'Cancelada por el usuario'" mat-menu-item (click)="openSolicitudesFinalizar(data, true)">Cancelar mi solicitud</button>
+
+                  <button *ngIf="perfilUsuario === 'Empresa'" (click)="descargarEncuesta()" mat-raised-button color="secondary">
+                    Encuesta de Satisfacción
+                  </button>            
+
+                </mat-menu>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled"
+          [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+          [hidePageSize]="hidePageSize" [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+
+</div>

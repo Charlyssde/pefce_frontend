@@ -1,0 +1,26 @@
+<h1 mat-dialog-title>Confirmar</h1>
+<mat-dialog-content>
+  <div *ngIf="!isVerMotivo">
+    ¿Realmente desea {{data.etiqueta}} <strong>{{data.nombre}}</strong> dentro de la plataforma?
+  </div>
+  <div *ngIf="isVerMotivo">
+    Motivo de rechazo de  <strong>{{data.nombre}}</strong> dentro de la plataforma
+  </div>
+  <div *ngIf="isRechazar || isVerMotivo">
+    <form [formGroup]="formulario" autocomplete="off">
+      <mat-grid-list cols="1" rowHeight="100px">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Motivo de rechazo</mat-label>
+            <textarea matInput placeholder="Motivo de rechazo" formControlName="motivoRechazo"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="false">Cancelar</button>
+  <button mat-button color="warn" (click)="confirm()" *ngIf="!isVerMotivo">Aceptar</button>
+  <button mat-button [mat-dialog-close]="false" *ngIf="isVerMotivo">Aceptar</button>
+</mat-dialog-actions>

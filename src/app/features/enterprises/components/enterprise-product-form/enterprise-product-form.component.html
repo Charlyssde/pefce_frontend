@@ -1,0 +1,269 @@
+<div class="mat-elevation-z8">
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12" style="text-align:right;">
+          <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+            <mat-icon>help</mat-icon></button>
+        </div>
+        <div class="col-12">
+          <small>Los campos marcados con asterisco (*) son requeridos</small>
+          <hr>
+        </div>
+      </div>
+
+      <form [formGroup]="formProduct" #form="ngForm" (ngSubmit)="onSubmitForm()">
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre del producto</mat-label>
+              <input matInput type="text" formControlName="nombre" placeholder="Nombre del producto" required>
+            </mat-form-field>
+          </div>
+
+          <div class="mb-1 col-12">
+            <span class="mb-1">Descripción del producto *</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Descripción del producto *"
+              formControlName="descripcion" required></quill-editor>
+          </div>
+
+          <div class="mb-1 col-12 col-md-6">
+            <span class="mb-1">Empaque/Envasado</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Empaque/Envasado"
+              formControlName="empaqueEnvasado"></quill-editor>
+          </div>
+          <div class="mb-1 col-12 col-md-6">
+            <span class="mb-1">Estibado</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Estibado"
+              formControlName="estibado"></quill-editor>
+          </div>
+          <div class="mb-1 col-12 col-md-6">
+            <span class="mb-1">Condiciones de almacenamiento</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Condiciones de almacenamiento"
+              formControlName="condicionesAlmacenamiento"></quill-editor>
+          </div>
+          <div class="mb-1 col-12 col-md-6">
+            <span class="mb-1">Transporte</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Transporte"
+              formControlName="transporte"></quill-editor>
+          </div>
+          <div class="mb-1 col-12 col-md-6">
+            <span class="mb-1">Vida en anaquel</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Vida en anaquel"
+              formControlName="vidaAnaquel"></quill-editor>
+          </div>
+          <div class="col-12 col-md-6">
+            <span><mat-icon>info</mat-icon> Ingresa el nombre del municipio o estado para seleccionar una opción
+              de autocompletado.</span>
+            <mat-form-field appearance="fill">
+              <mat-label>Lugar de origen </mat-label>
+              <input matInput type="text" placeholder="Ingresar municipio, estado..." [(ngModel)]="placeFilter"
+                [ngModelOptions]="{standalone: true}" (ngModelChange)="geocodingOnKeypress()"
+                [matAutocomplete]="placeAutosuggest" required>
+              <mat-autocomplete autoActiveFirstOption #placeAutosuggest="matAutocomplete"
+                (optionSelected)="selectedZipcodeOption($event.option.value)" [displayWith]="displayProperty">
+                <mat-option *ngFor="let feature of geoCodingFeatures" [value]="feature">
+                  {{feature.place_name}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <h3><mat-icon>{{ technicalDocumentPreview !== null ? 'done' : 'close' }}</mat-icon> Ficha técnica</h3>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <small>* Solo se permite la carga de archivos en formato PDF</small>
+              </div>
+              <div class="col-12 col-md-6" align="end">
+                <input hidden (change)="onTechnicalDocumentUploaded($event.target, technicalDocumentPreview)"
+                  accept=".pdf,application/pdf" #technicalDocumentInput type="file" id="technicalDocument">
+                <button type="button" mat-button matTooltip="Cargar archivo"
+                  (click)="technicalDocumentInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
+              </div>
+            </div>
+            <hr>
+            <div class="row multimedia-container">
+              <div class="col-12 multimedia-content">
+                <div *ngIf="technicalDocumentPreview !== null" class="pdf-container">
+                  <mat-list role="list">
+                    <mat-list-item role="listitem">
+                      <div class="row" style="width:100%;">
+                        <div class="col-1">
+                          <mat-icon (click)="onClickPreviewTechnicalDocument(technicalDocumentPreview.uri)"
+                            style="cursor:pointer;" matTooltip="Clic para vista previa">description</mat-icon>
+                        </div>
+                        <div class="col-9">
+                          <div style="text-align:justify;">
+                            <span>Ficha técnica</span>
+                            <div *ngIf="technicalDocumentPreview.uri.includes('base64')">
+                              <small (click)="onClickPreviewTechnicalDocument(technicalDocumentPreview.uri)"
+                                style="cursor:pointer;">({{ technicalDocumentPreview.fileData.name }})</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-2" align="end">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu"  matTooltip="Acciones" title="Acciones">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item
+                              (click)="onClickPreviewTechnicalDocument(technicalDocumentPreview.uri)"><mat-icon>visibility</mat-icon>
+                              Vista previa</button>
+                              <button mat-menu-item (click)="onClickRemoveTechnicalDocument()">
+                                <mat-icon>delete</mat-icon> {{ technicalDocumentPreview.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}
+                              </button>
+                          </mat-menu>
+                        </div>
+                      </div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;" *ngIf="technicalDocumentPreview === null">description</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <h3><mat-icon>{{ imagesPreview.length>0 ? 'done' : 'close' }}</mat-icon> Imágenes del producto</h3>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <small>* Solo se permite la carga de archivos en formatos PNG, JPG, JPEG o GIF</small>
+              </div>
+              <div class="col-12 col-md-6" align="end">
+                <input hidden (change)="onImagesUploaded($event.target)"
+                  accept="image/png,image/jpg,image/jpeg,image/gif" #productImagesInput [multiple]="true" type="file"
+                  id="imagenes">
+                <button type="button" mat-button matTooltip="Cargar archivos"
+                  (click)="productImagesInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar imágenes</button>
+              </div>
+            </div>
+            <hr>
+            <div class="row multimedia-container">
+              <div class="col-12 multimedia-content">
+                <div *ngIf="imagesPreview.length > 0" class="image-container">
+                  <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let image of imagesPreview; let index = index;">
+                      <div class="row" style="width:100%;">
+                        <div class="col-1">
+                          <mat-icon (click)="onClickImagePreview(image.uri)" style="cursor:pointer;" matTooltip="Clic para vista previa">image</mat-icon>
+                        </div>
+                        <div class="col-9">
+                          <div style="text-align:justify;">
+                            <span>Imagen {{ (index+1) }}</span>
+                            <div *ngIf="image.uri.includes('base64')">
+                              <small (click)="onClickImagePreview(image.uri)"
+                                style="cursor:pointer;">({{image.fileData.name}})</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-2" align="end">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu"  matTooltip="Acciones" title="Acciones">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <div *ngIf="!(image.uri.includes('base64'))">
+                              <input hidden (change)="onClickChangeImage($event.target,image.fileData, index)"
+                                accept="image/png,image/jpg,image/jpeg,image/gif" #productImageInput type="file">
+                              <button mat-menu-item
+                                (click)="productImageInput.click()"><mat-icon>change_circle</mat-icon> Cambiar
+                                imagen</button>
+                            </div>
+                            <button mat-menu-item
+                              (click)="onClickImagePreview(image.uri)"><mat-icon>visibility</mat-icon> Vista
+                              previa</button>
+                            <button mat-menu-item (click)="onClickRemoveUploadedImage(image,index)">
+                              <mat-icon>delete</mat-icon> {{ image.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}
+                            </button>
+                          </mat-menu>
+                        </div>
+                      </div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;" *ngIf="imagesPreview.length === 0">perm_media</mat-icon>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-6">
+            <h3><mat-icon>{{ videosPreview.length>0 ? 'done' : 'close' }}</mat-icon> Videos del producto</h3>
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <small>* Solo formatos WEBM o MP4 y se recomienda cargar archivos menores a 100 MB en resolución HD o
+                  FullHD</small>
+              </div>
+              <div class="col-12 col-md-6" align="end">
+                <input hidden (change)="onVideosUploaded($event.target)" accept="video/webm,video/mp4"
+                  #productVideosInput [multiple]="true" type="file" id="videos">
+                <button type="button" mat-button matTooltip="Cargar archivos"
+                  (click)="productVideosInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar videos</button>
+              </div>
+            </div>
+            <hr>
+            <div class="row multimedia-container">
+              <div class="col-12 multimedia-content">
+                <div *ngIf="videosPreview.length > 0" class="video-container">
+                  <mat-list role="list">
+                    <mat-list-item role="listitem" *ngFor="let video of videosPreview; let index = index;">
+                      <div class="row" style="width:100%;">
+                        <div class="col-1">
+                          <mat-icon (click)="onClickVideoPreview(video.uri)" style="cursor:pointer;" matTooltip="Clic para vista previa">videocam</mat-icon>
+                        </div>
+                        <div class="col-9">
+                          <div style="text-align:justify;">
+                            <span>Video {{ (index+1) }}</span>
+                            <div *ngIf="video.uri.includes('base64')">
+                              <small (click)="onClickVideoPreview(video.uri)" style="cursor:pointer;">({{
+                                video.fileData.name }})</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-2" align="end">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu"  matTooltip="Acciones" title="Acciones">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <div *ngIf="!(video.uri.includes('base64'))">
+                              <input hidden (change)="onClickChangeVideo($event.target,video.fileData, index)"
+                                accept="video/mp4,video/webm" #productImageInput type="file">
+                              <button mat-menu-item
+                                (click)="productImageInput.click()"><mat-icon>change_circle</mat-icon> Cambiar
+                                video</button>
+                            </div>
+                            <button mat-menu-item
+                              (click)="onClickVideoPreview(video.uri)"><mat-icon>visibility</mat-icon> Vista
+                              previa</button>
+                            <button mat-menu-item (click)="onClickRemoveUploadedVideo(video,index)"><mat-icon>delete</mat-icon>{{
+                              video.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}</button>
+                          </mat-menu>
+                        </div>
+                      </div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;" *ngIf="videosPreview.length === 0">videocam</mat-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <div class="row">
+        <div class="col-12" align="end">
+          <button type="button" mat-button color="primary" (click)="form.ngSubmit.emit()">Guardar</button>
+          <a [routerLink]="['/empresas/'+enterpriseIdIn+'/productos']" type="button" mat-button
+            color="warn">Cancelar</a>
+        </div>
+      </div>
+    </mat-card-footer>
+  </mat-card>
+</div>

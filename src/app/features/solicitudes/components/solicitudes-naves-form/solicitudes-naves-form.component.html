@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <h4>Datos específicos para solicitud de naves y terrenos</h4>
+  </div>
+  <div class="col-12">
+    <mat-form-field appearance="fill">
+      <mat-label>Ubicación solicitada</mat-label>
+      <textarea matInput [(ngModel)]="naves.ubicacionSolicitada" rows="5" required placeholder="Ubicación solicitada" (change)="naveDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Terreno (m<sup>2</sup>)</mat-label>
+      <input matInput [(ngModel)]="naves.terreno" type="number" min="0" placeholder="Terreno" (change)="naveDataAdded()" required>
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Agua (m<sup>3</sup> aproximados)</mat-label>
+      <input matInput [(ngModel)]="naves.agua" type="number" min="0" placeholder="Agua" (change)="naveDataAdded()">
+    </mat-form-field>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Densidad poblacional</mat-label>
+      <input matInput [(ngModel)]="naves.densidadPoblacional" type="number" min="0" placeholder="Densidad poblacional" (change)="naveDataAdded()">
+    </mat-form-field>
+  </div>
+
+
+
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-label>Características</mat-label>
+    <ul style="list-style-type: none;">
+      <li *ngFor="let caracteristica of naves.caracteristicas | keyvalue">
+        <mat-checkbox [(ngModel)]="naves.caracteristicas[caracteristica.key]" [value]="caracteristica.value" (change)="naveDataAdded()">{{ (caracteristica.key).replace('_',' ').toUpperCase() }}</mat-checkbox>
+      </li>
+    </ul>
+  </div>
+
+  <div class="col-12">
+    <mat-form-field appearance="fill">
+      <mat-label>Otros requerimientos</mat-label>
+      <textarea matInput [(ngModel)]="naves.otrosRequerimientos" rows="5" placeholder="Otros requerimientos" (change)="naveDataAdded()"></textarea>
+    </mat-form-field>
+  </div>
+
+</div>

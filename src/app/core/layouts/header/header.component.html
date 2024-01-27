@@ -1,0 +1,52 @@
+<div class="sticky-header">
+    <div class="container-fluid">
+        <div class="row site-content-header-head">
+            <div class="col-12 col-md-6">
+
+            </div>
+            <div class="col-12 col-md-6 float-right">
+                <div class="rs-icons float-right form-inline">
+                    <a target="_BLANK" *ngIf="header.data.url_twitter != null" href="{{header.data.url_twitter}}">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a target="_BLANK" *ngIf="header.data.url_facebook" href="{{header.data.url_facebook}}">                     
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a target="_BLANK" *ngIf="header.data.url_instagram" href="{{header.data.url_instagram}}">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a target="_BLANK" *ngIf="header.data.url_skype" href="{{header.data.url_skype}}">                    
+                        <i class="fab fa-skype"></i>
+                    </a>
+                    <a target="_BLANK" *ngIf="header.data.url_linkedin" href="{{header.data.url_linkedin}}">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <shared-translation></shared-translation>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="containerMenu" *ngIf="header !== null">
+        <div class="row">
+            <div class="col-md-3" id="actions">
+                <a routerLink="/inicio" class="btn-menu">
+                <button id="menuButton" mat-icon-button (click)="toggleMenu('null')" aria-label="">                
+                <mat-icon>menu</mat-icon>
+                </button>
+                <img class="logo" [src]="'/assets/img/default/logos/veracruz_c.png'" alt="Logo" />
+                </a>
+            </div>
+            <div id="menuContainer" class="col-md-9 menu-container">
+                <a class="btn-menu" id="closeMenu"><span class="material-icons">close</span><span>{{ 'header.menuButton' | translate }}</span></a>
+                <a routerLink="/inicio" class="btn-menu">{{ 'header.home' | translate }}</a>
+                <a routerLink="/atraccionInversiones" class="btn-menu" mat-button>{{ 'header.investment' | translate }}</a>
+                <a routerLink="/comercioExterior" class="btn-menu" mat-button>{{ 'header.commerce' | translate }}</a>
+                <a routerLink="/proyectosEstrategicos" class="btn-menu" mat-button>{{ 'header.projects' | translate }}</a>
+                <a routerLink="/auth/login" class="btn-menu" mat-button>{{ 'header.login' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<shared-chatbot></shared-chatbot>

@@ -1,0 +1,60 @@
+.zoom {
+  transition: transform .2s; /* Animation */
+  margin: 0 auto;
+  cursor: pointer;
+}
+.zoom:hover {
+  /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  transform: scale(1.5);
+}
+.hover14 figure {
+  position: relative;
+}
+.row > div{
+  padding-left: 0px;
+}
+.linkBlock{
+  background: url('/assets/images/default/square_texture.jpeg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
+  cursor: pointer;
+}
+.linkBlock .overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top:0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #57585afa;
+  backdrop-filter:blur(1px);
+  color:white;
+  z-index: 1;
+  display: flex;
+}
+.overlay span{margin:auto;font-size: 6rem;}
+.linkBlock:hover{
+  z-index: 2;
+  box-shadow: 0px 0px 10px 0px #cccccc;
+}
+.linkBlock:hover .overlay,{
+  background-color: #57585af5;
+}
+.linkBlock:hover .overlay span{
+  font-size: 7rem;
+}
+.linkBlock .sectionLabel{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 20px 5px;
+  display: flex;
+  justify-content: center;
+  color:white;
+  z-index: 2;
+}

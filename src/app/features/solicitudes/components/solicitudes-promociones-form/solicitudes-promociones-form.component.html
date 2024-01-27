@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-12">
+    <h4>Datos específicos para solicitud de promociones</h4>
+  </div>
+  <div class="col-12">
+    <mat-form-field appearance="fill">
+      <mat-label>Ubicación</mat-label>
+      <textarea matInput type="text" [(ngModel)]="promociones.ubicacion" rows="5" placeholder="Ubicación" (change)="promocionDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <h4>Coordenadas</h4>
+      </div>
+      <div class="col-6" *ngFor="let coords of promociones.coordenadas | keyvalue">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ coords.key == 'lat' ? 'Latitud' : 'Longitud' }}</mat-label>
+          <input matInput [value]="promociones.coordenadas[coords.key]" type="number" step="0.000000000001" placeholder="{{ coords.key == 'lat' ? 'Latitud' : 'Longitud' }}" (change)="promocionDataAdded()" required>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Superficie</mat-label>
+      <input matInput [(ngModel)]="promociones.superficie" type="text" placeholder="Superficie" (change)="promocionDataAdded()" required>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Unidad de medida</mat-label>
+      <mat-select [(ngModel)]="promociones.unidadSuperficie" (ngModelChange)="promocionDataAdded()" required>
+        <mat-option [value]="null">Ninguno</mat-option>
+        <mat-option [value]="'hectareas'">Hectareas (ha)</mat-option>
+        <mat-option [value]="'metrosCuadrado'">Metros cuadrados (m<sup>2</sup>)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-4">
+    <mat-form-field appearance="fill">
+      <mat-label>Valor del m<sup>2</sup></mat-label>
+      <input matInput [(ngModel)]="promociones.valorM2" type="number" step="2" min="0" (change)="promocionDataAdded()" required>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <mat-form-field appearance="fill">
+      <mat-label>Tipología</mat-label>
+      <textarea matInput [(ngModel)]="promociones.tipologia" rows="5" placeholder="Tipología" (change)="promocionDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <mat-form-field appearance="fill">
+      <mat-label>Vocación</mat-label>
+      <textarea matInput [(ngModel)]="promociones.vocacion" rows="5" placeholder="Vocación" (change)="promocionDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <mat-form-field appearance="fill">
+      <mat-label>Permisos</mat-label>
+      <textarea matInput [(ngModel)]="promociones.permisos" rows="5" placeholder="Permisos" (change)="promocionDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <h4>Tipo de propiedad</h4>
+    <ul style="list-style:none;">
+      <li *ngFor="let tipo of promociones.tipoPropiedad | keyvalue">
+        <mat-checkbox [(ngModel)]="promociones.tipoPropiedad[tipo.key]" [value]="promociones.tipoPropiedad[tipo.value]" (change)="promocionDataAdded()">{{ (tipo.key) }}</mat-checkbox>
+      </li>
+    </ul>
+  </div>
+  <div class="col-12">
+    <mat-form-field appearance="fill">
+      <mat-label>Datos del documento</mat-label>
+      <textarea matInput [(ngModel)]="promociones.datosDocumento" rows="5" placeholder="Datos del documento" (change)="promocionDataAdded()" required></textarea>
+    </mat-form-field>
+  </div>
+  <div class="col-12">
+    <h4>Tiene gravamen</h4>
+    <mat-checkbox [(ngModel)]="promociones.tieneGravamen" (change)="promocionDataAdded()"></mat-checkbox>
+  </div>
+</div>

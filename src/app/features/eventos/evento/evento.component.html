@@ -1,0 +1,18 @@
+<div *ngIf="showCreate">
+  <app-create-evento (goPage)=goToPage()></app-create-evento>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" > <!-- *ngIf="scriptGL.getCanCreateRol('/eventos')" -->
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-evento (goEventosEmpresas)="goToEventosEmpresas($event)" (goUpdate)="goToUpdate($event)"></app-page-evento>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-evento [idForm]="idForm" (goPage)=goToPage()></app-update-evento>
+</div>
+
+<div *ngIf="showEventosEmpresas">
+  <app-registro-evento-empresas [idForm]="idForm" (goPage)="goToPage()"></app-registro-evento-empresas>
+</div>

@@ -1,0 +1,18 @@
+<mat-card class="formHeader">
+  <mat-card-title>{{tema.nombre}}</mat-card-title>
+</mat-card>
+<mat-card>
+  <mat-card-content align="center">
+    <p align="justify">
+      {{tema.descripcion}}
+    </p>
+    <div *ngIf="tema.recurso && tema.tipoRecurso == 'archivo'" [class]="'pdf-visor'">
+      <pdf-viewer class="pdfPreview" [src]="tema.recurso" [render-text]="true" [show-borders]="true" style="width: 400px; height: 500px"></pdf-viewer>
+    </div>
+    <video *ngIf="tema.recurso && tema.tipoRecurso == 'video'" [src]="tema.recurso" class="videoPreview" controls></video>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="mostrarModulos()">Regresar al temario</button>
+    <button mat-button color="primary" *ngIf="permitirResponder" (click)="mostrarCuestionario()">Responder cuestionario del tema</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,17 @@
+<div>
+  <mat-card class="formHeader">
+    <mat-title>Editar meeting</mat-title>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-content>
+      <app-form-meetings [idCuentaMeeting]="idCuentaMeeting" [idMeeting]="idMeeting"></app-form-meetings>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <a [routerLink]="['/meetings/cuentas/'+idCuentaMeeting+'/zoom']" mat-raised-button color="warn">Regresar</a>
+      <button mat-raised-button color="primary" (click)="save()">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+

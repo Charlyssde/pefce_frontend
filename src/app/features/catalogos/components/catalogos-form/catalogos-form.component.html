@@ -1,0 +1,53 @@
+<div>
+    <div class="row">
+        <div class="col-12">
+            <h3>{{ data.action }} registro</h3>
+            <hr>
+        </div>
+    </div>
+    <form [formGroup]="formCatalogo" #form (ngSubmit)="onSubmitForm()">
+        <div class="row">
+            <div class="col-12">
+                <span>Tipo de catálogo: <b>{{ data.tableSettings.type }}</b></span>
+                <hr>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <ng-container *ngIf="data.tableSettings.headers.length > 1; then twoInputs; else oneInput"></ng-container>
+                    <ng-template #oneInput>
+                        <div class="col-12 col-lg-6">
+                            <mat-form-field appearance="fill">
+                                <mat-label>{{ data.tableSettings.headers[0].label }}</mat-label>
+                                <input matInput type="text" formControlName="nombre" placeholder="{{ data.tableSettings.headers[0].label }}" required autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                    </ng-template>
+                    <ng-template #twoInputs>
+                        <div class="col-12 col-lg-6">
+                            <mat-form-field appearance="fill">
+                                <mat-label>{{ data.tableSettings.headers[0].label }}</mat-label>
+                                <input matInput type="text" formControlName="nombre" placeholder="{{ data.tableSettings.headers[0].label }}" required autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-lg-6">
+                            <mat-form-field appearance="fill">
+                                <mat-label>{{ data.tableSettings.headers[1].label }}</mat-label>
+                                <input matInput type="text" [(ngModel)]="descripcion" [ngModelOptions]="{standalone:true}" placeholder="{{ data.tableSettings.headers[1].label }}" required autocomplete="off" />
+                            </mat-form-field>
+                        </div>
+                    </ng-template>
+                    <div class="col-12 col-lg-6">
+                        <mat-label>Activo</mat-label>
+                        <br>
+                        <mat-checkbox formControlName="activo" color="primary"></mat-checkbox>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-12" align="end">
+                <button mat-raised-button color="primary" (click)="form.ngSubmit">Guardar</button>
+                <button mat-raised-button color="warn" mat-dialog-close>Cancelar</button>
+            </div>
+        </div>
+    </form>
+</div>

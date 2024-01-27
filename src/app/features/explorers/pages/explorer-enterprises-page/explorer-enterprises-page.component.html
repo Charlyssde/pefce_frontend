@@ -1,0 +1,141 @@
+<div class="wallpaper"></div>
+
+<div>
+
+  <shared-chatbot></shared-chatbot>
+
+  <a [routerLink]="['/exploradores']" mat-fab color="warn" matTooltip="Volver" class="btn-regresar">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+      <div class="col-12" align="end">
+        <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <span>
+          <mat-icon>filter_alt</mat-icon> Filtros
+          <hr>
+        </span>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Categoría</mat-label>
+          <mat-select [(ngModel)]="categoria" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por categoría</mat-option>
+            <mat-option *ngFor="let categoriaItem of categoriaList" [value]="categoriaItem.id">{{ categoriaItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Régimen fiscal</mat-label>
+          <mat-select [(ngModel)]="regimenFiscal" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por régimen fiscal</mat-option>
+            <mat-option *ngFor="let regimenFiscalItem of regimenFiscalList" [value]="regimenFiscalItem.id">{{
+              regimenFiscalItem.nombre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Sector</mat-label>
+          <mat-select [(ngModel)]="sector" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por sector</mat-option>
+            <mat-option *ngFor="let sectorItem of sectorList" [value]="sectorItem.id">{{ sectorItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3" align="end" *ngIf="sector !== null">
+        <mat-form-field appearance="fill">
+          <mat-label>Subsector</mat-label>
+          <mat-select [(ngModel)]="subsector" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por subsector</mat-option>
+            <mat-option *ngFor="let subsectorItem of subsectorList" [value]="subsectorItem.id">{{ subsectorItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-12 div col-sm-6 div col-lg-4 col-xl-3 card-col" style="margin-bottom:2rem;"
+        *ngFor="let enterprise of dataset;">
+        <mat-card>
+          <mat-card-content>
+            <div class="card-content">
+              <div class="row">
+                <div class="col-12" *ngIf="enterprise.imagenEmpresarial.length>0">
+                  <div class="logo-container">
+                    <img [src]="setURI(enterprise.imagenEmpresarial[0].logotipoId.url)" alt="logo">
+                  </div>
+                </div>
+                <div class="col-12">
+                  <h3 style="margin: 5px auto;">{{ enterprise.empresa }}</h3>
+                  <h4 style="margin: 5px auto;">Categoría: {{ enterprise.categoria.nombre }}</h4>
+                  <small>
+                    <b>Sector</b>: <i>{{ enterprise.sector.nombre }}</i>
+                    <br>
+                    <b>Subsector</b>: <i>{{ enterprise.subsector.nombre }}</i>
+                  </small>
+                </div>
+                <div class="col-12">
+                  <hr>
+                </div>
+                <div class="col-12">
+                  <div
+                    [innerHTML]="enterprise.descripcion ? enterprise.descripcion : 'No se registró la descripción de esta empresa'">
+                  </div>
+                  <br>
+                  <small>
+                    <b>Productos registrados: <i>{{ enterprise.productos.length }}</i></b>
+                  </small>
+                </div>
+                <div class="col-12">
+                  <hr>
+                </div>
+              </div>
+              <div class="row justify-content-center">
+                <div class="col-6" align="center">
+                  <button mat-button (click)="onClickVideoPreview(enterprise.imagenEmpresarial[0].videoId.url)">
+                    <mat-icon>movie</mat-icon>
+                    <br>
+                    <span>Ver video</span>
+                  </button>
+                </div>
+                <div class="col-6" align="center">
+                  <a [routerLink]="['/exploradores/empresas/'+enterprise.id+'/stand']" mat-button>
+                    <mat-icon>storefront</mat-icon>
+                    <br>
+                    <span>Visitar stand</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </mat-card-content>
+          <mat-card-actions align="end">
+            <a (click)="openSolicitarMesa(enterprise, enterprise.contactos[0])" mat-button color="warn">Solicitar mesa de negocio</a>
+
+            <a [routerLink]="['/exploradores/empresas/'+enterprise.id+'/stand']" mat-button color="warn">Visitar stand</a>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled"
+          [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+          [hidePageSize]="hidePageSize" [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+
+</div>

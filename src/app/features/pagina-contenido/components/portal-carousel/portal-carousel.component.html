@@ -1,0 +1,26 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" align="center">
+      <h2>{{ title }}</h2>
+    </div>
+    <div class="col-12">
+      <mat-carousel timings="250ms ease-in" interval="8000" color="black" maxWidth="auto" orientation="ltr"
+        slideHeight="350px" slides="{{slidesData.length}}" [loop]="true" [hideArrows]="false" [autoplay]="true"
+        [maintainAspectRatio]="false" [hideIndicators]="true" [useKeyboard]="true" [useMouseWheel]="false"
+        [style.color]="'black'">
+
+        <mat-carousel-slide *ngFor="let slide of slidesData;" [image]="" [style.minHeight]="350" overlayColor="#000000C5" [hideOverlay]="false">
+          <div style="z-index:0 !important;position:absolute;left:0; right:0px;top:0px; bottom:0px;text-align:center;background-color: white;height:350px;">
+            <a href="auth/login"><img style="position:relative;width: auto;height: 350px !important;" [src]="slide.cover" alt="{{ slide.name }}" /></a>
+          </div>
+          <div style="z-index:2 !important;position:absolute;left:0; right:0px;bottom:0px; bottom:0px;text-align:center;height:80px;background-color:#00000099;color:white;display:flex;backdrop-filter: blur(2px);">
+            <div style="margin:auto;">
+              <h4>{{ slide.name }}</h4>
+            </div>
+          </div>
+        </mat-carousel-slide>
+
+      </mat-carousel>
+    </div>
+  </div>
+</div>

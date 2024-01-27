@@ -1,0 +1,51 @@
+<mat-card-content>
+  <div class="mat-elevation-z8">
+    <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort [hidden]="!dataSource && !isCharge">
+      <ng-container matColumnDef="nombreLegal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre legal</th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.nombreLegal}} </td>
+      </ng-container>
+      <ng-container matColumnDef="rfc">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> RFC </th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.rfc}} </td>
+      </ng-container>
+      <ng-container matColumnDef="correo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Correo </th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.correo}} </td>
+      </ng-container>
+      <ng-container matColumnDef="telefono">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.telefono}} </td>
+      </ng-container>
+      <ng-container matColumnDef="sectorPrincipal">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sector principal </th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.sectorPrincipal?.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="tipoEmpresa">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de empresa </th>
+        <td mat-cell *matCellDef="let element"> {{element?.directorio?.tipoEmpresa?.nombre}} </td>
+      </ng-container>
+      <ng-container matColumnDef="estatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+        <td mat-cell *matCellDef="let element"> {{scriptGL.eEstatusEmpresaEvento[element.estatus]}} </td>
+      </ng-container>
+      <ng-container matColumnDef="enviarCorreo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Enviar correo </th>
+        <td mat-cell *matCellDef="let element"><button mat-menu-item (click)="enviarCorreo(element?.directorio?.correo)"><mat-icon>send</mat-icon></button></td>
+      </ng-container>
+      <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div>
+      <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+      <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+        <td>No existen registros</td>
+      </tr>
+    </div>
+    <div *ngIf="cargando">
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <strong class="loader-text">{{cargandoTexto}}</strong>
+    </div>
+    <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+  </div>
+</mat-card-content>

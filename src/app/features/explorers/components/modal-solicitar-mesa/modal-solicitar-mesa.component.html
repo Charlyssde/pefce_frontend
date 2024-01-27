@@ -1,0 +1,23 @@
+<div>
+  <h1 mat-dialog-title>Solicitar mesa de negocio</h1>
+
+  <div class="mat-dialog-content">
+    <div class="row">
+      <div class="col-12" align="justify">
+        <strong>Describa brevemente el motivo que tiene para realizar la solicitud de mesa de negocio a través de este pabellón</strong>?
+      </div>
+      <div class="col-12" align="justify">
+        <mat-form-field appearance="fill">
+          <mat-label>Motivo de la solcitud</mat-label>
+          <textarea matInput id="comentario" name="comentario" rows="5" placeholder="Comentarios"></textarea>
+        </mat-form-field>        
+      </div>
+    </div>
+  </div>
+
+
+  <div mat-dialog-actions style="text-align: right;width:100% !important;">
+    <button mat-raised-button type="button" color="primary" (click)="save()">Guardar acción</button>
+    <button mat-raised-button type="button" color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

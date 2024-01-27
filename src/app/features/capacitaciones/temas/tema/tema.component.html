@@ -1,0 +1,64 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Datos generales
+  </mat-card-title>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="3" rowHeight="80px">
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Capacitación:</h3>
+          {{capacitacion.nombre}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Descripción</h3>
+          {{capacitacion.descripcion}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Subárea</h3>
+          {{capacitacion.subarea}}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+    <hr>
+
+    <mat-grid-list cols="2" rowHeight="80px">
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Módulo:</h3>
+          {{modulo.nombre}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Descripción</h3>
+          {{modulo.descripcion}}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+<br>
+<div *ngIf="showCreate">
+  <app-create-tema (goPage)=goToPage() [modulo]="modulo"></app-create-tema>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="warn" class="mat-stroked-button btn-regresar" [routerLink]="['/capacitaciones/'+id_capacitacion+'/modulos']">
+    <mat-icon>arrow_back_ios_new</mat-icon>
+  </a>
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" *ngIf="scriptGL.getCanCreateRol('/capacitaciones')">
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-tema [idCapacitacion]="id_capacitacion" [idModulo]="id_modulo" (goUpdate)="goToUpdate($event)"></app-page-tema>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-tema [idForm]="idForm" [modulo]="modulo" (goPage)=goToPage()></app-update-tema>
+</div>

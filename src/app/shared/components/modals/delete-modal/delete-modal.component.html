@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content>
+    <div class="content" [innerHTML]="data.content"></div>
+    <div class="alerts" *ngIf="data.alerts != null">
+        <div>
+            <mat-icon>warning</mat-icon> ¡Atención!
+        </div>
+        <br>
+        <div [innerHTML]="data.alerts"></div>
+        <br>
+        <div>
+            <mat-checkbox (change)="onChangeValidation($event.checked)" color="primary">Confirmo de entarado y deseo continuar con la eliminación del registro</mat-checkbox>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button type="button" mat-button mat-dialog-close>Cancelar</button>
+    <button type="button" mat-raised-button color="warn" [disabled]="disableDelete" [mat-dialog-close]="data.id">Eliminar</button>
+</mat-dialog-actions>

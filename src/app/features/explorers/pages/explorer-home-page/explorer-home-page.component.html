@@ -1,0 +1,87 @@
+<div>
+
+  <shared-chatbot></shared-chatbot>
+
+  <button mat-fab color="primary" matTooltip="Mostrar ayuda" class="btn-regresar" (click)="showHelpSection()">
+    <mat-icon>question_mark</mat-icon>
+  </button>
+
+  <div class="wallpaper"></div>
+  <div class="main-container">
+    <div class="main-content">
+      <mat-card>
+        <mat-card-content>
+          <h3>Exploradores disponibles</h3>
+          <div class="button-container">
+            <a [routerLink]="['/dashboard']" type="button" mat-button color="warn" style="text-align:justify;">
+              <span matTooltip="Agenda">
+                <mat-icon>calendar_month</mat-icon> Agenda
+              </span>
+               <mat-icon matTooltip="Ir a la agenda" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>            
+            <a [routerLink]="['/audienciaCapacitaciones']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Explorador de capacitaciones">
+                <mat-icon>store</mat-icon> Capacitaciones
+              </span>
+               <mat-icon matTooltip="Ir al explorador de capacitaciones" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
+            <!--
+            <button type="button" mat-button color="warn" style="text-align:justify; padding: 3px auto;">
+              <span matTooltip="Explorador de eventos">
+                <mat-icon>event</mat-icon>Eventos y Ferias
+              </span>
+               <mat-icon matTooltip="Ir al explorador de eventos" style="float:right;">navigate_next</mat-icon>
+            </button>
+            
+          -->
+            <a [routerLink]="['/exploradores/eventos']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Explorador de empresas">
+                <mat-icon>event</mat-icon> Eventos y ferias
+              </span>
+               <mat-icon matTooltip="Ir al explorador de eventos" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
+
+            <a [routerLink]="['/exploradores/empresas']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Explorador de empresas">
+                <mat-icon>store</mat-icon> Pabellones de empresas
+              </span>
+               <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
+            <a [routerLink]="['/solicitudes']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Solicitudes de servicio">
+                <mat-icon>page</mat-icon> Solicitud de servicios
+              </span>
+               <mat-icon matTooltip="ir a solicitudes de servicio" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
+            <a [routerLink]="['/proyectos']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Explorador de empresas">
+                <mat-icon>store</mat-icon> Proyectos de seguimiento
+              </span>
+               <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
+            <hr>
+            <a [routerLink]="['/empresas']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Explorador de empresas">
+                <mat-icon>store</mat-icon> Mi empresa
+              </span>
+               <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>          
+            <button type="button" mat-button color="warn" style="text-align:justify; padding: 3px auto;" (click)="openNewAutodiagnosticoModal(null)">
+              <span matTooltip="Autodiagnóstico del exportador">
+                <mat-icon>update</mat-icon>Autodiagnóstico del exportador
+              </span>
+               <mat-icon matTooltip="Llenar el autodiagnóstico del exportador" style="float:right;">navigate_next</mat-icon>
+            </button>
+
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

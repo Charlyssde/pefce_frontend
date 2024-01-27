@@ -1,0 +1,13 @@
+.content {
+    text-align: justify;
+    margin-bottom: 1rem;
+}
+
+.alerts {
+    text-align: justify;
+    margin-bottom: 1rem;
+    padding: 10px 5px;
+    border-radius: 5px;
+    background-color: #eee;
+    width: 100%;
+}

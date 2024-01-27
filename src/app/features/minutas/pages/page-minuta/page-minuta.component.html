@@ -1,0 +1,83 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Listado de minutas
+  </mat-card-title>
+</mat-card>
+<div>
+  <mat-card>
+    <mat-card-content>
+      <mat-form-field class="filter_field">
+        <mat-label>Buscar</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input [disabled]="dataSource === null" autocomplete="off">
+      </mat-form-field>
+      <br>
+      <button mat-button color="primary" (click)="descargarZip('multiple')">Descargar zip</button>
+      <button mat-button color="primary" (click)="descargarZip('singular')">Descargar Masiva</button> 
+      <br>
+      <div class="mat-elevation-z8">
+        <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort *ngIf="dataSource && isCharge">
+          <ng-container matColumnDef="seleccionar">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Seleccionar </th>
+            <td mat-cell *matCellDef="let element">
+              <mat-checkbox class="example-margin" (change)="ejecutarAddDel($event,element)"></mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="folio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Folio </th>
+            <td mat-cell *matCellDef="let element"> {{element?.folio}} </td>
+          </ng-container>
+          <ng-container matColumnDef="asunto">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Asunto </th>
+            <td mat-cell *matCellDef="let element"> {{element?.asunto}} </td>
+          </ng-container>
+          <ng-container matColumnDef="objetivo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Objetivo </th>
+            <td mat-cell *matCellDef="let element"> {{element?.objetivo}} </td>
+          </ng-container>
+          <ng-container matColumnDef="sede">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sede </th>
+            <td mat-cell *matCellDef="let element"> {{element?.sede}} </td>
+          </ng-container>
+          <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Categoría </th>
+            <td mat-cell *matCellDef="let element"> {{element?.claseMinuta?.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </th>
+            <td mat-cell *matCellDef="let element"> {{element?.tipoMinuta?.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fecha">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+            <td mat-cell *matCellDef="let element"> {{element?.fecha | date: 'mediumDate'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let element" class="tdActions">
+              <a mat-button [matMenuTriggerFor]="matMenu"><span class="material-icons">menu</span></a>
+              <mat-menu #matMenu="matMenu">
+                <mat-divider *ngIf="(scriptGL.getCanDeleteRol('/minutas'))"></mat-divider>
+                <button mat-menu-item (click)="generarPdf(element,'singular')" *ngIf="scriptGL.getCanReportRol('/minutas')">Descargar PDF</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/minutas'))"></mat-divider>
+                <button mat-menu-item (click)="editar(element)" *ngIf="scriptGL.getCanUpdateRol('/minutas')">Editar</button>                
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/minutas'))"></mat-divider>
+                <button mat-menu-item (click)="eliminar(element)" *ngIf="scriptGL.getCanDeleteRol('/minutas')">Eliminar</button>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No hay resultados para la búsqueda con "{{input.value}}"</td>
+          </tr>
+        </table>
+        <div>
+          <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+          <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+            <td>No existen registros</td>
+          </tr>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

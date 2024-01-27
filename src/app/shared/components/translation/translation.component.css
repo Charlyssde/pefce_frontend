@@ -1,0 +1,18 @@
+a {
+    color: #ffffff !important;
+    margin: auto 10px !important;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #87868a !important;
+    cursor: pointer;
+}
+
+.menu-item{
+    display: flex;
+    flex-direction: row;
+    color: #000000 !important;
+    margin: auto 10px !important;
+    text-decoration: none;
+}

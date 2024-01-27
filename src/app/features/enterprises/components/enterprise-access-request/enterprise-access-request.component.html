@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Solicitud de acceso a la plataforma</h2>
+<mat-dialog-content>
+  <div style="margin: 10px auto;">
+    <div class="row">
+      <div class="col-12">
+        Seleccione una opción para dar respuesta a la solicitud de acceso a la plataforma de la empresa <b>{{
+          enterprise.empresa }}</b> con RFC <b>{{ enterprise.rfc }}</b>.
+      </div>
+      <div class="col-12">
+        <mat-radio-group [(ngModel)]="request.status" (ngModelChange)="onChangeStatus()">
+          <mat-radio-button class="radio" color="primary" [value]="true">Aceptar solicitud</mat-radio-button>
+          <mat-radio-button class="radio" color="primary" [value]="false">Rechazar solicitud</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div *ngIf="request.status !== null && request.status === false" class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Comentario</mat-label>
+          <textarea matInput [(ngModel)]="request.message" rows="5"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="button" mat-button [mat-dialog-close]="null">Cancelar</button>
+  <button type="button" mat-raised-button color="warn" [disabled]="disableDelete()" [mat-dialog-close]="request">Responder
+    solicitud</button>
+</mat-dialog-actions>

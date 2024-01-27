@@ -1,0 +1,67 @@
+@media(min-width: 993px){
+  .panel-container{
+    padding:20px 0px;
+    margin: 20px;
+    height: calc(100vh - 200px) !important;
+    max-height: calc(100vh - 200px) !important;
+    overflow: hidden;
+  }
+  .panel-container > .row{
+    height: 100% !important;
+  }
+
+  .section{
+    height: 100% !important;
+  }
+
+  .section1 > div{
+    margin: 5px auto;
+  }
+
+
+  .history-section{
+    height: calc(100% - 90px) !important;
+    max-height: calc(100% - 90px) !important;
+    overflow-y: scroll;
+  }
+  .history-section::-webkit-scrollbar{
+    width: 0px !important;
+  }
+
+  .history-header{
+    display: inline-block;
+    width: 100%;
+    padding: 5px 0px;
+    font-size: 0.9rem !important;
+  }
+  .history-header-user{
+    margin: 10px auto;
+    float: left;
+  }
+  .history-header-date{
+    float: right;
+  }
+  .history-content-body{
+    font-size: 0.85rem !important;
+    text-align: justify;
+    padding-top: 10px !important;
+  }
+  .history-content-body img{
+    max-width: 80% !important;
+    width: 80% !important;
+  }
+
+  .tareas-content,
+  .colaboradores-content{
+    max-height: 400px !important;
+    overflow-y: scroll;
+  }
+  .tareas-content::-webkit-scrollbar,
+  .colaboradores-content::-webkit-scrollbar{
+    width: 0px !important;
+  }
+}
+.endedTask{
+  text-decoration: line-through !important;
+}
+  

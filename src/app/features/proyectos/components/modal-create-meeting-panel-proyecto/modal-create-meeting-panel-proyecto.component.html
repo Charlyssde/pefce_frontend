@@ -1,0 +1,23 @@
+<div>
+  <div class="row">
+    <div class="col-12"></div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <mat-form-field appearance="fill">
+        <mat-label>Cuentas de zoom disponibles</mat-label>
+        <mat-select [(ngModel)]="meetingAccount">
+          <mat-option [value]="null">Seleccione uno</mat-option>
+          <mat-option *ngFor="let zoomAccount of zoomAccounts" [value]="zoomAccount">{{ zoomAccount.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <app-form-meetings [idCuentaMeeting]="null" [idMeeting]="0"></app-form-meetings>
+    </div>
+    <div class="col-12" align="end">
+      <button mat-raised-button color="primary" (click)="saveMeeting()">Guardar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-12">
+    <span>Eliminar actividad/acción del panel</span>
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: justify;">
+    ¿Realmente desea eliminar el registro de actividad/acción <span [innerHTML]="accion"></span> del panel de control? Esta acción es irreversible y si tiene archivos relacionados a esta actividad/acción también serán eliminados.
+  </div>
+  <div class="col-12">
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button mat-raised-button color="primary" (click)="deleteProyectoHistorico()">Eliminar</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>

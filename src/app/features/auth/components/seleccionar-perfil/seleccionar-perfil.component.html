@@ -1,0 +1,18 @@
+<div>
+    <h1 mat-dialog-title>Seleccionar perfil</h1>
+    <div mat-dialog-content>
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field appearance="fill">
+                    <mat-label>Perfil</mat-label>
+                    <mat-select matNativeControl [(ngModel)]="data.selectedPerfil" required>
+                        <mat-option *ngFor="let perfil of data.perfiles" [value]="perfil">{{perfil.nombre}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div mat-dialog-actions align="end">
+        <button mat-button color="primary" [mat-dialog-close]="data.selectedPerfil" cdkFocusInitial>Confirmar</button>
+    </div>
+</div>

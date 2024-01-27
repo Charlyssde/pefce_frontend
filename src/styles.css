@@ -1,0 +1,757 @@
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./assets/css/animate.css";
+@import "~quill/dist/quill.snow.css";
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import './assets/css/org-chart.css';
+
+.table-container::-webkit-scrollbar{
+    width: 3px !important;
+}
+.table-container{
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: scroll;
+}
+.history-content-body img{
+    max-width: 80% !important;
+    width: 80% !important;
+    margin: auto 10% !important;
+  }
+
+/* MARGIN GLOBAL STYLES */
+
+.mb-0 {
+    margin-bottom: 0rem !important;
+}
+
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 4rem;
+}
+
+.mb-5 {
+    margin-bottom: 5rem;
+}
+
+
+/* BUTTONS GLOBAL STYLES */
+
+.btn-block {
+    width: 100%;
+}
+
+
+/* AUTH GLOBAL STYLES */
+
+.auth-sticky-header {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    background-color: white;
+    z-index: 3;
+}
+
+.auth-background {
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.auth-content {
+    z-index: 1;
+}
+
+.auth-content .mat-card {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    background-color: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(1px);
+    box-shadow: 0px 0px 15px lightgray;
+}
+
+button[disabled],
+a[disabled] {
+    cursor: not-allowed !important;
+    opacity: 0.8;
+}
+
+textarea {
+    resize: none !important;
+}
+
+.mat-drawer-inner-container::-webkit-scrollbar {
+    width: 0px;
+}
+
+.mat-drawer-inner-container {
+    border-right: 1px solid rgba(0, 0, 0, 0.1) !important;
+}
+
+.animated-delay-1 {
+    animation-delay: 1s;
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    -o-animation-delay: 1s;
+}
+
+.animated-delay-2 {
+    animation-delay: 2s;
+    -webkit-animation-delay: 2s;
+    -moz-animation-delay: 2s;
+    -o-animation-delay: 2s;
+}
+
+.animated {
+    visibility: visible !important;
+}
+
+/* .hide-on-init {
+    visibility: hidden;
+} */
+
+
+/* INICIO: Globales */
+
+@font-face {
+    font-family: Monserrat;
+    src: url("/assets/fonts/Montserrat-Regular.ttf");
+}
+
+@font-face {
+    font-family: Panton;
+    src: url("/assets/fonts/Panton-Regular.otf");
+}
+
+html * {
+    font-family: Panton;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    font-family: Panton !important;
+    /* background-color: #ccc !important; */
+}
+
+.container-fluid {
+    margin: 0px !important;
+    padding: 0px !important;
+    width: 100% !important;
+    overflow-x: hidden;
+}
+
+.container-fluid.content {
+    padding-bottom: 50px !important;
+}
+
+.container-fluid.mat-drawer-container.mat-sidenav-container {
+    height: 100% !important;
+}
+
+.app-container {
+    padding: 20px 40px !important;
+}
+
+.mat-progress-bar-fill::after {
+    background-color: rgb(175, 63, 54) !important;
+}
+
+.mat-progress-bar-buffer {
+    background: rgba(157, 36, 73, 0.2) !important;
+}
+
+
+/* FIN: Globales */
+
+
+/* INICIO: MAT-TABS */
+
+.mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: rgb(175, 63, 54) !important;
+}
+
+.mat-tab-row {
+    /* width: 100% !important; */
+    margin: 10px 1px !important;
+}
+
+
+/* FIN: MAT-TABS */
+
+
+/* INICIO: SCROLLBAR */
+
+
+/* width */
+
+body::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    z-index: 2001 !important;
+}
+
+
+/* Track */
+
+body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    z-index: 2000 !important;
+}
+
+
+/* Handle */
+
+body::-webkit-scrollbar-thumb {
+    background: rgb(175, 63, 54) !important;
+}
+
+
+/* Handle on hover */
+
+body::-webkit-scrollbar-thumb:hover {
+    background: rgb(175, 63, 54);
+}
+
+
+/* FIN: SCROLLBAR */
+
+
+/* INICIO: BOTONES */
+
+a.mat-button.mat-accent,
+button.mat-button.mat-accent,
+a.mat-stroked-button.mat-accent,
+button.mat-stroked-button.mat-accent,
+a.mat-fab.mat-accent,
+button.mat-fab.mat-accent,
+a.mat-raised-button.mat-accent,
+button.mat-raised-button.mat-accent {
+    background-color: #B03E36 !important;
+    color: white !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-icon-button.mat-primary,
+button.mat-icon-button.mat-primary {
+    color: #B03E36 !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-button.mat-primary,
+button.mat-button.mat-primary,
+a.mat-stroked-button.mat-primary,
+button.mat-stroked-button.mat-primary,
+a.mat-fab.mat-primary,
+button.mat-fab.mat-primary,
+a.mat-raised-button.mat-primary,
+button.mat-raised-button.mat-primary {
+    background-color: rgb(179, 142, 93) !important;
+    color: white !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-icon-button.mat-primary,
+button.mat-icon-button.mat-primary {
+    color: rgb(179, 142, 93) !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-button.mat-warn,
+button.mat-button.mat-warn,
+a.mat-stroked-button.mat-warn,
+button.mat-stroked-button.mat-warn,
+a.mat-raised-button.mat-warn,
+button.mat-raised-button.mat-warn {
+    background-color: rgb(87, 87, 86) !important;
+    color: white !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-icon-button.mat-warn,
+button.mat-icon-button.mat-warn {
+    color: rgb(175, 63, 54) !important;
+    margin: 0px 2px !important;
+}
+
+a.mat-raised-button:hover {
+    color: black;
+}
+
+
+/* FIN: BOTONES */
+
+
+/* INICIO: FORMS */
+
+.formHeader {
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0px !important;
+    box-shadow: none !important;
+}
+
+.formHeader .mat-card-header-text {
+    margin: 0px;
+}
+
+.formHeader .mat-card-title {
+    font-size: 20px !important;
+    margin-bottom: 0px !important;
+}
+
+.headerFormSection {
+    /* background-color: rgb(135, 135, 135) !important; */
+    border: solid 3px rgb(175, 63, 54) !important;
+    color: black !important;
+    text-align: center !important;
+    margin-bottom: 10px !important;
+}
+
+.headerFormSection hr {
+    border: solid 1px black !important;
+}
+
+div[class^="col-"]>mat-form-field {
+    min-width: 100% !important;
+    width: 100% !important;
+}
+
+
+/* FIN: DIV Bootstrap-Angular Material INPUTS */
+
+
+/* INICIO: Inputs */
+
+.readonly-wrapper {
+    cursor: not-allowed;
+}
+
+.readonly-wrapper .readonly-block {
+    pointer-events: none;
+}
+
+figure.mat-figure>mat-form-field {
+    width: 100%;
+    padding: 5px;
+}
+
+
+/* FIN: Inputs */
+
+
+/* INICIO: Botones */
+
+.mat-fab.mat-warn,
+.mat-flat-button.mat-warn,
+.mat-mini-fab.mat-warn,
+.mat-raised-button.mat-warn {
+    background-color: #b03e36 !important;
+}
+
+.btn-registrar {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 3;
+}
+
+.btn-regresar {
+    position: fixed !important;
+    bottom: 20px;
+    right: 95px;
+    z-index: 3;
+}
+
+.btn-regresar-esquina {
+    position: fixed !important;
+    bottom: 20px;
+    right: 20px;
+    z-index: 4;
+}
+
+.spinner-loading {
+    position: fixed !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    color: rgb(175, 63, 54);
+}
+
+
+/* FIN: Botones */
+
+
+/* INICIO: Drag and Drop */
+
+.file_tile>.mat-figure {
+    display: block !important;
+}
+
+.uploadfilecontainer {
+    background-color: white !important;
+    border: 1px solid #000;
+    border-radius: 5px;
+    height: 150px;
+    width: calc(100% - 2px);
+    display: flex;
+}
+
+.uploadfilecontainer div {
+    text-align: center;
+    margin: auto;
+}
+
+.uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #fafafa !important;
+}
+
+.files-list {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 2px);
+    height: 20px;
+    background: #ffffff !important;
+    border-radius: 5px;
+    padding: 5px 5px;
+}
+
+.files-list:hover {
+    cursor: pointer;
+    background-color: #fafafa !important;
+}
+
+.files-list p {
+    font-size: 15px !important;
+    margin: 0px !important;
+}
+
+.files-list .delete-file {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.files-list .delete-file span {
+    font-size: 15px;
+}
+
+
+/* FIN: Drag and Drop */
+
+
+/* INICIO: MAPBOX */
+
+
+/* se quita etiqueta de mapbox*/
+
+.mapboxgl-ctrl-bottom-left {
+    display: none !important;
+}
+
+.mapboxgl-ctrl-bottom-right {
+    display: none !important;
+}
+
+
+/* FIN: MAPBOX */
+
+
+/* INICIO: TABLAS EN LA PLATAFORMA */
+
+
+/* Generales */
+
+.search_field {
+    width: 30%;
+    padding: 0px 50px 0px 0 !important;
+}
+
+.filter_field {
+    font-size: 14px;
+    width: 50%;
+    padding: 0px 50px 0px 0 !important;
+}
+
+.mat-but_excel {
+    background-color: green;
+    color: #fff;
+}
+
+.mat-elevation-z8 {
+    box-shadow: none !important;
+    overflow-x: scroll;
+    width: 100% !important;
+}
+
+.table-responsive {
+    overflow-x: scroll;
+}
+
+.table-responsive::-webkit-scrollbar {
+    width: 0px;
+}
+
+td>a.mat-menu-item:hover,
+td>a:hover,
+body a:hover {
+    color: #000000DE !important;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table),
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) {
+    width: 100%;
+    margin: 10px 3px;
+    border-spacing: 0px;
+    box-shadow: 0px 5px 13px -8px rgb(87, 87, 86);
+    -webkit-box-shadow: 0px 5px 13px -8px rgb(87, 87, 86);
+    -moz-box-shadow: 0px 5px 13px -8px rgb(87, 87, 86);
+}
+
+.mat-sort-header-arrow {
+    color: #AF3F36;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th.mat-header-cell,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th {
+    background-color: rgb(87, 87, 86);
+    color: rgb(255, 255, 255);
+    border-bottom: solid 2px rgb(179, 183, 186);
+    text-align: justify;
+    font-size: 1rem;
+    font-weight: bolder;
+    height: 38px;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th.fc-head-container,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th.mat-header-cell,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) td,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) td.fc-head-container,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) td.mat-cell,
+table th {
+    padding: 15px 8px;
+}
+
+.mat-table th:first-of-type,
+.mat-table th.mat-header-cell:first-of-type,
+.mat-table td:first-of-type,
+.mat-table td.mat-cell:first-of-type,
+table th:first-of-type {
+    padding-left: 10px;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th:last-of-type,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th.mat-cell:last-of-type,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) th:last-of-type {
+    text-align: center;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tbody tr:hover,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tbody tr.mat-row:hover,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tbody tr:hover {
+    background-color: rgba(179, 183, 186, 0.25);
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tr:not(:last-of-type) td,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tr:not(:last-of-type) td.mat-cell,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tr:not(:last-of-type) td {
+    border-bottom: solid 1px rgb(179, 183, 186);
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tr td,
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) tr td.mat-cell,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container) table tr td {
+    font-size: 15px;
+    color: black;
+}
+
+.mat-table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) td.mat-cell,
+table:not(#tblPortal):not(.mat-calendar-table):not(.fc-view-container>table) td {
+    padding: 8px;
+}
+
+
+/* tblPaginaContenido */
+
+.tblPaginaContenido {
+    margin-bottom: 20px;
+}
+
+td>mat-form-field {
+    width: 100%;
+}
+
+
+/* Table numbers */
+
+.tdNumbers {
+    min-width: 50px !important;
+    width: 50px !important;
+    text-align: center !important;
+}
+
+
+/* Table actions */
+
+.tdActions {
+    min-width: 200px !important;
+    width: 200px !important;
+    text-align: center !important;
+}
+
+
+/* Table fullCalendar */
+
+.fc-head-container.fc-widget-header,
+.fc-widget-content {
+    padding: 0px !important;
+}
+
+.fc-day-header.fc-widget-header {
+    padding: 5px !important;
+    height: 30px !important;
+    text-align: center !important;
+}
+
+.fc-row table,
+.fc-row.fc-widget-header,
+.fc-row.fc-widget-header>table {
+    margin: 0px !important;
+    box-shadow: none !important;
+    -webkit-box-shadow: none !important;
+}
+
+.fc-body:hover,
+.fc-body table:hover,
+.fc-body tr:hover,
+.fc-body tr:hover>td {
+    background-color: transparent !important;
+}
+
+.fc-scroller.fc-day-grid-container::-webkit-scrollbar {
+    width: 0px;
+}
+
+.fc-event {
+    cursor: pointer !important;
+}
+
+
+/* FIN: TABLAS EN LA PLATAFORMA */
+
+
+/* INICIO: PDF VIEWER */
+
+.ng2-pdf-viewer-container {
+    max-height: 100% !important;
+}
+
+
+/* FIN: PDF VIEWER */
+
+
+/* TABS */
+
+.mat-tab-body,
+.mat-tab-body .mat-tab-body-content {
+    overflow: hidden !important;
+}
+
+.mat-tab-body-content {
+    padding-top: 20px !important;
+}
+
+
+/* TABS */
+
+
+/* EXPANSION PANEL */
+
+.mat-expansion-panel {
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+}
+
+
+/* EXPANSION PANEL */
+
+
+/* MODALES - GLOBAL */
+
+.modal-component {
+    padding: 0px;
+}
+
+.modal-header {
+    padding: 10px 0px;
+    border-bottom: solid 1px lightgray;
+}
+
+.modal-content {
+    padding: 10px 0px;
+    text-align: justify;
+}
+
+.modal-actions {
+    border-top: solid 1px lightgray;
+    padding: 10px 0px;
+    text-align: right;
+}
+
+
+/* MODALES - GLOBAL */
+
+
+/* BOTONES FOOTER EXPLORADORES */
+
+.btn-footer-icon:hover {
+    color: rgb(175, 63, 54);
+}
+
+
+/* BOTONES FOOTER EXPLORADORES */
+
+
+/* SELECTS */
+
+.matSelectFilter {
+    padding: 16px 10px;
+    border: none;
+    border-bottom: solid 1px darkgray;
+    width: 100%;
+    height: 50px;
+    max-height: 50px;
+}
+
+
+/* SELECTS */
+
+
+.inline-radio-button{
+    margin-right: 5px;
+}

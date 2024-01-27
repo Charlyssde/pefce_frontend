@@ -1,0 +1,39 @@
+<h1 mat-dialog-title>Añadir tarea</h1>
+<div mat-dialog-content>
+  <mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Tarea</mat-label>
+        <input matInput [(ngModel)]="data.nombreTarea">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Entregable</mat-label>
+        <input matInput [(ngModel)]="data.entregable">
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Responsable</mat-label>
+        <mat-select [(ngModel)]="data.usuario" required>
+          <mat-option *ngFor="let participante of data.participantes" [value]="participante">
+            {{participante.nombreCompleto}} ({{participante.puesto}})
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="fill">
+        <mat-label>Fecha</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="data.fechaTermino" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" [mat-dialog-close]="data">Añadir</button>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+</div>

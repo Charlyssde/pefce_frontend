@@ -1,0 +1,7 @@
+<h3 mat-dialog-title>Vista previa</h3>
+<div mat-dialog-content class="image-container">
+  <img *ngIf="image" [src]="image" alt="Vista previa">
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+</div>

@@ -1,0 +1,232 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario">
+
+      <mat-grid-list col="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de evento</mat-label>
+            <mat-select formControlName="tipoId" [compareWith]="scriptGL.objectComparisonFunction" required>
+              <mat-option [value]="null" disabled>Ninguno</mat-option>
+              <mat-option *ngFor="let i of eTipoEvento" [value]="i">{{i.nombre}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Estatus</mat-label>
+            <mat-select formControlName="estatus" required>
+              <mat-option [value]="null" disabled>Ninguno</mat-option>
+              <mat-option *ngFor="let i of eEstatus" [value]="i.key">{{i.value}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="breakpoint" *ngIf="formulario.get('estatus').value === 4;observacionesC">
+          <mat-form-field appearance="fill">
+            <mat-label>Observaciones</mat-label>
+            <textarea matInput rows="3" maxlength="255" placeholder="Observaciones" formControlName="observaciones"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <ng-template #observacionesC>
+          <input type="hidden" formControlName="observaciones">
+        </ng-template>
+
+      </mat-grid-list>
+
+      <!-- Datos de origen de solicitud -->
+      <div class="row" *ngIf="formulario.get('tipoId').value !== null && formulario.get('tipoId').value.nombre === 'Solicitud'">
+        <div class="col-12">
+          <h3>Datos de la solicitud de origen</h3>
+          <hr>
+        </div>
+        <div class="col-12">
+        </div>
+        <div class="col-12">
+          <mat-grid-list col="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Tipo de solicitud</mat-label>
+                <mat-select formControlName="solicitudId" [readonly]>
+                  <mat-option [value]="null" disabled>Ninguno</mat-option>
+                  <mat-option *ngFor="let i of eTiposSolicitud | keyvalue" [value]="i.key">{{i.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Nombre de la solicitud</mat-label>
+                <input matInput [readonly]>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Descripción de la solicitud</mat-label>
+                <textarea matInput [readonly]></textarea>
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </div>
+
+      <!-- CONTENIDO MULTIMEDIA -->
+
+      <ng-template #media>
+        <input type="hidden" formControlName="pathfileCover">
+        <input type="hidden" formControlName="pathfileVideo">
+      </ng-template>
+
+      <!-- Datos generales del evento -->
+      <div class="row">
+        <div class="col-12">
+          <h3>Datos generales del evento</h3>
+          <hr>
+        </div>
+        <div class="col-12">
+          <mat-grid-list col="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Nombre del evento</mat-label>
+                <input matInput placeholder="Nombre del evento" formControlName="nombreEvento">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Ponentes (Separados por coma (,))</mat-label>
+                <input matInput placeholder="Ponentes (Separados por coma (,)" formControlName="ponentes">
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput rows="3" maxlength="255" placeholder="Descripción" formControlName="descripcion"></textarea>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Fecha de inicio</mat-label>
+                <input matInput type="datetime-local" formControlName="fechaInicio" [value]="dateStart === null ? '' : dateStart" placeholder="Fecha y hora" (change)="validaFechasInicioYFin()" required>
+              </mat-form-field>
+              <span *ngIf="!fechaInicioYFinValidos" style="color: red;">La fecha de inicio no debe ser posterior a la
+                fecha de finalización</span>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Fecha de finalización</mat-label>
+                <input matInput type="datetime-local" formControlName="fechaFin" [value]="dateEnd === null ? '' : dateStart" placeholder="Fecha y hora" (change)="validaFechasInicioYFin()" required>
+              </mat-form-field>
+              <span *ngIf="!fechaInicioYFinValidos" style="color: red;">La fecha de inicio no debe ser posterior a la
+                fecha de finalización</span>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Modalidad del evento</mat-label>
+                <mat-select formControlName="modalidad" required>
+                  <mat-option [value]="null" disabled>Ninguno</mat-option>
+                  <mat-option *ngFor="let i of eModalidadEvento | keyvalue" [value]="i.key">{{i.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Privacidad del evento</mat-label>
+                <mat-select formControlName="privacidad" required>
+                  <mat-option [value]="null" disabled>Ninguno</mat-option>
+                  <mat-option *ngFor="let i of ePrivacidadEvento | keyvalue" [value]="i.key">{{i.value}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+        </div>
+      </div>
+
+      <!-- Datos para ubicación pública -->
+      <div class="row" *ngIf="formulario.get('modalidad').value ===  'presencial' ">
+        <div class="col-12">
+          <h3>Ubicación para evento público</h3>
+          <hr>
+        </div>
+        <div class="col-12">
+          <mat-grid-list col="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Sede</mat-label>
+                <input matInput placeholder="Sede" formControlName="sede">
+              </mat-form-field>
+            </mat-grid-tile>
+     
+            <mat-grid-tile [colspan]="breakpoint">
+              <mat-form-field appearance="fill">
+                <mat-label>Domicilio</mat-label>
+                <input matInput placeholder="Domicilio" formControlName="domicilio">
+              </mat-form-field>
+            </mat-grid-tile>
+          </mat-grid-list>
+        </div>
+      </div>
+
+      <div class="row multimedia-container">
+        <h3><mat-icon>{{ imagenPreview !== null ? 'done' : 'close' }}</mat-icon> Imágen promocional del evento</h3>
+        <div class="col-12 col-md-6">
+          <small>* Solo se permite la carga de archivos en formato jpg, png, gif</small>
+        </div>
+        <div class="col-12 col-md-6" align="end">
+          <input hidden (change)="onImagenUploaded($event.target, imagenPreview)" accept="image/png,image/jpg,image/jpeg,image/gif" #imagenInput type="file" id="archivoimagen">
+          <button type="button" mat-button matTooltip="Cargar archivo"
+            (click)="imagenInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
+        </div>
+        <div class="col-12 multimedia-content">
+          <div *ngIf="imagenPreview !== null" class="pdf-container">
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                <div class="row" style="width:100%;">
+                  <div class="col-1">
+                    <mat-icon (click)="onClickPreviewImagen(imagenPreview.uri)" style="cursor:pointer;"
+                      matTooltip="Clic para vista previa">description</mat-icon>
+                  </div>
+                  <div class="col-9">
+                    <div style="text-align:justify;">
+                      <span>Imagen promocional del evento</span>
+                      <div *ngIf="imagenPreview.uri.includes('base64')">
+                        <small (click)="onClickPreviewImagen(imagenPreview.uri)" style="cursor:pointer;">({{
+                          imagenPreview.fileData.name }})</small>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-2" align="end">
+                    <button type="button" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Acciones" title="Acciones">
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="onClickPreviewImagen(imagenPreview.uri)"><mat-icon>visibility</mat-icon>
+                        Vista previa</button>
+                      <!--
+                      <button mat-menu-item (click)="onClickRemoveImagen()">
+                        <mat-icon>delete</mat-icon> {{ imagenPreview.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}
+                      </button>
+                      -->
+                    </mat-menu>
+                  </div>
+                </div>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;"
+            *ngIf="imagenPreview === null">description</mat-icon>
+        </div>
+      </div>   
+    </form>   
+  </mat-card-content>
+</mat-card>

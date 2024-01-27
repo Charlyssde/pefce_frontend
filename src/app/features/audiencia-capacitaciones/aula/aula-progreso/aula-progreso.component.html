@@ -1,0 +1,12 @@
+<mat-vertical-stepper>
+  <ng-template matStepperIcon="edit">
+    <mat-icon>book</mat-icon>
+  </ng-template>
+  <ng-template matStepperIcon="number" let-index="index">
+    <mat-icon>book</mat-icon>
+  </ng-template>
+  <mat-step *ngFor="let modulo of modulos; let i = index">
+    <ng-template matStepLabel>Modulo {{i + 1}}: {{modulo.nombre}}</ng-template>
+    <app-progreso-modulo [modulo]="modulo"></app-progreso-modulo>
+  </mat-step>
+</mat-vertical-stepper>

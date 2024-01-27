@@ -1,0 +1,16 @@
+<div>
+  <mat-card class="formHeader">
+    <mat-card-title>Editar Módulo</mat-card-title>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-content>
+      <app-form-modulo [formUpdate]="formUpdate"></app-form-modulo>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="warn" (click)="goToPage()">Regresar</button>
+      <button mat-raised-button color="primary" *ngIf="canUpdate && scriptGL.getCanUpdateRol('/capacitaciones')" (click)="save()">Actualizar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

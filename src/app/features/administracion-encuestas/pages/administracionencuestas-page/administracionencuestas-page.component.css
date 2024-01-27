@@ -1,0 +1,52 @@
+.blue-color {
+    color:blue;
+}
+ 
+.green-color {
+    color:green;
+}
+ 
+.teal-color {
+    color:teal;
+}
+ 
+.yellow-color {
+color:yellow;
+}
+
+.red-color {
+    color:red;
+}
+
+.mat-elevation-z8 {
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 10px 10px -1px rgb(0 0 0 / 20%) !important;
+    margin-bottom: 2rem;
+}
+
+.mat-elevation-z8::-webkit-scrollbar {
+    width: 0px;
+}
+
+.mat-elevation-z8>.row {
+    margin: auto !important;
+}
+
+.mat-elevation-z8>table {
+    width: calc(100% - 20px) !important;
+    margin: 5px auto !important;
+}
+
+.mat-elevation-z8 table td{
+    vertical-align: top !important;
+    text-align: justify;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center a {
+    margin: auto 2px;
+}

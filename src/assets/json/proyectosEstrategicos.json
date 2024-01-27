@@ -1,0 +1,27 @@
+{
+  "data": {},
+  "lang": {
+    "en": {
+      "lbl_1title": "Proyectos estratégicos",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    },
+    "es": {
+      "lbl_1title": "Proyectos estratégicos",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    },
+    "fr": {
+      "lbl_1title": "Proyectos estratégicos",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    }
+  },
+  "multimedia": {
+    "s1_background_title": {
+      "url": null,
+      "nombre": "Fondo para proyectos estratégicos",
+      "pathfile": "portal/proyectosEstrategicos/imagenes/s1_background_title.png"
+    }
+  }
+}

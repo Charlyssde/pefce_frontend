@@ -1,0 +1,26 @@
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <mat-panel-title>{{modulo.nombre}}</mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="row">
+    <div class="col-12" align="justify">
+      {{modulo.descripcion}}
+    </div>
+    <div class="col-12">
+      <hr>
+    </div>
+    <div class="col-12">
+      <div class="row" *ngFor="let tema of temas; let i = index" style="margin: 5px;border-bottom:solid 1px #ececec;">
+        <div class="col-12 col-md-8 col-lg-9" align="justify">
+          <h4 style="margin: 3px auto;">Tema {{i+1}}: {{tema.nombre}}</h4>
+          <p  style="margin: 3px auto;"align="justify">{{tema.descripcion}}</p>
+          <small style="margin: 3px auto;">({{tema.preguntas.length}} Pregunta{{(tema.preguntas.length != 1) ? 's': ''}})</small>
+        </div>
+        <div class="col-12 col-md-4 col-lg-3" align="end">
+          <button mat-raised-button color="primary" (click)="mostrarTema(tema)">Ver/Tomar tema</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>
+<br>

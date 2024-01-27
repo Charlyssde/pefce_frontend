@@ -1,0 +1,9 @@
+<div class="container rs-container">
+  <div class="row justify-content-center">
+    <div *ngFor="let socialNetwork of socialNetworks; let i = index;" class="col-6 col-md-3 b-cell">
+      <div class="icon-container" title="{{socialNetwork.title}}" (click)="openSite(socialNetwork.url)">
+        <i class="{{socialNetwork.icon}} sn-icon"></i>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div>
+    <shared-dashboard-title [title]="'CRM '">{{titulo}}</shared-dashboard-title>
+    {{titulo}}
+    <a *ngIf="!isEnterprise" [routerLink]="['/proyectos/nuevo']" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro">
+        <mat-icon>add</mat-icon>
+    </a>
+    <button *ngIf="!isEnterprise" mat-raised-button color="primary" (click)="crearReporte()">Reporte</button>
+    <div class="mat-elevation-z8">
+        <div class="row">
+            <div class="col-12" align="end">
+                <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+                    <mat-icon>help</mat-icon></button>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-12">
+                <shared-main-filter 
+                [myData]="'Mis proyectos'"
+                [filterModule]="'proyectos'"
+                (setRequestFilter)="setRequestFilter($event)">
+                </shared-main-filter>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Folio</th>
+                                <th>Proyecto</th>
+                                <th>Tipo</th>
+                                <th>Prioridad</th>
+                                <th>Estatus</th>
+                                <th>Area</th>
+                                <th>Responsable</th>
+                                <th>Empresa</th>
+                                <th>Interesado</th>
+                                <th>Estatus</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let project of dataset">
+                                <td>{{ project.folio ? project.folio : '-' }}</td>
+                                <td style="min-width:300px;">{{ project.nombre }}</td>
+                                <td style="min-width:150px;">{{ project.tipoId ? project.tipoId.nombre : '-' }}</td> 
+                                <td>{{ project.prioridad ? prioridadEnum[project.prioridad] :'-' }}</td>
+                                <td style="min-width:150px;">{{ project.estatus ? estatusEnum[project.estatus] : '-' }}</td>
+                                <td style="min-width:200px;">{{ project.area ? areaEnum[project.area] : '-' }}</td>
+                                <td style="min-width:200px;">{{ getInstitutionResponsible(project.colaboradores) }}</td>
+                                <td style="min-width:200px;">{{ project.empresaId?.empresa }}</td>
+                                <td style="min-width:200px;">{{ getEnterpriseResponsible(project.colaboradores) }}</td>
+                                <td>{{ project.activo ? 'Activo' : 'Inactivo' }}</td>
+                                <td align="center">
+                                    <button mat-icon-button [matMenuTriggerFor]="options" matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
+                                    <mat-menu #options="matMenu" xPosition="before">
+                                        <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                                        <mat-divider></mat-divider>
+                                        <a *ngIf="showEditAction()" [routerLink]="['/proyectos/'+project.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro"><mat-icon>edit</mat-icon>Editar</a>
+                                        <a *ngIf="showEditAction()" [routerLink]="['/proyectos/'+project.id+'/panel']" mat-menu-item color="primary" matTooltip="Ir al panel"><mat-icon>dashboard</mat-icon>Panel</a>
+                                        <button (click)="descargarEncuesta()" mat-raised-button color="secondary">
+                                            Encuesta de Satisfacción
+                                        </button>            
+                          
+                                    </mat-menu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="10" *ngIf="dataset && dataset.length === 0" align="center">
+                                    <span>No hay registros para mostrar</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+                    [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+                    [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+                    [pageIndex]="pageIndex" aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

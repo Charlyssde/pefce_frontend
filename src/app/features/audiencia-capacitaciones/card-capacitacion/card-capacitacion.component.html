@@ -1,0 +1,32 @@
+<div class="card-cover">
+  <img [src]="pathPortada" alt="Portada">
+</div>
+<div class="card-content">
+  <mat-card-title>{{capacitacion.nombre}}</mat-card-title>
+  <mat-card-subtitle>
+    <div>
+      {{printArea(capacitacion.subarea)}}
+    </div>
+    <div>
+      {{printTipo(capacitacion.tipo)}}
+    </div>
+  </mat-card-subtitle>
+  <h4>{{ capacitacion.fechaInicio | date: 'dd/MM/yyyy' }} - {{ capacitacion.fechaFin | date: 'dd/MM/yyyy' }}</h4>
+  <h4 *ngIf="capacitacion.tipo == 5 || capacitacion.tipo == 6">Lugar: {{ capacitacion.lugar }}</h4>
+  <mat-divider [inset]="true"></mat-divider>
+  <p align="justify">
+    {{capacitacion.descripcion}}
+  </p>
+</div>
+<div class="card-actions" align="end">
+    <button mat-raised-button color="primary" *ngIf="show" (click)="confirmarRegistro()">Registrarme</button>
+    <button mat-raised-button color="primary" *ngIf="showCancel" (click)="cancelarRegistro()">Cancelar</button>
+    <button mat-raised-button color="warn" *ngIf="tipo==2 && today.getTime() > startDate.getTime() && (capacitacion.tipo == 1 || capacitacion.tipo == 2)" (click)="irAAula()">{{textoBoton}}</button>
+    <button mat-raised-button color="warn" *ngIf="tipo==2 && today.getTime() > startDate.getTime() && (capacitacion.tipo == 3 || capacitacion.tipo == 4)">Entrar a aula</button>
+    <button mat-raised-button color="primary" *ngIf="tipo==2 && terminada" (click)="descargarConstancia()">Constancia</button>
+    <!--
+    <a href="mailto:?subject=Testing">
+      <img [src]="pathPortada">
+    </a>
+    -->
+</div>

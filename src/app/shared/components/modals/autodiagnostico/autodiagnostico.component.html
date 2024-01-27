@@ -1,0 +1,405 @@
+<h2 mat-dialog-title>{{ empresa.autodiagnostico.id ? 'Editar datos del ' : 'Llenar el ' }} autodiagnóstico</h2>
+<mat-dialog-content class="mat-typography">
+  <div class="row">
+    <div class="col-12">
+      I. Datos generales de la empresa
+      <hr>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>1. Razón social</mat-label>
+        <input [(ngModel)]="empresa.empresa" matInput
+          placeholder="Nombre con el que se dio de alta como persona Física y/o Moral en Hacienda" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>2. Nombre comercial</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.nombre_comercial" matInput
+          placeholder="Nombre con el que su empresa es promocionada">
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>3. Sector de la vocación de su empresa</mat-label>
+        <input [(ngModel)]="empresa.sector.nombre" matInput
+          placeholder="De acuerdo al catálogo del SCIAN (https://www.inegi.org.mx/app/scian)" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>4. Subsector de la vocación de su empresa</mat-label>
+        <input [(ngModel)]="empresa.subsector.nombre" matInput
+          placeholder="De acuerdo al catálogo del SCIAN (https://www.inegi.org.mx/app/scian)" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>5. Representante legal</mat-label>
+        <input [(ngModel)]="empresa.representanteLegal" matInput placeholder="" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>6. Sexo</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.sexo_representante" placeholder="" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="F">Femenino</mat-option>
+          <mat-option value="M">Masculino</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>7. Página web</mat-label>
+        <input [(ngModel)]="empresa.website" matInput placeholder="" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>8. Redes sociales</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.redes" matInput placeholder="">
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>9. Número de empleados hombre</mat-label>
+        <input [(ngModel)]="empresa.numeroColaboradoresMasculinos" matInput placeholder="" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>10. Número de empleadas mujeres</mat-label>
+        <input [(ngModel)]="empresa.numeroColaboradoresFemeninos" matInput placeholder="" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>11. Número de empleados con capacidades diferentes</mat-label>
+        <input [(ngModel)]="empresa.numeroColaboradoresCapacidadesDiferentes" matInput placeholder=""
+          disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      II. Datos de ubicación de la empresa
+      <hr>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>12. Domicilio fiscal</mat-label>
+        <input value="{{ domiciliofiscal }}" matInput placeholder="Dirección dada de alta en Hacienda" disabled>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>13. ¿El domicilio de las instalaciones de la empresa coincide con el domicilio fiscal?</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.domicilio_coincide" placeholder=""
+          (selectionChange)="onChangeCoincide($event.value)" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="Si">Si</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>14. Domicilio fisico</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.domicilio_fisico" matInput
+          placeholder="Si el domicilio fisico es diferente al fiscal" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>15. Municipio</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.municipio_fisico" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <!--
+    <div class="col-12">
+      III. Datos de contacto
+      <hr>
+    </div>
+    <div class="col-12">
+      <mat-form-field appearance="fill">
+        <mat-label>16. Nombre de quien contesta la encuesta:</mat-label>
+        <input matInput type="text" value="{{ empresa.autodiagnostico.contesto.nombre }}"
+          placeholder="Nombre de quien contesta el autodiagnóstico" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>17. Teléfono</mat-label>
+        <input matInput type="text" value="{{ empresa.autodiagnostico.contesto.telefono }}" placeholder="Teléfono"
+          maxlength="10" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>18. Correo electrónico</mat-label>
+        <input value="{{ empresa.autodiagnostico.contesto.email }}" matInput placeholder="Correo electrónico" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>19. Puesto/cargo</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.puesto_contesto" matInput placeholder="Puesto o cargo del contacto"
+          required>
+      </mat-form-field>
+    </div>
+    -->
+    <div class="col-12">
+      III. Perfil del exportador<br>Oferta exportable de la empresa
+      <hr>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>20. Años de operación</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.operacion" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>21. ¿Cuál o cuales son los esquemas de operación de su empresa?</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.esquemas" matInput
+          placeholder="Comercializador, exportador directom exportador indirecto, fabricante de marca propia, maquilador, otros"
+          required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>22. Número de instalaciones / tiendas físicas</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.numero_tiendas" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>23. ¿Cuenta con representación en el extranjero?</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.representacion" placeholder="" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="Si">Si</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>24. Sí cuenta con registro de marca ante el Instituto Mexicano de la Propiedad Intelectual (IMPI),
+          escribalo</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.impi" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>25. Sí cuenta con registro de marca Internacional, escribala</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.marca_internacional" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <mat-form-field appearance="fill">
+        <mat-label>26. Tiene alguna certificación, registro, norma o distintivo para sus productos/servicios ya sea
+          nacional o internacional - mencionelos</mat-label>
+        <textarea matInput [(ngModel)]="empresa.autodiagnostico.certificacion" rows="5" maxlength="250" placeholder="Tarea"
+          required></textarea>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>27. ¿La empresa tiene registro en VUCEM para trámites de comercio exterior?</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.vucem" placeholder="" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="Si">Si</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>28. ¿Cuál es el volumen mensual de producción / capacidad instalada de su empresa?</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.volumen" matInput
+          placeholder="Ej. 1000 botellas de 1lt, 1200 cajas de limón de 5 kg." required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>29. Número de operaciones de exportación previa</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.exportacion_previa" placeholder="" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="Ninguna">Ninguna</mat-option>
+          <mat-option value="1-5">1-5</mat-option>
+          <mat-option value="6-10">6-10</mat-option>
+          <mat-option value="10 o más">10 o más</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>30. ¿Actualmente realiza actividaes de exportación?</mat-label>
+        <mat-select [(ngModel)]="empresa.autodiagnostico.actualmente_exporta" placeholder="" required>
+          <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+          <mat-option value="Si">Si</mat-option>
+          <mat-option value="No">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>31. ¿A qué país(es) ha exportado?</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.pais_exporta" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>32. Número de empleados del departamento de ventas internacionales</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.area_ventas" matInput
+          placeholder="Si no cuenta con un departamento de ventas internacionales, coloque N/A" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>33. Si oferta sus productos en línea especifíque (Página web y/o redes sociales)</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.en_linea" matInput placeholder="" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-6">
+      <mat-form-field appearance="fill">
+        <mat-label>34. ¿Con qué programa y/o autorización de fomento al comercio exterior cuenta su empresa?</mat-label>
+        <input [(ngModel)]="empresa.autodiagnostico.programas" matInput
+          placeholder="Empresa certificada IVA-IEPS, IMMEX, OEA, PROSEC, NA" required>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      IV. Documentación obligatoria
+      <hr>
+    </div>
+  </div>
+  <div class="row multimedia-container">
+    <h3><mat-icon>{{ cifPreview !== null ? 'done' : 'close' }}</mat-icon> Constancia de Situación Fiscal</h3>
+    <div class="col-12 col-md-6">
+      <small>* Solo se permite la carga de archivos en formato PDF</small>
+    </div>
+    <div class="col-12 col-md-6" align="end">
+      <input hidden (change)="onCifUploaded($event.target, cifPreview)" accept=".pdf,application/pdf" #cifInput type="file" id="archivoCIF">
+      <button type="button" mat-button matTooltip="Cargar archivo"
+        (click)="cifInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
+    </div>
+    <div class="col-12 multimedia-content">
+      <div *ngIf="cifPreview !== null" class="pdf-container">
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <div class="row" style="width:100%;">
+              <div class="col-1">
+                <mat-icon (click)="onClickPreviewCIF(cifPreview.uri)" style="cursor:pointer;"
+                  matTooltip="Clic para vista previa">description</mat-icon>
+              </div>
+              <div class="col-9">
+                <div style="text-align:justify;">
+                  <span>Constancia de Situación Fiscal</span>
+                  <div *ngIf="cifPreview.uri.includes('base64')">
+                    <small (click)="onClickPreviewCIF(cifPreview.uri)" style="cursor:pointer;">({{
+                      cifPreview.fileData.name }})</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2" align="end">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Acciones" title="Acciones">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onClickPreviewCIF(cifPreview.uri)"><mat-icon>visibility</mat-icon>
+                    Vista previa</button>
+                  <button mat-menu-item (click)="onClickRemoveCIF()">
+                    <mat-icon>delete</mat-icon> {{ cifPreview.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;"
+        *ngIf="cifPreview === null">description</mat-icon>
+    </div>
+  </div>
+
+  <div class="row multimedia-container">
+    <h3><mat-icon>{{ opinionPreview !== null ? 'done' : 'close' }}</mat-icon> Opinión de cumplimiento de obligaciones fiscales en sentido positivo </h3>
+    <div class="col-12 col-md-6">
+      <small>* Solo se permite la carga de archivos en formato PDF</small>
+    </div>
+    <div class="col-12 col-md-6" align="end">
+      <input hidden (change)="onOpinionUploaded($event.target, opinionPreview)" accept=".pdf,application/pdf" #opinionInput type="file" id="archivoOpinion">
+      <button type="button" mat-button matTooltip="Cargar archivo"
+        (click)="opinionInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
+    </div>
+    <div class="col-12 multimedia-content">
+      <div *ngIf="opinionPreview !== null" class="pdf-container">
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <div class="row" style="width:100%;">
+              <div class="col-1">
+                <mat-icon (click)="onClickPreviewOpinion(opinionPreview.uri)" style="cursor:pointer;"
+                  matTooltip="Clic para vista previa">description</mat-icon>
+              </div>
+              <div class="col-9">
+                <div style="text-align:justify;">
+                  <span>Opinión de cumplimiento de obligaciones fiscales</span>
+                  <div *ngIf="opinionPreview.uri.includes('base64')">
+                    <small (click)="onClickPreviewOpinion(opinionPreview.uri)" style="cursor:pointer;">({{
+                      opinionPreview.fileData.name }})</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-2" align="end">
+                <button type="button" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Acciones" title="Acciones">
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="onClickPreviewOpinion(opinionPreview.uri)"><mat-icon>visibility</mat-icon>
+                    Vista previa</button>
+                  <button mat-menu-item (click)="onClickRemoveOpinion()">
+                    <mat-icon>delete</mat-icon> {{ opinionPreview.uri.includes('base64') ? 'Quitar' : 'Eliminar' }}
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;"
+        *ngIf="opinionPreview === null">description</mat-icon>
+    </div>
+  </div>  
+  <div class="row">
+    <hr>
+    <div class="col-12 col-md-12">
+      Declaro bajo protesta de decir verdad, que la información y documentación proporcionada es verídica, por lo que en
+      caso de existir falsedad en ella, tengo pleno conocimiento que se aplicarán las sanciones administrativas y penas
+      establecidas en los ordenamientos respectivos para quienes se conducen con falsedad ante la autoridad competente.
+      <!--
+        <mat-form-field appearance="fill">
+          <mat-checkbox color="primary">39. He leído y acepto los derechos y obligaciones</mat-checkbox>
+        </mat-form-field>
+        -->
+    </div>
+    <br>
+    <div class="col-12 col-md-12">
+      Hago constar que leí el <a href="http://www.veracruz.gob.mx/desarrolloeconomico/avisos/" target="_blank">Aviso de Privacidad</a> y autorizo el tratamiento de mis datos
+      personales para los fines descritos.
+      <!--
+        <mat-form-field appearance="fill">
+          <mat-checkbox color="primary">40. He leído y acepto las condiciones del servicio y la política de privacidad</mat-checkbox>
+        </mat-form-field>
+        -->
+    </div>
+    <br>
+    <div class="col-12 col-md-12">
+      "Este programa es público, ajeno a cualquier partido político. Queda prohibido su uso para fines distintos a los
+      establecidos en el programa"
+    </div>
+    <div class="col-12" style="text-align: right;">
+      <button mat-raised-button color="primary" (click)="createAutodiagnostico()"
+        [disabled]="!validarFormularioAutodiagnostico()">Guardar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-12">
+    <h3 style="margin-bottom:5px;">Agenda</h3>
+    <small>Usuario: {{ data.usuario?.nombreCompleto }}</small>
+    <hr>
+  </div>
+  <div class="col-12">
+    <small *ngIf="data.alldayevent">
+      <span>Este evento tiene duración de todo el día</span>
+    </small>
+    <br>
+    <small *ngIf="!data.alldayevent; else alldayini">
+      <span>Fecha y hora Inicio: {{ data.fechahora | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+    </small>
+    <ng-template #alldayini><small><span>Fecha Inicio: {{ data.fechahora | date: 'dd/MM/yyyy' }}</span></small></ng-template>
+    <br>
+    <small *ngIf="!data.alldayevent; else alldayfin">
+      <span>Fecha y hora Fin: {{ data.fechahorafin | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+    </small>
+    <ng-template #alldayfin><small><span>Fecha Fin: {{ data.fechahorafin | date: 'dd/MM/yyyy' }}</span></small></ng-template>
+  </div>
+  <div class="col-12">
+    <h4 style="margin-bottom:5px;">{{ data.nombre }}</h4>
+    <p align="justify" [innerHtml]="data.descripcion ? data.descripcion : 'No hay descripción para esta agenda.'"></p>
+  </div>
+  <div class="col-12" style="text-align:right;">
+    <hr>
+    <button type="button" mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

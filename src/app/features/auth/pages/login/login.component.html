@@ -1,0 +1,12 @@
+<div [class]="'auth-background'" [ngStyle]="{ 'background': 'url(assets/img/default/backgrounds/common-background-login.jpg) center no-repeat fixed','backgroundSize':'cover' }"></div>
+
+<div [class]="'auth-content'">
+    <mat-card>
+        <auth-login-form [accessType]="'EMPRESA'"></auth-login-form>
+        <div class="row mb-1">
+            <div class="col-12" style="text-align:center;">
+                <span>Si aún no tienes cuenta, <a routerLink="/auth/registrar-empresa">registrate aquí</a></span>
+            </div>
+        </div>
+    </mat-card>
+</div>

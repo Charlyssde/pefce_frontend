@@ -1,0 +1,110 @@
+<div *ngIf="!isEnterprise || viewDashboard">
+    <shared-dashboard-title [title]="'Dashboard'"></shared-dashboard-title>
+    <div class="row">
+        <!-- Agenda y tareas -->
+        <div class="col-12 col-lg-8 col-xl-7">
+            <div class="row">
+                <div class="col-12">
+                    <mat-card>
+                        <mat-card-content>
+                            <h4> <mat-icon>calendar_month</mat-icon> Mi agenda</h4>
+                            <hr>
+                            <div id="calendar-container">
+                                <app-agenda-calendar 
+                                    [calendarHeight]="calendarHeight"
+                                    (eventsRequest)="eventsRequest($event)" 
+                                    [eventsList]="eventsList"
+                                    (postEventRequest)="postEventRequest($event)"
+                                    (putEventRequest)="putEventRequest($event)"
+                                    (deleteEventRequest)="deleteEventRequest($event)"></app-agenda-calendar>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+
+        </div>
+        <!-- Proyectos, notificaciones -->
+        <div class="col-12 col-lg-4 col-xl-5">
+            <div class="row">
+                <div class="col-12 projects-container">
+                    <mat-card>
+                        <mat-card-content>
+                            <h4>
+                                <mat-icon>task_alt</mat-icon> Proyectos ({{ projects.length }})
+                            </h4>
+                            <hr>
+                            <div class="projects-container-scroll" *ngIf="projects.length>0 else emptyProjects">
+                                <table *ngIf="projects.length>0 else emptyProjects">
+                                    <tbody>
+                                        <tr *ngFor="let project of projects; let i = index"
+                                            (click)="openShowProjectModal(project)"
+                                            style="cursor:pointer;text-align:justify;">
+                                            <td>
+                                                <small>
+                                                    P-{{ (project.id).toString().padStart(10,'0') }}
+                                                </small>
+                                            </td>
+                                            <td>
+                                                <small>{{ project.nombre }}</small>
+                                                <br *ngIf="project.empresaId">
+                                                <small *ngIf="project.empresaId">Empresa: {{
+                                                    project.empresaId.empresa }}</small>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <ng-template #emptyProjects>
+                                <div [style.width]="'100%'" align="center">
+                                    <h5>No tienes proyectos activos</h5>
+                                </div>
+                            </ng-template>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+
+                <div class="col-12 notifications-container">
+                    <mat-card>
+                        <mat-card-content>
+                            <div style="overflow: none !important;">
+                                <h4>
+                                    <mat-icon>notifications</mat-icon> Últimas notificaciones
+                                </h4>
+                                <hr>
+                                <div class="notifications-container-scroll" *ngIf="notifications.length>0 ; else emptyNotifications">
+                                    <table *ngIf="notifications.length>0 ; else emptyNotifications">
+                                        <tbody>
+                                            <tr *ngFor="let notification of notifications; let i = index" style="cursor: pointer;">
+                                                <td>
+                                                    <mat-icon (click)="marcarComoLeida(notification)">{{ notification.vista ? 'done_all' : 'notifications_active' }}</mat-icon>
+                                                </td>
+                                                <td>
+                                                    <small>{{ notification.destinatario ? 'Personal: ' + notification.destinatario.nombre : ' Canal: ' + notification.canal.nombre }}</small>
+                                                    <br>
+                                                    <small>
+                                                        <p style="margin: 2px auto;text-align:justify;">{{ notification.texto }}</p>
+                                                    </small>
+                                                    <br>
+                                                    <div style="text-align:right;">
+                                                        <small>{{ notification.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}</small>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <ng-template #emptyNotifications>
+                                    <div [style.width]="'100%'" align="center">
+                                        <h5>No hay notificaciones pendientes</h5>
+                                    </div>
+                                </ng-template>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

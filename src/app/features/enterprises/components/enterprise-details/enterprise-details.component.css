@@ -1,0 +1,24 @@
+div.details{
+    max-height: calc(90vh - 48px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding: auto 5px;
+}
+div.details > .row{
+    margin: auto 15px;
+}
+div.details::-webkit-scrollbar{
+    width: 5px;
+}
+div.details::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background-color: #565657;
+}
+
+.detail-group{
+    margin-bottom: 1rem !important;
+}
+::ng-deep.detail-group .label-title{
+    margin-bottom: 1rem !important;
+    text-align: justify;
+}

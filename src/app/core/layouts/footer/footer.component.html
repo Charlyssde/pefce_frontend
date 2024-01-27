@@ -1,0 +1,223 @@
+<!-- FOOTER -->
+
+<!-- EVENTOS -->
+<div class="container-fluid contentPageContainer" *ngIf="footer !== null && eventos !== null && eventos.length > 0">
+  <div class="row">
+    <div class="col-12">
+      <h2 align="center">{{footer.lang[layout.lang].lbl_dp_eventos}}</h2>
+    </div>
+    <div class="col-12">
+      <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="8000" color="white" maxWidth="auto" [maintainAspectRatio]="false" slideHeight="500px" slides="5" [loop]="true" [hideArrows]="false" [hideIndicators]="false" [useKeyboard]="true" [useMouseWheel]="false" [style.color]="'white'" orientation="ltr">
+
+        <mat-carousel-slide *ngFor="let i of eventos;" [image]="" [style.minHeight]="400" overlayColor="#00000090" [hideOverlay]="false">
+          <div style="z-index:20!important;position:absolute;left:0; right:0px;top:0px; bottom:0px;background-color:#00000090;color:#ffffff; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content:center">
+            <h3>{{i.nombre}}</h3>
+            <div [innerHTML]="i.descripcion" align="center"></div>
+            <br>
+            <div><small>{{i.fechaInicio | date: 'dd/MM/yyyy'}} - {{i.fechaFin | date: 'dd/MM/yyyy'}}</small></div>
+          </div>
+          <div class="background" style="z-index:0 !important;position:absolute;left:0; right:0px;top:0px; bottom:0px;">
+            <img style="position:relative;left: 0; right: 0; margin-top:-25%; margin-bottom:-25%; margin-left: auto; margin-right: auto;width: 100%;height: auto;" [src]="(i.pathfileCover !== null && i.pathfileCover.includes('http') ? i.pathfileCover : 'assets/img/eventos-ferias/background_e.jpeg')" alt="" />
+          </div>
+        </mat-carousel-slide>
+
+      </mat-carousel>
+    </div>
+  </div>
+</div>
+<!-- EVENTOS -->
+
+
+
+<!-- CAPACITACIONES -->
+<div class="container contentPageContainer" *ngIf="capacitaciones !== null && capacitaciones.length > 0">
+  <div class="row">
+    <div class="col-12">
+      <h2 align="center">{{footer.lang[layout.lang].lbl_dp_capacitaciones}}</h2>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4 {{(layout.pageName === 'inicio' ? '' : (i.subarea === layout.pageName ? '' : 'hideListItem'))}}" *ngFor="let i of capacitaciones;">
+      <mat-card>
+        <img mat-card-image src="" alt="">
+        <mat-card-title align="center" style="text-transform:uppercase; ">{{i.nombre}}</mat-card-title>
+        <mat-card-subtitle align="center">{{i.fechaInicio | date: "dd/MM/yyyy"}} - {{i.fechaFin | date: "dd/MM/yyyy"}}
+        </mat-card-subtitle>
+        <!-- <mat-card-content>
+          <p align="center">{{i.descripcion}}</p>
+        </mat-card-content> -->
+      </mat-card>
+    </div>
+  </div>
+</div>
+<!-- CAPACITACIONES -->
+
+
+
+<!-- DATOS PEFCE -->
+<div class="container contentPageContainer" *ngIf="footer !== null">
+  <div class="row">
+    <div class="col-12 hide-on-init" animateOnScroll animationName="animated fadeInDown" offset="200">
+      <h2 align="center">{{ 'footer.numbers.hoy' | translate }} {{' ('+actualYear+')'}}</h2>
+    </div>
+    <div class="col-12 col-sm-6 col-lg-3 numberInfo hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="200" threshold="0.10">
+      <mat-card>
+        <mat-card-content align="center">
+          <span>{{pefceInfo.empresas}}</span>
+          <h3>{{ 'footer.numbers.empresas' | translate }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-3 numberInfo hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="200" threshold="0.20">
+      <mat-card>
+        <mat-card-content align="center">
+          <span>{{pefceInfo.proyectos}}</span>
+          <h3>{{ 'footer.numbers.proyectos' | translate }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-3 numberInfo hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="200" threshold="0.30">
+      <mat-card>
+        <mat-card-content align="center">
+          <span>{{pefceInfo.eventos}}</span>
+          <h3>{{ 'footer.numbers.eventos' | translate }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="col-12 col-sm-6 col-lg-3 numberInfo hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="200" threshold="0.40">
+      <mat-card>
+        <mat-card-content align="center">
+          <span>{{pefceInfo.capacitaciones}}</span>
+          <h3>{{ 'footer.numbers.capacitaciones' | translate }}</h3>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+<!-- DATOS PEFCE -->
+
+<!-- DATAMEXICO VERACRUZ -->
+<div class="container-fluid" id="dataMexicoContent" *ngIf="footer !== null">
+  <div class="row" style="background: url('./assets/img/backgrounds/footer_veracruz_dm.jpeg') fixed center no-repeat !important;background-size: cover !important;">
+    <div class="col-12" style="background: rgb(0,0,0);background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.8337710084033614) 5%, rgba(56,56,56,0.7441351540616247) 81%); padding: 50px 0px !important;">
+      <div class="container">
+
+        <div class="row">
+          <div align="center" class="col-12 col-sm-10 offset-sm-2 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+            <h3>Veracruz de Ignacio de la Llave</h3>
+            <hr>
+            <br>
+          </div>
+          <div class="d-none d-lg-block col-lg-4">
+            <img [src]="'./assets/img/inicioSection/inicio/white_map_veracruz.png'" alt="Veracruz">
+          </div>
+          <div class="col-12 col-lg-8">
+            <table id="tblPortal" cellspacing="0" cellpadding="0">
+              <tbody>
+                <tr>
+                  <td>{{ 'footer.datamexico.poblacion' | translate }} ({{dataMexico.poblacion?.Year}})</td>
+                  <td align="right">{{ dataMexico.poblacion.Population | number}}</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.econcom' | translate }} ({{dataMexico.ECI?.Year}})</td>
+                  <td align="right">{{ (dataMexico.ECI.ECI).toFixed(2) | number}}</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.ventint' | translate }} ({{dataMexico.Ventas?.Year}})</td>
+                  <td align="right">{{ dataMexico.Ventas?.Trade | currency }}</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.compint' | translate }} ({{dataMexico.Compras?.Year}})</td>
+                  <td align="right">{{ dataMexico.Compras?.Trade | currency }}</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.pobecact' | translate }} ({{dataMexico.EconAct?.Year}})</td>
+                  <td align="right">{{dataMexico.EconAct?.Workforce | number}}</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.desempl' | translate }} ({{dataMexico.TasaDesem?.Year}})</td>
+                  <td align="right">{{(dataMexico.TasaDesem?.Workforce).toFixed(2)}} %</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.inforlab' | translate }} ({{dataMexico.InformLab?.Year}})</td>
+                  <td align="right">{{ (dataMexico.InformLab?.Workforce).toFixed(1) }} %</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.ingcorr' | translate }} ({{dataMexico.IngMensTrim?.Year}})</td>
+                  <td align="right">{{dataMexico.IngMensTrim?.Income | currency}} MXN</td>
+                </tr>
+                <tr>
+                  <td>{{ 'footer.datamexico.invexrt' | translate }} ({{dataMexico.InvExtr?.Year}})</td>
+                  <td align="right">US ${{ (dataMexico.InvExtr?.Investment).toFixed(0) }} M</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div align="center" class="col-12">
+            <br>
+            <span>{{ 'footer.datamexico.source' | translate }}: <a style="color:white !important;" href="https://datamexico.org/es/profile/geo/veracruz-de-ignacio-de-la-llave-ve" target="_BLANK">datamexico.org</a></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- DATAMEXICO VERACRUZ -->
+
+<!-- MAPA -->
+<div id="map" class="map-container" style="height: 400px !important;"></div>
+<!-- FOOTER INFO -->
+<footer *ngIf="footer !== null">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-3">
+        <h3>{{ 'footer.contact' | translate }}</h3>
+        <div align="center">{{ 'footer.address' | translate }}: {{footer.data.address}}</div> <br>
+        <div align="center">{{ 'footer.phone' | translate }}: {{footer.data.phone}}</div> <br>
+        <div align="center">{{ 'footer.switch' | translate }}: {{footer.data.switch}}</div>
+      </div>
+      <div class="col-12 col-md-6">
+        <h3>{{ 'footer.socialnetworks' | translate }}</h3>
+        <div class="row">
+          <div class="col-12" align="center">
+            <a target="_BLANK" *ngIf="footer.data.url_twitter !== null" href="{{footer.data.url_twitter === null ? '#' : footer.data.twitter}}"><i class="fab fa-twitter"></i></a>
+            <a target="_BLANK" *ngIf="footer.data.url_facebook !== null" href="{{footer.data.url_facebook === null ? '#' : footer.data.facebook}}"><i class="fab fa-facebook-f"></i></a>
+            <a target="_BLANK" *ngIf="footer.data.url_instagram !== null" href="{{footer.data.url_instagram === null ? '#' : footer.data.instagram}}"><i class="fab fa-instagram"></i></a>
+            <a target="_BLANK" *ngIf="footer.data.url_skype !== null" href="{{footer.data.url_skype === null ? '#' : footer.data.skype}}"><i class="fab fa-skype"></i></a>
+            <a target="_BLANK" *ngIf="footer.data.url_linkedin !== null" href="{{footer.data.url_linkedin === null ? '#' : footer.data.linkedin}}"><i class="fab fa-linkedin-in"></i></a>
+          </div>
+          <div class="col-12" align="center">
+            <div class="row justify-content-center">
+              <div *ngFor="let i of multimedia | keyvalue" class="col-12 col-lg-4" align="center">
+                <img style="height: 65px; padding: 3px; cursor: pointer;" *ngIf="multimedia[i.key].pathfile" [src]="multimedia[i.key].pathfile" alt="{{multimedia[i.key].nombre}}" (click)="openTab(multimedia[i.key].url);" />
+              </div>
+            </div>
+            <br>
+            <a href="http://www.veracruz.gob.mx" target="_BLANK">www.veracruz.gob.mx</a>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-12 col-md-3">
+        <h3>{{ 'footer.sitemap' | translate }}</h3>
+        <ul>
+          <li><a [routerLink]="['/inicio']">{{ 'footer.home' | translate }}</a></li>
+          <li><a [routerLink]="['/atraccionInversiones']">{{ 'footer.investment' | translate }}</a></li>
+          <li><a [routerLink]="['/comercioExterior']">{{ 'footer.commerce' | translate }}</a></li>
+          <li><a [routerLink]="['/proyectosEstrategicos']">{{ 'footer.projects' | translate }}</a></li>
+          <li><a href="http://www.veracruz.gob.mx/desarrolloeconomico/avisos-de-privacidad/" target="_blank">Aviso de privacidad</a></li>
+          <li><a [routerLink]="['/auth/login']">{{ 'footer.login' | translate }}</a></li>
+        </ul>
+      </div>
+      <div class="col-12" align="center">
+        <br>
+        <hr>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<div class="df-chat">
+  <shared-chatbot></shared-chatbot>
+</div>

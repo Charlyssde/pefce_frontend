@@ -1,0 +1,10 @@
+<a color="black" [matMenuTriggerFor]="languagesMenu" matTooltip="Idiomas">
+    <i class="fas fa-language"></i> {{ 'header.lang' | translate }}
+</a>
+<mat-menu #languagesMenu="matMenu">
+    <a class="menu-item" *ngFor="let lang of langs;" (click)="toggleLanguage(lang)">{{lang.idioma}}</a>
+
+    <!-- <a class="menu-item" (click)="toggleLanguage('es')">Español</a>
+    <a class="menu-item" (click)="toggleLanguage('en')">English</a>
+    <a class="menu-item" (click)="toggleLanguage('fr')">Français</a> -->
+</mat-menu>

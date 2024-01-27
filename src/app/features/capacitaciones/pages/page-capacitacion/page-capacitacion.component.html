@@ -1,0 +1,86 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Listado de capacitaciones
+  </mat-card-title>
+</mat-card>
+<div>
+  <mat-card>
+    <mat-card-content>
+      <div>
+        <app-buscador-filtros
+          [filterOptions]="displayerColumnsFilter"
+          [dataSourceByService]="dataSourceByService"
+          [matDataSource]="dataSource"
+          (resultados)="filtrado($event)"
+        ></app-buscador-filtros>
+        <button mat-raised-button color="but_excel" (click)="pageExcel()">Exportar Excel</button>
+        <button mat-raised-button color="primary" (click)="crearReporte()">Reporte</button>
+      </div>
+      <br>
+      <div class="mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" multiTemplateDataRows matSort [hidden]="!dataSource && !isCharge">
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element?.nombre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+            <td mat-cell *matCellDef="let element"> {{element?.descripcion}} </td>
+          </ng-container>
+          <ng-container matColumnDef="subarea">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Subarea </th>
+            <td mat-cell *matCellDef="let element"> {{printArea(element?.subarea)}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fechaInicio">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de inicio </th>
+            <td mat-cell *matCellDef="let element"> {{element?.fechaInicio | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fechaFin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de finalización </th>
+            <td mat-cell *matCellDef="let element"> {{element?.fechaFin | date: 'dd/MM/yyyy'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de capacitación </th>
+            <td mat-cell *matCellDef="let element"> {{ printTipo(element?.tipo) }} </td>
+          </ng-container>
+          <ng-container matColumnDef="activo">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Activo </th>
+            <td mat-cell *matCellDef="let element"> {{element?.activo ? 'Si':'No'}} </td>
+          </ng-container>
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+            <td mat-cell *matCellDef="let element" class="tdActions">
+              <a mat-button [matMenuTriggerFor]="matMenu"><span class="material-icons">menu</span></a>
+              <mat-menu #matMenu="matMenu">
+                <mat-divider *ngIf="(scriptGL.getCanDeleteRol('/capacitaciones'))"></mat-divider>
+                <button mat-menu-item (click)="editar(element)" *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))">Editar</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))"></mat-divider>
+                <button mat-menu-item (click)="eliminar(element)" *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))">Eliminar</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))"></mat-divider>
+                <button mat-menu-item (click)="activarDesactivar(element)" *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))">{{element?.activo ? 'Desactivar': 'Activar'}}</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones'))"></mat-divider>
+                <button mat-menu-item (click)="verContactos(element)" *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones')) && (element.tipo == 2 || element.tipo == 4 || element.tipo == 6)">Ver contactos</button>
+                <button mat-menu-item (click)="verContactos(element)" *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones')) && (element.tipo == 1 || element.tipo == 3 || element.tipo == 5)">Añadir/Ver contactos</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/capacitaciones')) && (element.tipo == 1 || element.tipo == 2)"></mat-divider>
+                <a [routerLink]="['/capacitaciones/' + element?.id + '/modulos']" mat-menu-item >Ver Modulos</a>
+                <a [routerLink]="['/promocionDigital']" mat-menu-item color="primary" matTooltip="Generar campañas de promoción"><mat-icon>mail</mat-icon>Ir a campañas de promoción por correo electrónico</a>
+              </mat-menu>
+            </td>
+          </ng-container>
+          <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No hay resultados para la búsqueda con "{{input.value}}"</td>
+          </tr> -->
+        </mat-table>
+        <div>
+          <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+          <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+            <td>No existen registros</td>
+          </tr>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

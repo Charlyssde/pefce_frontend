@@ -1,0 +1,20 @@
+<!-- Content - Section 1 -->
+<video autoplay *ngIf="video != null" [src]="video" [muted]="welcomeVolume" loop id="video"></video>
+
+<div class="container-fluid" id="welcomeSection">
+  <div class="row section-welcome">
+    <div class="col-12 content-section hide-on-init animated-delay-1" animateOnScroll animationName="animated fadeInUpBig" offset="220">
+      <!--
+      <img *ngIf="logo" [src]="logo" alt="Logotipo">
+      <h1 animatedOnScroll>{{ 'inicio.slogan' | translate }}</h1>
+      -->
+      <div style="display:inline-block;color: #ffffff;">
+        <span style="cursor:pointer;width: 30px; margin:5px;" (click)="playPauseWelcome()" class="material-icons" *ngIf="!welcomePlay">play_arrow</span>
+        <span style="cursor:pointer;width: 30px; margin:5px;" (click)="playPauseWelcome()" class="material-icons" *ngIf="welcomePlay">pause_arrow</span>
+        <span style="cursor:pointer;width: 30px; margin:5px;" (click)="muteUnmuteWelcome()" class="material-icons" *ngIf="!welcomeVolume">volume_up</span>
+        <span style="cursor:pointer;width: 30px; margin:5px;" (click)="muteUnmuteWelcome()" class="material-icons" *ngIf="welcomeVolume">volume_off</span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Content - Section 1 -->

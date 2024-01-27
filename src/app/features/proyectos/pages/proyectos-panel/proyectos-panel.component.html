@@ -1,0 +1,239 @@
+<div>
+  <shared-dashboard-title [title]="'Panel de administración'"></shared-dashboard-title>
+</div>
+
+<div class="contanier-fluid">
+  <div class="row">
+    <div class="col-12">
+      <small>
+        <span>{{proyecto?.nombre}}</span>
+      </small>
+      <br>
+      <small>
+        <span>Monto previsto: $ {{(proyecto.montoPrevisto ? proyecto.montoPrevisto : 0) | currency:'MXN'}}</span>
+        <span>, Empleos directos: {{(proyecto.empleosDirectos ? proyecto.empleosDirectos : 0) }}</span>
+        <span>, Empleos indirectos: {{(proyecto.empleosIndirectos ? proyecto.empleosIndirectos : 0) }}</span>
+      </small>
+    </div>
+  </div>
+</div>
+
+<mat-divider></mat-divider>
+<br>
+
+<div class="container-fluid panel-container">
+  <div class="row">
+    <div class="section col-12 col-lg-3">
+      <div class="row">
+        <div class="col-12">
+          <mat-card>
+              <mat-card-content>
+                <span>Oportunidad</span>
+                <hr>
+                <div class="row section1">
+                  <div class="col-12">
+                    <span>Estatus:</span>
+                    <mat-form-field appearance="fill">
+                      <mat-select [(ngModel)]="proyecto.estatus" (ngModelChange)="changeProbabilidadEstatus()">
+                          <mat-option [value]="null" selected disabled>Sin estatus</mat-option>
+                          <mat-option *ngFor="let estatus of estatusList" [value]="estatus.nombre">{{estatus.nombre}}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12">
+                    <div>Apertura:</div>
+                    <div><strong>{{(proyecto.fechaInicio ? (proyecto.fechaInicio | date: 'dd/MM/yyyy')  : 'No registrado')}}</strong></div>
+                    <br>
+                    <div>Término:</div>
+                    <div><strong>{{(proyecto.fechaInicio ? (proyecto.fechaFin| date: 'dd/MM/yyyy')  : 'No registrado')}}</strong></div>
+                  </div>
+                </div>
+              </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="section col-12 col-lg-6">
+      <div class="row">
+        <div class="col-12">
+          <mat-card>
+              <mat-card-content>
+                <div style="display: inline-block;width:100%;">
+                  <span style="float:left;margin:10px auto;">Agregar actividad/acción al panel</span>
+                  <button *ngIf="['institución','root'].indexOf(session.perfil.tipo) > -1" mat-icon-button style="float:right;" (click)="openNewMeetingModal()">
+                    <mat-icon>videocam</mat-icon>
+                  </button>
+                  <button mat-icon-button style="float:right;" (click)="openNewActionModal()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-12">
+          <br>
+          <mat-divider></mat-divider>
+          <br>
+        </div>
+      </div>
+
+      <div class="row history-section">
+        <div class="col-12">
+          <mat-card style="padding: 0px !important; background-color: transparent !important; border:none !important; box-shadow:none !important;">
+            <mat-card-content>
+              <div class="row" *ngIf="proyecto.historico && proyecto.historico.length>0; else sinHistorico;">
+                <div *ngFor="let historico of sortHistory(proyecto.historico);" class="col-12">
+                  <mat-card class="history-card">
+                      <mat-card-content>
+                          <div class="history-header">
+                            <strong class="history-header-user">{{ historico.usuarioId.nombre }}</strong>
+                            <small class="history-header-date">
+                              {{ historico.updatedAt | date: 'dd/MM/yyyy HH:mm' }}
+                              <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="historico.usuarioId.id === usuario.id">
+                                <mat-icon>more_vert</mat-icon>
+                              </button>
+                            </small>
+
+                            <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
+                              <button mat-menu-item *ngIf="historico.usuarioId.id === usuario.id" (click)="openEditActionModal(historico)">
+                                <mat-icon>edit</mat-icon>
+                                <span>Editar</span>
+                              </button>
+                              <button mat-menu-item *ngIf="historico.usuarioId.id === usuario.id" (click)="openDeleteActionModal(historico)">
+                                <mat-icon>delete</mat-icon>
+                                <span>Eliminar</span>
+                              </button>
+                              <!-- <button mat-menu-item *ngIf="proyectoHistorico[i].archivos !== null">
+                                <mat-icon>folder_open</mat-icon>
+                                <span>Ver archivos</span>
+                              </button> -->
+                            </mat-menu>
+
+                          </div>
+                          <div class="history-content">
+                            <div [class]="'history-content-body'" [innerHTML]="historico.accion"></div>
+                            <div *ngIf="historico.createdAt !== historico.updatedAt">
+                              <small>
+                                (Editado {{ historico.updatedAt | date: 'dd/MM/yyyy HH:mm' }})
+                              </small>
+                            </div>
+                            <!-- <div *ngIf="proyectoHistorico[i].archivos !== null">
+                              <button mat-menu-item *ngIf="proyectoHistorico[i].archivos !== null">
+                                <mat-icon>folder_open</mat-icon>
+                                <span>Ver archivos</span>
+                              </button>
+                            </div> -->
+                          </div>
+                      </mat-card-content>
+                  </mat-card>
+                  <br>
+                </div>
+              </div>
+              <ng-template #sinHistorico>
+                <div class="row">
+                  <div class="col-12">
+                    <mat-card>
+                      <mat-card-content>
+                        <div style="text-align: center;padding: 5px 0px;">
+                          No hay histórico registrado
+                        </div>
+                      </mat-card-content>
+                    </mat-card>
+                  </div>
+                </div>
+              </ng-template>
+              <br>
+            </mat-card-content>
+
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+    <div class="section col-12 col-lg-3">
+      <div class="row">
+        <div class="col-12">
+          <mat-card>
+            <mat-card-content>
+              <div class="colaboradores-header">
+                <div style="display: inline-block;width:100%;">
+                  <span style="float:left;margin:10px auto;">Colaboradores</span>
+                  <button mat-icon-button style="float:right;" (click)="openNewColaboradorModal()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="colaboradores-content">
+                <div *ngIf="proyecto.colaboradores && proyecto.colaboradores.length > 0; else sinColaboradores">
+                  <ul style="padding: 0px !important;margin:0px !important;">
+                    <li (click)="openOptionsColaboradorModal(colaborador)" 
+                    *ngFor="let colaborador of proyecto.colaboradores; let i = index;"
+                    matToggle="Clic para ver más opciones" 
+                    style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" >
+                    <div style="padding:5px 0px !important;">
+                      <p style="margin:0; padding:0;" title="{{colaborador.usuarioId?.email}} - {{colaborador.usuarioId?.telefono}}">{{ colaborador.usuarioId?.nombre }}</p>
+                      <br>
+                      <small>({{ rolesList[colaborador.rol] }})</small>
+                    </div> 
+                    <mat-divider></mat-divider>
+                    </li>
+                  </ul>
+                </div>
+                <ng-template #sinColaboradores>
+                  <div style="text-align: center;padding: 5px 0px;">
+                    No hay colaboradores registrados
+                  </div>
+                </ng-template>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div class="col-12">
+          <br>
+        </div>
+        <div class="col-12">
+          <mat-card>
+            <mat-card-content>
+              <div class="tareas-header">
+                <div style="display: inline-block;width:100%;">
+                  <span style="float:left;margin:10px auto;">Tareas</span>
+                  <button [disabled]="proyecto.colaboradores && proyecto.colaboradores.length <= 0" mat-icon-button style="float:right;" (click)="openNewTareaModal()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                  <button [disabled]="proyecto.colaboradores && proyecto.colaboradores.length <= 0" mat-icon-button style="float:right;" (click)="openNewPlantillasModal()">
+                    <mat-icon>list</mat-icon>
+                  </button>
+
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="tareas-content">
+                <div *ngIf="proyecto.proyectoTareas && proyecto.proyectoTareas.length>0; else sinTareas">
+                  <ul style="padding:0px !important;">
+                    <li 
+                    *ngFor="let tarea of proyecto.proyectoTareas; let i = index;"
+                    (click)="openOptionsTareasModal(tarea)" 
+                    style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" >
+                      ({{ ((proyecto.proyectoTareas).length - i) }}) <span class="{{ tarea.estatus ? 'endedTask': '' }}" >{{ tarea.tarea }}</span>
+                      <br>
+                      <small>({{ tarea.usuarioId !== null ? tarea.usuarioId.nombre : 'No asignado' }})</small>
+                      <mat-divider></mat-divider>
+                    </li>
+                  </ul>
+                </div>
+                <ng-template #sinTareas>
+                  <div style="text-align: center;padding: 5px 0px;">
+                    No hay tareas registradas
+                  </div>
+                </ng-template>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

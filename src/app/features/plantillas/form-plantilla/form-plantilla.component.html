@@ -1,0 +1,68 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+          <mat-grid-list cols="3" rowHeight="100px" [cols]="breakpoint">
+            <mat-grid-tile>
+              <mat-form-field appearance="fill">
+                <mat-label>Nombre</mat-label>
+                  <input 
+                    type="text"
+                    autocomplete="off"
+                    matInput
+                    formControlName="nombre"
+                  />
+                  <mat-icon matSuffix>description</mat-icon>
+                  <mat-error>Mínimo 6 caracteres</mat-error>
+                </mat-form-field>  
+            </mat-grid-tile>
+          </mat-grid-list>   
+          <div class="row" formArrayName="tareas">
+            <div class="col-12" *ngFor="let tarea of tareas.controls; let i = index">
+              <div [formGroupName]="i">
+                <mat-form-field appearance="outline" >
+                  <mat-label>Descripción</mat-label>
+                  <input 
+                    type="text"
+                    autocomplete="off"
+                    matInput
+                    formControlName="descripcion"  
+                    id="descripcion-{{ i }}"                                  
+                    placeholder="Descripción"
+                  />                  
+                </mat-form-field>
+                <mat-form-field appearance="outline" >
+                  <mat-label>Entregable</mat-label>
+                  <input 
+                    type="text"
+                    autocomplete="off"
+                    matInput
+                    formControlName="entregable"
+                    id="entregable-{{ i }}"                                  
+                    placeholder="Entregable"
+                  />
+                </mat-form-field>              
+                <mat-form-field appearance="outline" >
+                  <mat-label>Días</mat-label>
+                  <input 
+                    type="text"
+                    autocomplete="off"
+                    matInput
+                    formControlName="dias"
+                    id="dias-{{ i }}"                                  
+                    placeholder="Días"
+                  />
+                </mat-form-field>
+                <button mat-raised-button color="primary" *ngIf="tareas.controls.length > 1" type="button" (click)="deleteTarea(i)">Delete</button>
+              </div>
+            </div>
+              <div class="col-6 text-center">
+                <!-- <button type="button" >Add New</button> -->
+                <button mat-raised-button color="primary" type="button"  (click)="addTarea()">Agregar tarea</button>
+              </div>  
+  
+  
+
+          </div>
+    </form>
+  </mat-card-content>
+</mat-card>

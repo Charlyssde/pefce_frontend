@@ -1,0 +1,137 @@
+{
+  "data": {
+    "map": { "lat": 19.5175475, "lng": -96.8817107 },
+    "phone": "01 (228) 841-8500",
+    "switch": "01 800 570 3255",
+    "address": "Blvd. Cristóbal Colón No. 5 - 1406 Fraccionamiento Jardines de las Ánimas, 91190, Xalapa Enríquez, Veracruz",
+    "url_skype": null,
+    "url_twitter": "https://twitter.com/sedecopver/status/859089425489199104?lang=es",
+    "url_facebook": "https://www.facebook.com/SEDECOPVer",
+    "url_linkedin": null,
+    "url_instagram": null
+  },
+  "lang": {
+    "en": {
+      "lbl_rs": "Social networks",
+      "lbl_hoy": "PEFCE indicators",
+      "lbl_atinv": "Investment attraction",
+      "lbl_login": "Login",
+      "lbl_phone": "Phone",
+      "lbl_comext": "Foreign trade",
+      "lbl_inicio": "Home",
+      "lbl_proest": "Strategic projects",
+      "lbl_switch": "Free national LADA switch",
+      "lbl_address": "Address",
+      "lbl_contact": "Contact info",
+      "lbl_eventos": "Coordinated events",
+      "lbl_sitemap": "Sitemap",
+      "lbl_empresas": "Registered buisness",
+      "lbl_dm_source": "Source",
+      "lbl_proyectos": "Registered projects",
+      "lbl_dm_compint": "International Sales",
+      "lbl_dm_desempl": "Unemployment rate",
+      "lbl_dm_econcom": "Economic complexity (ECI)",
+      "lbl_dm_invextr": "Foreign Direct Investment",
+      "lbl_dm_ventint": "International purchases",
+      "lbl_dp_eventos": "Last published events",
+      "lbl_dm_inforlab": "Labor informality rate",
+      "lbl_dm_ing_corr": "Average quarterly current income",
+      "lbl_dm_pobecact": "Economically active population",
+      "lbl_dm_poblacion": "Population",
+      "lbl_capacitaciones": "Trainings given",
+      "lbl_capsules_title": "Capsules",
+      "lbl_dp_capacitaciones": "Last published trainings"
+    },
+    "es": {
+      "lbl_rs": "Redes sociales",
+      "lbl_hoy": "Indicadores Plataforma Electrónica para el Fomento al Comercio Exterior, la Atracción de Inversiones y los Poryectos Estratégicos",
+      "lbl_atinv": "Atracción de inversiones",
+      "lbl_login": "Ingresar",
+      "lbl_phone": "Teléfono",
+      "lbl_comext": "Comercio exterior",
+      "lbl_inicio": "Inicio",
+      "lbl_proest": "Proyectos estratégicos",
+      "lbl_switch": "Conmutador, Lada nacional sin costo",
+      "lbl_address": "Domicilio",
+      "lbl_contact": "Medios de contacto",
+      "lbl_eventos": "Eventos coordinados",
+      "lbl_sitemap": "Mapa del sitio",
+      "lbl_empresas": "Empresas registradas",
+      "lbl_dm_source": "Fuente",
+      "lbl_proyectos": "Proyectos registrados",
+      "lbl_dm_compint": "Compras internacionales",
+      "lbl_dm_desempl": "Tasa de desempleo",
+      "lbl_dm_econcom": "Complejidad económica (ECI)",
+      "lbl_dm_invextr": "Inversión extranjera directa",
+      "lbl_dm_ventint": "Ventas internacionales",
+      "lbl_dp_eventos": "Últimos eventos publicados",
+      "lbl_dm_inforlab": "Tasa de informalidad laboral",
+      "lbl_dm_ing_corr": "Ingreso corriente promedio trimestral",
+      "lbl_dm_pobecact": "Población económicamente activa",
+      "lbl_dm_poblacion": "Población",
+      "lbl_capacitaciones": "Capacitaciones impartidas",
+      "lbl_capsules_title": "Cápsulas",
+      "lbl_dp_capacitaciones": "Últimas capacitaciones publicadas"
+    },
+    "fr": {
+      "lbl_rs": "Redes sociales",
+      "lbl_hoy": "Indicadores Plataforma Electrónica para el Fomento al Comercio Exterior, la Atracción de Inversiones y los Poryectos Estratégicos",
+      "lbl_atinv": "Atracción de inversiones",
+      "lbl_login": "Ingresar",
+      "lbl_phone": "Teléfono",
+      "lbl_comext": "Comercio exterior",
+      "lbl_inicio": "Inicio",
+      "lbl_proest": "Proyectos estratégicos",
+      "lbl_switch": "Conmutador, Lada nacional sin costo",
+      "lbl_address": "Domicilio",
+      "lbl_contact": "Medios de contacto",
+      "lbl_eventos": "Eventos coordinados",
+      "lbl_sitemap": "Mapa del sitio",
+      "lbl_empresas": "Empresas registradas",
+      "lbl_dm_source": "Fuente",
+      "lbl_proyectos": "Proyectos registrados",
+      "lbl_dm_compint": "Compras internacionales",
+      "lbl_dm_desempl": "Tasa de desempleo",
+      "lbl_dm_econcom": "Complejidad económica (ECI)",
+      "lbl_dm_invextr": "Inversión extranjera directa",
+      "lbl_dm_ventint": "Ventas internacionales",
+      "lbl_dp_eventos": "Últimos eventos publicados",
+      "lbl_dm_inforlab": "Tasa de informalidad laboral",
+      "lbl_dm_ing_corr": "Ingreso corriente promedio trimestral",
+      "lbl_dm_pobecact": "Población económicamente activa",
+      "lbl_dm_poblacion": "Población",
+      "lbl_capacitaciones": "Capacitaciones impartidas",
+      "lbl_capsules_title": "Cápsulas",
+      "lbl_dp_capacitaciones": "Últimas capacitaciones publicadas"
+    }
+  },
+  "capsulas": [
+    {
+      "titulo": "Acero veracruzano",
+      "pathfile": "portal/footer/capsules/Acero.mp4",
+      "categoria": "inicio"
+    },
+    {
+      "titulo": "Alimentos y bebidas",
+      "pathfile": "portal/footer/capsules/Alimentosybebidas.mp4",
+      "categoria": "atraccionInversiones"
+    }
+  ],
+  "multimedia": {
+    "1veracruz": {
+      "url": "http://www.veracruz.gob.mx/",
+      "nombre": "Veracruz",
+      "pathfile": "portal/footer/veracruz_b.png"
+    },
+    "2sedecop": {
+      "url": "http://www.veracruz.gob.mx/desarrolloeconomico/",
+      "nombre": "SEDECOP",
+      "pathfile": "portal/footer/sedecop_b.png"
+    },
+    "3subin": {
+      "url": "/inicio",
+      "nombre": "SUBIN",
+      "pathfile": "portal/footer/subin_b.png"
+    }
+  }
+}

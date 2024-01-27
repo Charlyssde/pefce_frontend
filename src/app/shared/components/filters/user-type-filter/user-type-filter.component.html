@@ -1,0 +1,43 @@
+<div class="row" *ngIf="profile && profile.tipo !== 'empresa'">
+  <!-- Radio button options -->
+  <div class="col-12" *ngIf="profile.tipo === 'root' || profile.tipo === 'institución'">
+    <label id="radio-group-label">Tipos de filtros disponibles</label>
+    <mat-radio-group [(ngModel)]="selectedProfileType" (ngModelChange)="onChangeProfileTypeRadio()"
+      aria-labelledby="radio-group-label" class="radio-group">
+      <mat-radio-button name="profileType" color="primary" class="radio-button" [value]="'myData'">
+        {{ myDataLabel }}</mat-radio-button>
+      <mat-radio-button *ngIf="profile.tipo === 'root' || profile.tipo === 'institución'" name="profileType" color="primary" class="radio-button"
+        [value]="'institución'">Institución</mat-radio-button>
+      <mat-radio-button *ngIf="profile.tipo === 'root'" name="profileType" color="primary" class="radio-button"
+        [value]="'empresa'">Empresa</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  
+  <!-- Institutional areas dropdown -->
+  <div class="col-12 col-sm-6 col-md-4" *ngIf="showAreasIfRootOrInstitution && selectedProfileType === 'institución' && profile.nivel<2">
+    <mat-form-field appearance="fill">
+      <mat-label>Áreas institucionales</mat-label>
+      <mat-select [(ngModel)]="selectedArea" (ngModelChange)="onChangeInstitutionArea()">
+        <mat-option [value]="null">Ninguno</mat-option>
+        <mat-option [value]="'all'">Todos</mat-option>
+        <mat-option *ngFor="let area of areasList | keyvalue" [value]="area.key">{{ area.value }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedArea != 'all' && profilesList.length>0">
+    <shared-select-with-filter [placeholder]="'Perfil'" [appearance]="'fill'" [optionsList]="profilesList"
+      [keyName]="'nombre'" (emitSelectedValue)="getSelectedProfile($event)"></shared-select-with-filter>
+  </div>
+  
+  <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'empresa'">
+    <shared-select-with-filter [placeholder]="'Empresa'" [appearance]="'fill'" [optionsList]="enterprisesList"
+      [keyName]="'empresa'" (emitSelectedValue)="getSelectedEnterprise($event)"></shared-select-with-filter>
+  </div>
+  
+  <div class="col-12 col-sm-6 col-md-4" *ngIf="usersList.length>0">
+    <shared-select-with-filter [placeholder]="'Usuario'" [appearance]="'fill'" [optionsList]="usersList"
+      [keyName]="'nombre'" (emitSelectedValue)="getSelectedUser($event)"></shared-select-with-filter>
+  </div>
+
+</div>

@@ -1,0 +1,95 @@
+<!-- Welcome section -->
+<app-welcome-section 
+*ngIf="labels && multimedia && videos" 
+[video]="videos.s1_welcome.pathfile" 
+ ></app-welcome-section>
+
+
+<!-- Content - Section 2 -->
+<div class="container contentPageContainer" *ngIf="labels !== null">
+    <div class="row generalInfo">
+        <div class="col-12 hide-on-init" animateOnScroll animationName="animated fadeInDown" offset="200">
+            <h2 align="center">{{ 'inicio.pefce' | translate }}</h2>
+        </div>
+        <div class="col-12 hide-on-init" animateOnScroll animationName="animated fadeInDown" offset="200">
+            <p align="center" [innerHTML]="'inicio.desc' | translate"></p>
+        </div>
+        <div class="col-12">
+            <div class="row cardsContainer">
+                <!-- Card 1 - iAC -->
+                <div class="col-12 col-md-6 col-lg-4 hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="100">
+                    <mat-card>
+                        <img mat-card-image *ngIf="multimedia !== null && multimedia.s2_atraccion_inversiones.pathfile" [src]="multimedia.s2_atraccion_inversiones.pathfile" alt="{{multimedia.s2_atraccion_inversiones.nombre}}">
+                        <mat-card-content>
+                            <h3>{{ 'inicio.title1' | translate }}</h3>
+                            <p>{{ 'inicio.content1' | translate }}</p>
+                        </mat-card-content>
+                        <mat-card-actions align="center">
+                            <a [routerLink]="['/atraccionInversiones']" mat-button>{{ 'inicio.url' | translate }}</a>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <!-- Card 2 - fTC -->
+                <div class="col-12 col-md-6 col-lg-4 hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="100" threshold="0.25">
+                    <mat-card>
+                        <img mat-card-image *ngIf="multimedia !== null && multimedia.s2_comercio_exterior.pathfile" [src]="multimedia.s2_comercio_exterior.pathfile" alt="{{multimedia.s2_comercio_exterior.nombre}}">
+                        <mat-card-content>
+                            <h3>{{ 'inicio.title2' | translate }}</h3>
+                            <p>{{ 'inicio.content2' | translate }}</p>
+                        </mat-card-content>
+                        <mat-card-actions align="center">
+                            <a [routerLink]="['/comercioExterior']" mat-button>{{ 'inicio.url' | translate }}</a>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <!-- Card 3 - sPC -->
+                <div class="col-12 offset-md-3 col-md-6 offset-lg-0 col-lg-4 hide-on-init" animateOnScroll animationName="animated fadeInUpBig" offset="100" threshold="0.35">
+                    <mat-card>
+                        <img mat-card-image *ngIf="multimedia !== null && multimedia.s2_proyectos_estrategicos.pathfile" [src]="multimedia.s2_proyectos_estrategicos.pathfile" alt="{{multimedia.s2_proyectos_estrategicos.nombre}}">
+                        <mat-card-content>
+                            <h3>{{ 'inicio.title3' | translate }}</h3>
+                            <p>{{ 'inicio.content3' | translate }}</p>
+                        </mat-card-content>
+                        <mat-card-actions align="center">
+                            <a [routerLink]="['/proyectosEstrategicos']" mat-button>{{ 'inicio.url' | translate }}</a>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- DIVISOR -->
+<div class="container-fluid d-none d-md-block divisor" *ngIf="labels !== null">
+    <div class="row" *ngIf="multimedia !== null && multimedia.s2_fondo_subareas.pathfile" [style.background-image]="'url('+multimedia.s2_fondo_subareas.pathfile+')'"></div>
+</div>
+<!-- Content - Section 2 -->
+
+
+
+<div class="container contentPageContainer" *ngIf="labels !== null">
+    <div class="row">
+        <div class="col-12 hide-on-init" animateOnScroll animationName="animated fadeInDown" offset="200">
+            <h2 align="center">{{'inicio.target_title' | translate}}</h2>
+        </div>
+        <div class="col-12 hide-on-init" animateOnScroll animationName="animated fadeInDown" offset="200">
+            <p align="center" [innerText]="'inicio.target_content' | translate"></p>
+        </div>
+    </div>
+</div>
+
+<!-- Carousel eventos -->
+<app-portal-carousel *ngIf="eventos.length>0" [title]="'carousel.events' | translate" [slidesData]="eventos"></app-portal-carousel>
+
+
+<!-- Video player -->
+<app-portal-video-player [capsulas]="capsulas" [title]="'player.capsules' | translate" [pagename]="'inicio'"></app-portal-video-player>
+
+<!-- Carousel capacitaciones -->
+<app-portal-carousel *ngIf="capacitaciones.length>0" [title]="'carousel.courses' | translate" [slidesData]="capacitaciones"></app-portal-carousel>
+
+<!-- Interesting sites -->
+<app-interesting-sites-section></app-interesting-sites-section>
+
+<!-- Footer -->
+<site-footer></site-footer>

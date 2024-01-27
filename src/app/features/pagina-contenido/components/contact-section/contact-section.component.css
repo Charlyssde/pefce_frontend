@@ -1,0 +1,17 @@
+.seccion12{
+  background-color: rgba(0,0,0,0.5);
+  padding: 50px 10%;
+  color: white;
+}
+
+.contactBg{
+  background: url('/assets/portalContenido/global/back-recovery.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.contact-info h5{
+  margin: 5px auto;
+}

@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-12">
+    <h4>Datos para la solicitud de vinculación</h4>
+  </div>
+  <div class="col-12">
+    <h4>Tipo de vinculación: <strong>{{tiposSolicitud[tipoVinculacion]}}</strong></h4>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <mat-form-field appearance="fill" >
+      <mat-label>Empresa para vincular</mat-label>
+      <mat-select [disabled]="isEdit" [(ngModel)]="vinculaciones.directorioEmpresarialId" (ngModelChange)="getUsuariosByDirectorio(vinculaciones.directorioEmpresarialId)" [compareWith]="lib.objectComparisonFunction" required>
+        <input class="matSelectFilter" placeholder ="Buscar empresa" (keyup)="applyEmpresasFilter($event.target.value)"/>
+        <mat-option [value]="null">Empresas para vincular</mat-option>
+        <!-- <mat-option *ngFor="let empresa of empresasFiltro" [value]="empresa">{{ empresa.nombreLegal }}</mat-option>-->
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <mat-form-field appearance="fill">
+      <mat-label>Contacto de la empresa a vincular</mat-label>
+      <mat-select [disabled]="isEdit" [(ngModel)]="vinculaciones.contactoEmpresaId" (ngModelChange)="vinculacionDataAdded()" [compareWith]="lib.objectComparisonFunction" required>
+        <mat-option [value]="null">Ninguno</mat-option>
+        <mat-option *ngFor="let contacto of contactosSelect;" [value]="contacto">{{ contacto.nombreCompleto }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

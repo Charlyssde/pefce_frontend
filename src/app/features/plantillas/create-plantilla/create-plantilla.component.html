@@ -1,0 +1,16 @@
+<div>
+  <mat-card class="formHeader">
+    <mat-card-title>Nueva Plantilla</mat-card-title>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-content>
+      <app-form-plantilla></app-form-plantilla>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <button mat-raised-button color="warn" (click)="goToPage()">Regresar</button>
+      <button mat-raised-button color="primary" (click)="save()" *ngIf="scriptGL.getCanCreateRol('/plantillas')">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

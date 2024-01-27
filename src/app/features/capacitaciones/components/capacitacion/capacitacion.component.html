@@ -1,0 +1,14 @@
+<div *ngIf="showCreate">
+  <app-create-capacitacion (goPage)=goToPage()></app-create-capacitacion>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" *ngIf="scriptGL.getCanCreateRol('/capacitaciones')">
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-capacitacion (goUpdate)="goToUpdate($event)"></app-page-capacitacion>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-capacitacion [idForm]="idForm" (goPage)=goToPage()></app-update-capacitacion>
+</div>

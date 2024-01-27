@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{data.module}}</h1>
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col-12" align="center">
+      <video class="site-content-video-player" controls src="{{data.url}}" style="width: 80% !important;"></video>
+    </div>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+</div>

@@ -1,0 +1,106 @@
+<mat-sidenav-container class="container-fluid">
+  <mat-sidenav #sidenav [(mode)]="over" [(opened)]="opened" class="bottom-to-top sidebar-container">
+    <!-- Logotipo -->
+    <div class="my-2 sidebar-logo-container" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+      <img src="assets/img/logotipos/pefce-logo.png">
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="sidebar-userdata-container">
+      <div align="center">
+        <small class="lead">{{dataUsuario.nombreUsuario}}</small>
+      </div>
+      <div align="center">
+        <small class="">{{dataUsuario.emailUsuario}}</small>
+      </div>
+      <div align="center">
+        <small class="">{{dataUsuario.perfil.nombre}}</small>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div class="mt-3 sidebar-container-menu">
+      <mat-nav-list>
+        <a mat-list-item class="ml-2" style="font-size:14px;" (click)="goToUrl('/dashboard')">
+          <mat-icon>home</mat-icon>Inicio
+        </a>
+      </mat-nav-list>
+      <div *ngFor="let rolModulo of rolesModulos">
+        <mat-nav-list *ngIf="!rolModulo.subModulos;else contentWithSubModulos">
+          <a mat-list-item class="ml-2" style="font-size:14px;" (click)="goToUrl(rolModulo.urlModulo)">
+            <mat-icon>{{rolModulo.icon}}</mat-icon>{{rolModulo.nombreEtiqueta}}
+          </a>
+        </mat-nav-list>
+        <ng-template #contentWithSubModulos>
+          <mat-nav-list>
+            <a mat-list-item class="ml-2" style="font-size:14px;" [matMenuTriggerFor]="subMenu">
+              <mat-icon>{{rolModulo.icon}}</mat-icon>{{rolModulo.nombreEtiqueta}}
+            </a>
+            <mat-menu #subMenu>
+              <div *ngFor="let rolSubModulo of rolModulo.subModulos">
+                <a mat-menu-item (click)="goToUrl(rolSubModulo.urlModulo)">{{rolSubModulo.nombreEtiqueta}}</a>
+              </div>
+            </mat-menu>
+          </mat-nav-list>
+        </ng-template>
+      </div>
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- <mat-toolbar style="background-color: rgb(175,63,54) !important;" class="header-box-shadow"> -->
+    <mat-toolbar class="header-box-shadow">
+      <!--Menu que se oculta-->
+      <button mat-icon-button (click)="sidenav.toggle()" title="Menú">
+        <!-- <button mat-icon-button (click)="sidenav.toggle()" *ngIf="!opened"> -->
+        <mat-icon>{{!opened ? 'menu': 'menu_open'}}</mat-icon>
+      </button>
+      <!--Boton que te lleva a home-->
+      <!-- <button mat-icon-button (click)="goToUrl('/home')">
+        <mat-icon>home</mat-icon>
+      </button> -->
+      <!--Menu de cambio de idiomas-->
+      <!-- <button mat-icon-button [matMenuTriggerFor]="language">
+        <mat-icon>language</mat-icon>
+      </button> -->
+      <!-- <mat-menu #language="matMenu" overlapTrigger="false">
+        <button mat-menu-item (click)="toogleLanguage('es')">
+          <mat-icon>translate</mat-icon>
+          <span>ES</span>
+        </button>
+        <button mat-menu-item (click)="toogleLanguage('en')">
+          <mat-icon>translate</mat-icon>
+          <span>EN</span>
+        </button>
+      </mat-menu> -->
+      <!-- Texoto ejemplo-->
+      <!--  <button>{{ 'home.title' | translate }}</button> -->
+      <span class="spacer"></span>
+      <small style="font-size: small;">{{finishToken}}</small>
+      <!--Menu de cuenta y sub menus-->
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>account_box</mat-icon>
+      </button>
+      
+      <mat-menu #menu="matMenu" overlapTrigger="false">
+        
+        <button mat-menu-item [routerLink]="['/miPerfil']">
+          <mat-icon>manage_accounts</mat-icon>
+          <span>Mi perfil</span>
+        </button>
+        
+        <button mat-menu-item (click)="exit()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Salir</span>
+        </button>
+      </mat-menu>
+
+    </mat-toolbar>
+    <div class="  container-fluid content">
+      <!-- Se encarga de mostrar los componentes ¡NO ELIMINAR! -->
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

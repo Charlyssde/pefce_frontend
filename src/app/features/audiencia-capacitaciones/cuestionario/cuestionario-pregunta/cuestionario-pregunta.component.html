@@ -1,0 +1,32 @@
+<br>
+<mat-card>
+  <mat-card-content>
+    <h3>{{pregunta.pregunta}}</h3>
+    <p align="justify">{{pregunta.detalle}}</p>
+    <img *ngIf="pathRecurso" class="imgPreview" id="Recurso" [src]="pathRecurso"/>
+    <p>A) {{pregunta.respuestaA}}</p>
+    <p>B) {{pregunta.respuestaB}}</p>
+    <p>C) {{pregunta.respuestaC}}</p>
+    <p>D) {{pregunta.respuestaD}}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>Respuesta</mat-label>
+      <mat-select (selectionChange)="actualizarRespuesta($event.value)" [(value)]="valueRespuesta">
+        <mat-option *ngFor="let respuesta of respuestas" [value]="respuesta.value">
+          {{respuesta.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div *ngIf="valueRespuesta != '' && nuevaRespuesta == false">
+      <div *ngIf="valueRespuesta == pregunta.respuestaCorrecta">
+        <mat-card #thenBlock class="correct">
+          Su respuesta es correcta
+        </mat-card>
+      </div>
+      <div *ngIf="valueRespuesta != pregunta.respuestaCorrecta">
+        <mat-card #elseBlock class="incorrect">
+          Su respuesta es incorrecta
+        </mat-card>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Datos generales de la plantilla</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="1" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" formControlName="nombre" required>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <h4 style="margin: 0px; text-align: center;">Lista de variables que pueden utilizarse en la plantilla. Se deben copiar con las llaves y sin espacios. Debajo se encuentra el significado</h4>
+      <mat-grid-list cols="3" rowHeight="50px" [cols]="breakpoint" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <span>{{ '{' }}nombreLegalEmpresaDestinatario{{ '}' }}<br><strong>Nombre legal de la empresa</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}giroComercialEmpresaDestinatario{{ '}' }}<br><strong>Giro comercial de la empresa</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}nombreCompletoContactoDestinatario{{ '}' }}<br><strong>Nombre completo del contacto</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}correoContactoDestinatario{{ '}' }}<br><strong>Correo electrónico del contacto</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}estadoContactoDestinatario{{ '}' }}<br><strong>Entidad federativa del contacto</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}municipioContactoDestinatario{{ '}' }}<br><strong>Municipio del contacto</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}codigoPostalContactoDestinatario{{ '}' }}<br><strong>Código postal del contacto</strong></span>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <span>{{ '{' }}puestoContactoDestinatario{{ '}' }}<br><strong>Puesto del contacto</strong></span>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <mat-grid-list cols="1" rowHeight="500px" (window:resize)="onResize($event)">
+        <mat-label>Plantilla</mat-label>
+        <mat-grid-tile>
+          <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Ingrese la plantilla..." formControlName="plantilla"></quill-editor>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <span>* Campos obligatorios</span>
+    </form>
+  </mat-card-content>
+</mat-card>

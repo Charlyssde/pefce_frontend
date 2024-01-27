@@ -1,0 +1,21 @@
+<div>
+    <h1 class="helpIcon">
+        <mat-icon>help</mat-icon>
+    </h1>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <h2 [innerHTML]="data.module_name"></h2>
+    <p align="justify" [innerHTML]="data.description"></p>
+    <div class="row">
+        <div class="col-12">
+            <hr>
+        </div>
+        <div class="col-12" *ngFor="let detail of data.details">
+            <h3 [innerHTML]="detail.detail"></h3>
+            <div align="justify" [innerHTML]="detail.description"></div>
+        </div>
+        <div class="col-12">
+            <hr>
+            <br>
+        </div>
+    </div>
+</div>

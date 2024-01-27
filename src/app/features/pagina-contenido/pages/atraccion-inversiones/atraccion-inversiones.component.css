@@ -1,0 +1,97 @@
+
+.seccion6{
+  min-height: 500px;
+  max-height: 500px;
+  background-color: yellow;
+}
+
+.seccion9{
+  text-align: center;
+}
+.seccion9 .seccion9-cover{
+  min-height: 400px;
+}
+.seccion9 .seccion9-cover img{
+  width: 100%;
+  height: auto;
+}
+
+.seccion10{
+  text-align: center;
+}
+.seccion10 .seccion10-cover{
+  min-height: 400px;
+}
+.seccion10 .seccion10-cover img{
+  width: 100%;
+  height: auto;
+}
+
+.seccion11{
+  text-align: center;
+}
+
+
+
+
+
+/*********************************************************/
+
+
+
+.contentPageContainer{
+  color:#57585a !important;
+  font-size: 1.2em !important;
+  line-height: 1.7em !important;
+  z-index: 2 !important;
+}
+.contentPageContainer mat-card-content{
+  color:#57585a !important;
+}
+.contentPageContainer .row{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.contentPageContainer h2{
+  text-transform: uppercase;
+  color:#57585a !important;
+}
+.contentPageContainer p>strong{
+  color: #af3f36 !important;
+}
+
+.contentPageContainer mat-card h3,
+.contentPageContainer mat-cart p{
+  text-align: center;
+}
+
+.contentPageContainer .cardsContainer{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  z-index: 2;
+}
+.contentPageContainer .cardsContainer>div{
+  padding: 10px 5px !important;
+}
+.contentPageContainer .cardsContainer mat-card-content{
+  text-align: center !important;
+}
+
+
+.empresasInteres{
+  color:white;
+}
+
+.empresasInteres .overlay{
+  padding: 80px;
+  height: 100%;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.84) 5%, rgba(56,56,56,0.75) 81%);
+  vertical-align: middle;
+  display: flex;
+}
+
+.contentPageContainer mat-card{
+  margin: 5px;
+  background-color: rgba(255,255,255,0.85) !important;
+}

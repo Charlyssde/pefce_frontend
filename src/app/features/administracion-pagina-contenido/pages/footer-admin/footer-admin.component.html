@@ -1,0 +1,230 @@
+<div>
+    <shared-dashboard-title [title]="'Administracion de portal - Footer'"></shared-dashboard-title>
+
+    <br>
+
+    <mat-card>
+        <mat-card-content>
+            <mat-tab-group>
+                <!-- Contenido -->
+                <mat-tab label="Contenido">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Contenido</h2>
+                            <hr>
+                        </div>
+                        <div class="col-12">
+                            <h3>Datos de contacto</h3>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Número telefónico</mat-label>
+                                <input type="text" [(ngModel)]="data.phone" matInput placeholder="Número telefónico">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Conmutador</mat-label>
+                                <input type="text" [(ngModel)]="data.switch" matInput placeholder="Conmutador">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-12 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Domicilio</mat-label>
+                                <textarea [(ngModel)]="data.address" matInput placeholder="Domicilio" row="7" maxlength="255"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <h3>Redes sociales</h3>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Twitter</mat-label>
+                                <input type="text" [(ngModel)]="data.url_twitter" matInput placeholder="Twitter">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Facebook</mat-label>
+                                <input type="text" [(ngModel)]="data.url_facebook" matInput placeholder="Facebook">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Instagram</mat-label>
+                                <input type="text" [(ngModel)]="data.url_instagram" matInput placeholder="Instagram">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Skype</mat-label>
+                                <input type="text" [(ngModel)]="data.url_skype" matInput placeholder="Skype">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>LinkedIn</mat-label>
+                                <input type="text" [(ngModel)]="data.url_linkedin" matInput placeholder="LinkedIn">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <mat-action-row align="end">
+                        <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+                        <button mat-raised-button color="primary" (click)="saveData('Contenido')">Guardar contenido</button>
+                    </mat-action-row>
+                </mat-tab>
+
+
+                <!-- Idiomas -->
+                <!-- <mat-tab label="Etiquetas">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Etiquetas para idiomas</h2>
+                        </div>
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let l of languages;">
+                                <mat-expansion-panel-header>{{l.idioma}}</mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="row" style="padding:0px;margin:0px;">
+                                        <div class="col-12 col-md-6 col-xl-4" *ngFor="let j of labelsTemplate | keyvalue">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>{{j.value}}</mat-label>
+                                                <input type="text" [(ngModel)]="labels[l.tag][j.key]" matInput placeholder="{{j.value}}">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-12" align="end" style="padding-bottom:15px;">
+                                            <hr>
+                                            <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+                                            <button mat-raised-button color="primary" (click)="saveData('Idioma')">Guardar idioma
+                        {{l.idioma}}</button>
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <br>
+                    </div>
+                </mat-tab> -->
+
+
+                <!-- Multimedia -->
+                <mat-tab label="Multimedia">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Multimedia</h2>
+                            <hr>
+                        </div>
+                        <div class="col-12">
+                            <div class="mat-elevation-z8">
+                                <table class="tblPaginaContenido">
+                                    <thead>
+                                        <tr>
+                                            <th>Archivo</th>
+                                            <th>Nombre</th>
+                                            <th>Link</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let i of multimedia | keyvalue">
+                                            <td align="center">
+                                                <input hidden type="file" (change)="changeFile(i.key)" #inputLogotipo id="inputLogotipo_{{i.key}}">
+                                                <img class="imgPreview" id="logotipo_{{i.key}}" [src]="multimedia[i.key].pathfile===null || !(multimedia[i.key].pathfile).includes('http') ?'':multimedia[i.key].pathfile" alt="{{multimedia[i.key].nombre}}">
+                                                <div>
+                                                    <button *ngIf="oldPathfile[i.key]===null" type="button" mat-icon-button color="primary" (click)="inputLogotipo.click()"><span class="material-icons">change_circle</span></button>
+                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button (click)="uploadFile(i.key)"><span class="material-icons">cloud_upload</span></button>
+                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile(i.key)"><span class="material-icons">cancel</span></button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Nombre</mat-label>
+                                                    <input type="text" [(ngModel)]="multimedia[i.key].nombre" matInput placeholder="Nombre">
+                                                </mat-form-field>
+                                            </td>
+                                            <td align="center">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>URL</mat-label>
+                                                    <input type="text" [(ngModel)]="multimedia[i.key].url" matInput placeholder="URL">
+                                                </mat-form-field>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <mat-action-row align="end">
+                        <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+                        <button mat-raised-button color="primary" (click)="saveData('Multimedia')">Guardar multimedia</button>
+                    </mat-action-row>
+                </mat-tab>
+
+
+                <!-- Capsulas -->
+                <mat-tab label="Cápsulas">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Cápsulas</h2>
+                            <hr>
+                        </div>
+                        <div class="col-12">
+                            <div class="mat-elevation-z8">
+                                <table class="tblPaginaContenido">
+                                    <thead>
+                                        <tr>
+                                            <th>Video</th>
+                                            <th>Título</th>
+                                            <th>Categoría</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let i of capsules; let k = index;">
+                                            <td align="center">
+                                                <input hidden type="file" (change)="changeVideo(k)" #inputVideo id="inputVideo_{{k}}">
+                                                <video *ngIf="capsules[k].pathfile !== null && (capsules[k].pathfile).includes('http')" [src]="capsules[k].pathfile" id="video_{{k}}" class="videoPreview" controls></video>
+                                                <div *ngIf="(this.oldCapsule).length > 0">
+                                                    <button *ngIf="oldCapsule[k].pathfile===null" type="button" mat-icon-button color="primary" (click)="inputVideo.click()"><span class="material-icons">{{capsules[k].pathfile === null ? 'add_circle':'change_circle'}}</span></button>
+                                                    <button *ngIf="oldCapsule[k].pathfile!==null" type="button" mat-icon-button (click)="uploadVideo(k)"><span class="material-icons">cloud_upload</span></button>
+                                                    <button *ngIf="oldCapsule[k].pathfile!==null" type="button" mat-icon-button color="accent" (click)="cancelChangeVideo(k)"><span class="material-icons">cancel</span></button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Título</mat-label>
+                                                    <input type="text" placeholder="Titulo" title="Titulo" matInput [(ngModel)]="capsules[k].titulo" required>
+                                                </mat-form-field>
+                                            </td>
+                                            <td>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Categoría</mat-label>
+                                                    <select [(ngModel)]="capsules[k].categoria" matNativeControl required>
+                            <option value="" disabled selected>Seleccione uno</option>
+                            <option *ngFor="let j of categorias;" value="{{j.clave}}">{{j.categoria}}</option>
+                          </select>
+                                                </mat-form-field>
+                                            </td>
+                                            <td align="center">
+                                                <button mat-icon-button color="primary" aria-label="addRow" (click)="newVideoRow()">
+                          <mat-icon>add_circle</mat-icon>
+                        </button>
+                                                <button mat-icon-button color="warn" aria-label="removeRow" (click)="deleteVideoRow(k)">
+                          <mat-icon>remove_circle</mat-icon>
+                        </button>
+                                                <button [disabled]="validateVideoRow(k)" mat-icon-button aria-label="saveRow" (click)="saveData(k)">
+                          <mat-icon>save</mat-icon>
+                        </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</div>

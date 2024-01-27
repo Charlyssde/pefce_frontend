@@ -1,0 +1,37 @@
+.mat-accordion,
+.mat-accordion .row{
+  width: 100% !important;
+}
+.col-12{
+  -ms-flex: 0 0 100%;
+  flex: 0 0 100%;
+  max-width: calc(100% - 30px);
+}
+@media (min-width: 768px){
+  .col-md-6{
+    -ms-flex: 0 0 50%;
+    flex: 0 0 50%;
+    max-width: calc(50% - 30px);
+  }
+}
+@media (min-width: 1200px){
+  .col-xl-4{
+    -ms-flex: 0 0 33.333333%;
+    flex: 0 0 33.333333%;
+    max-width: calc(33.333333% - 30px);
+  }
+}
+
+.imgPreview{
+  width: 150px;
+  height: auto;
+  margin: 5px auto;
+  border: solid 1px lightgray;
+}
+
+.videoPreview{
+  width: 250px;
+  height: auto;
+  margin: 5px auto;
+  border: solid 1px lightgray;
+}

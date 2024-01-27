@@ -1,0 +1,247 @@
+.zoom {
+
+
+  transition: transform .2s; /* Animation */
+
+  margin: 0 auto;
+  }
+
+  .zoom:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+  }/* Shine */
+  .hover14 figure {
+  position: relative;
+  }
+
+.row > div{
+  padding-left: 0px;
+}
+
+.welcome{
+  height: 100%;
+  padding: 0px;
+  margin: -10px 0px;
+}
+.welcome .seccion1{
+  width: 100%;
+  height: 100%;
+  top:0px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  padding:0px
+}
+#video{
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: none !important;
+}
+
+.seccion2,.seccion3,.seccion4,.seccion5{
+  background: url('/assets/portalContenido/global/square_texture.jpeg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  min-height: 300px;
+  cursor: pointer;
+}
+.seccion2 .overlay,.seccion3 .overlay,.seccion4 .overlay,.seccion5 .overlay{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top:0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  background-color: #57585afa;
+  backdrop-filter:blur(1px);
+  color:white;
+  z-index: 1;
+  display: flex;
+}
+.overlay span{margin:auto;font-size: 6rem;}
+.seccion2:hover,.seccion3:hover,.seccion4:hover,.seccion5:hover{
+  z-index: 2;
+  box-shadow: 0px 0px 10px 0px #cccccc;
+}
+.seccion2:hover .overlay,.seccion3:hover .overlay,.seccion4:hover .overlay,.seccion5:hover .overlay{
+  background-color: #57585af5;
+}
+.seccion2:hover .overlay span,.seccion3:hover .overlay span,.seccion4:hover .overlay span,.seccion5:hover .overlay span{
+  font-size: 7rem;
+
+}
+.seccion2 .sectionLabel,.seccion3 .sectionLabel,.seccion4 .sectionLabel,.seccion5 .sectionLabel{
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 20px 5px;
+  display: flex;
+  justify-content: center;
+  color:white;
+  z-index: 2;
+}
+
+.seccion6{
+  min-height: 500px;
+  max-height: 500px;
+  background-color: yellow;
+}
+
+.seccion9{
+  text-align: center;
+}
+.seccion9 .seccion9-cover{
+  min-height: 400px;
+}
+.seccion9 .seccion9-cover img{
+  width: 100%;
+  height: auto;
+}
+
+.seccion10{
+  text-align: center;
+}
+.seccion10 .seccion10-cover{
+  min-height: 400px;
+}
+.seccion10 .seccion10-cover img{
+  width: 100%;
+  height: auto;
+}
+
+.seccion11{
+  text-align: center;
+}
+
+.seccion12{
+  background-color: rgba(0,0,0,0.5);
+  padding: 50px 10%;
+  color: white;
+}
+
+.contactBg{
+  background: url('/assets/portalContenido/global/back-recovery.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/*********************************************************/
+.areaPageTitle{
+  height: 250px;
+  color: #ffffff;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.areaPageTitle .overlay{
+  height: 100%;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.84) 5%, rgba(56,56,56,0.75) 81%);
+  vertical-align: middle;
+  display: flex;
+}
+.areaPageTitle .overlay>div{
+  margin: auto;
+}
+
+
+.contentPageContainer{
+  color:#57585a !important;
+  font-size: 1.2em !important;
+  line-height: 1.7em !important;
+  z-index: 2 !important;
+}
+.contentPageContainer mat-card-content{
+  color:#57585a !important;
+}
+.contentPageContainer .row{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.contentPageContainer h2{
+  text-transform: uppercase;
+  color:#57585a !important;
+}
+.contentPageContainer p>strong{
+  color: #af3f36 !important;
+}
+
+.contentPageContainer mat-card h3,
+.contentPageContainer mat-cart p{
+  text-align: center;
+}
+
+.contentPageContainer .cardsContainer{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  z-index: 2;
+}
+.contentPageContainer .cardsContainer>div{
+  padding: 10px 5px !important;
+}
+.contentPageContainer .cardsContainer mat-card-content{
+  text-align: center !important;
+}
+
+
+.videoContainer{
+  width: 100%;
+  padding-top: 56.25%;
+  height: 0px;
+  position: relative;
+}
+
+#videoPlayer{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+}
+
+.capsulePlaylist{
+  padding: 5px;
+  max-height: 300px;
+  height: 100%;
+  overflow-y: scroll;
+}
+.titleCapsule{
+  padding: 10px 5px;
+  border-bottom: 1px solid #808285;
+}
+
+.playing{
+  background-color: #af3f36;
+  color: #ffffff;
+  border-bottom:none;
+}
+
+
+.comercioExterior{
+  color:white;
+}
+
+.comercioExterior .overlay{
+  padding: 80px;
+  height: 100%;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.84) 5%, rgba(56,56,56,0.75) 81%);
+  vertical-align: middle;
+  display: flex;
+}
+
+.contentPageContainer mat-card{
+  margin: 5px;
+  background-color: rgba(255,255,255,0.85) !important;
+}

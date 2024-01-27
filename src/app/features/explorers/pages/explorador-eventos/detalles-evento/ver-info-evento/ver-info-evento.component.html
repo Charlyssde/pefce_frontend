@@ -1,0 +1,39 @@
+<div class="modal-component">
+  <div class="modal-header">
+    <strong>Evento: {{data.evento.nombreEvento}}</strong>
+  </div>
+  <div class="modal-content">
+    <div class="row" style="justify-content: center;">
+      <div class="col-12 col-md-6">
+        <div class="card-cover">
+          <img [src]="data.evento.pathfileCover !== null && data.evento.pathfileCover.includes('http') ? data.evento.pathfileCover : './assets/img/eventos-ferias/pefce-logotipo.png'" alt="Portada">
+        </div>
+      </div>
+      <div *ngIf="data.evento.pathfileVideo !== null" class="col-12 col-md-6">
+        <div class="card-cover">
+          <video [src]="data.evento.pathfileVideo !== null && data.evento.pathfileVideo.includes('http') ? data.evento.pathfileVideo : ''" controls></video>
+        </div>
+      </div>
+      <div class="col-12">
+        <p>{{data.evento.descripcion}}</p>
+        <small>Inicio: {{ data.evento.fechaInicio | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+        <small>Fin: {{ data.evento.fechaFin | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+        <small>Tipo de evento: {{ data.evento.tipoId.nombre }}</small> <br>
+        <small>Privacidad del evento: {{ lib.ePrivacidadEvento[data.evento.privacidad] }}</small> <br>
+        <small>Modalidad del evento: {{ lib.eModalidadEvento[data.evento.modalidad] }}</small> <br>
+        <div *ngIf="data.evento.modalidad === 'presencial'">
+          <small>
+            <p align="justify">
+              Sede: <br>
+              <strong>{{data.evento.sede}}</strong><br>
+              Domicilio: {{ data.evento.domicilio }}, {{data.evento.municipio.municipio}}, {{ data.evento.estado.estado }}
+            </p>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-actions">
+    <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

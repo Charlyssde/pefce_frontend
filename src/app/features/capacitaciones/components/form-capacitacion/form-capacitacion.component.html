@@ -1,0 +1,107 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Datos generales de la capacitación</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" formControlName="nombre" required>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Descripción</mat-label>
+            <textarea matInput placeholder="Descripción" formControlName="descripcion" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Subarea</mat-label>
+            <mat-select formControlName="subarea" required>
+              <mat-option *ngFor="let area of areas" [value]="area.value">
+                {{area.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo</mat-label>
+            <mat-select [(ngModel)]="selectedTipo" (selectionChange)="seleccionadoTipo()" formControlName="tipo" required>
+              <mat-option *ngFor="let tipo of tipos" [value]="tipo.value">
+                {{tipo.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile *ngIf="selectedTipo == 5 || selectedTipo == 6">
+          <mat-form-field appearance="fill">
+            <mat-label>Lugar</mat-label>
+            <textarea matInput placeholder="Lugar" formControlName="lugar" [required]="selectedTipo == 5 || selectedTipo == 6"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de inicio</mat-label>
+            <input matInput [matDatepicker]="pickerFechaInicio" formControlName="fechaInicio" #fechaInicio (dateChange)="validaFechasInicioYFin()" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaInicio></mat-datepicker>
+            <span *ngIf="!fechaInicioYFinValidos" style="color: red;">La fecha de inicio no debe ser posterior a la fecha de finalización</span>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha de finalización</mat-label>
+            <input matInput [matDatepicker]="pickerFechaFin" formControlName="fechaFin" #fechaFin (dateChange)="validaFechasInicioYFin()" required>
+            <mat-datepicker-toggle matSuffix [for]="pickerFechaFin"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFechaFin></mat-datepicker>
+            <span *ngIf="!fechaInicioYFinValidos" style="color: red;">La fecha de inicio no debe ser posterior a la fecha de finalización</span>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-4">
+                <p>Imagen de Perfil</p>
+              </div>
+              <div class="clol-4">
+                <input hidden type="file" (change)="changeFile('inputImagenPerfil')" #inputImagenPerfil id="inputImagenPerfil">
+                <img *ngIf="pathfileImagenPerfil != ''" class="imgPreview" (click)="openModalImage(pathfileImagenPerfil)" id="ImagenPerfil" [src]="pathfileImagenPerfil" title="click para expandir" />
+              </div>
+              <div class="col-4">
+                <button *ngIf="oldPathfileImagenPerfil == null" type="button" mat-icon-button color="primary" (click)="inputImagenPerfil.click()"><span class="material-icons">change_circle</span></button>
+                <button *ngIf="oldPathfileImagenPerfil != null" type="button" mat-icon-button (click)="uploadFile('inputImagenPerfil')"><span class="material-icons">cloud_upload</span></button>
+                <button *ngIf="oldPathfileImagenPerfil != null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile('inputImagenPerfil')"><span class="material-icons">cancel</span></button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-4">
+                <p>Portada</p>
+              </div>
+              <div class="col-4">
+                <input hidden type="file" (change)="changeFile('inputPortada')" #inputPortada id="inputPortada">
+                <img *ngIf="pathfilePortada != ''" class="imgPreview" (click)="openModalImage(pathfilePortada)" id="ImagenPerfil" [src]="pathfilePortada" title="click para expandir" />
+              </div>
+              <div class="col-4">
+                <button *ngIf="oldPathfilePortada == null" type="button" mat-icon-button color="primary" (click)="inputPortada.click()"><span class="material-icons">change_circle</span></button>
+                <button *ngIf="oldPathfilePortada != null" type="button" mat-icon-button (click)="uploadFile('inputPortada')"><span class="material-icons">cloud_upload</span></button>
+                <button *ngIf="oldPathfilePortada != null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile('inputPortada')"><span class="material-icons">cancel</span></button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <span>* Campos obligatorios</span>
+    </form>
+  </mat-card-content>
+</mat-card>

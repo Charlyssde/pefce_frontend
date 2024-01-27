@@ -1,0 +1,90 @@
+.sidebar-logo-container{
+  height: 64px;
+  padding: 5px;
+  box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 rgb(0 0 0 / 12%);
+}
+.sidebar-logo-container img{
+  height: 100%;
+  width: auto;
+}
+.sidebar-userdata-container{
+  padding: 10px 3px;
+}
+.sidebar-userdata-container small{
+  font-size: 0.8rem;
+}
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option{
+  height: 35px;
+}
+
+
+.header-box-shadow{
+  background: none;
+  background-color: white;
+}
+
+
+.mat-drawer-inner-container{
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.mat-drawer-inner-container::-webkit-scrollbar{
+  display: none !important;
+}
+
+
+
+
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.container-fluid.content{
+  padding: 20px 20px 60px 20px !important;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+mat-sidenav {
+  width: 250px;
+}
+
+.circle {
+  border-radius: 50%;
+}
+
+.with-bg {
+  background-size: cover;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  max-height: 130px;
+}
+
+.no-shadow {
+  box-shadow: none !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  padding: 0px !important;
+  padding-left: 10px !important;
+}
+
+.header-box-shadow {
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12);
+}
+
+.bottom-to-top {
+  border: 0px;
+  border-right: 1px;
+  border-style: solid;
+  border-image: linear-gradient(to top, #c1c1c1, rgba(0, 0, 0, 0)) 1 100%;
+}

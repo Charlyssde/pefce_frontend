@@ -1,0 +1,14 @@
+<div *ngIf="showCreate">
+  <app-create-plantilla (goPage)=goToPage()></app-create-plantilla>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" *ngIf="scriptGL.getCanCreateRol('/plantillas')">
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-plantilla (goUpdate)="goToUpdate($event)"></app-page-plantilla>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-plantilla [idForm]="idForm" (goPage)=goToPage()></app-update-plantilla>
+</div>

@@ -1,0 +1,57 @@
+<div class="row">
+  <div class="col-12">
+    <span>Opciones para la tarea del panel</span>
+    <hr>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <mat-checkbox color="primary" [(ngModel)]="editarRegistro">Editar el registro</mat-checkbox>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Descripción de la tarea:</mat-label>
+          <textarea matInput [(ngModel)]="task.descripcion" rows="5" maxlength="250" placeholder="Descripción de la tarea" [disabled]="!editarRegistro" required></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Entregable:</mat-label>
+          <input matInput type="text" [(ngModel)]="task.entregable" placeholder="Entregable" maxlength="100" [disabled]="!editarRegistro" required>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha de término:</mat-label>
+          <input [(ngModel)]="task.fechaTermino" matInput [matDatepicker]="picker"[disabled]="!editarRegistro" >
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Asignar tarea a:</mat-label>
+          <mat-select
+            [(ngModel)]="task.usuarioId"
+            [compareWith]="utils.objectComparisonFunction"
+            placeholder="Seleccione un colaborador"
+            [disabled]="!editarRegistro"
+            required>
+              <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+              <mat-option *ngFor="let colaborator of colaboratorsList;" [value]="colaborator?.usuarioId">{{colaborator?.usuarioId?.nombre }}</mat-option>
+            </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12" *ngIf="task.usuarioId !== null && task.usuarioId.id === session.idUsuario">
+        <hr>
+        <mat-checkbox color="primary" [(ngModel)]="task.estatus">Finalizar tarea</mat-checkbox>
+      </div>
+    </div>
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button mat-raised-button color="primary" (click)="updateProyectoTarea()" *ngIf="editarRegistro" [disabled]="!validarFormularioTarea()">Guardar</button>
+    <!-- <button mat-raised-button color="primary" *ngIf="tarea && !tarea.estatus" [disabled]="editarRegistro">Eliminar</button> -->
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>

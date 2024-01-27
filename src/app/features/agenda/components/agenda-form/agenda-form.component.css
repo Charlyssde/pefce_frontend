@@ -1,0 +1,15 @@
+::ng-deep .ql-container{
+    height: auto !important;
+}
+::ng-deep .ql-editor{
+    background-color: rgba(0,0,0,.04);
+}
+
+.alerts {
+    text-align: justify;
+    margin-bottom: 1rem;
+    padding: 10px 5px;
+    border-radius: 5px;
+    background-color: #eee;
+    width: 100%;
+}

@@ -1,0 +1,153 @@
+<div>
+    <shared-dashboard-title [title]="'Administracion de portal - Header'"></shared-dashboard-title>
+
+    <br>
+
+    <mat-card>
+        <mat-card-content>
+            <mat-tab-group>
+                <!-- Contenido -->
+                <mat-tab label="Contenido">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Contenido</h2>
+                            <hr>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Correo electrónico</mat-label>
+                                <input type="text" [(ngModel)]="data.txt_mail" matInput placeholder="Correo electrónico">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Número telefónico</mat-label>
+                                <input type="text" [(ngModel)]="data.txt_phone" matInput placeholder="Número telefónico">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Twitter</mat-label>
+                                <input type="text" [(ngModel)]="data.url_twitter" matInput placeholder="Twitter">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Facebook</mat-label>
+                                <input type="text" [(ngModel)]="data.url_facebook" matInput placeholder="Facebook">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Instagram</mat-label>
+                                <input type="text" [(ngModel)]="data.url_instagram" matInput placeholder="Instagram">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Skype</mat-label>
+                                <input type="text" [(ngModel)]="data.url_skype" matInput placeholder="Skype">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-6 col-xl-4">
+                            <mat-form-field appearance="fill">
+                                <mat-label>LinkedIn</mat-label>
+                                <input type="text" [(ngModel)]="data.url_linkedin" matInput placeholder="LinkedIn">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <mat-action-row align="end">
+                        <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+                        <button mat-raised-button color="primary" (click)="saveData('Contenido')">Guardar contenido</button>
+                    </mat-action-row>
+                </mat-tab>
+
+
+                <!-- Idiomas -->
+                <!-- <mat-tab label="Etiquetas">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Etiquetas para idiomas</h2>
+                        </div>
+                        <mat-accordion>
+                            <mat-expansion-panel *ngFor="let l of languages;">
+                                <mat-expansion-panel-header>{{l.idioma}}</mat-expansion-panel-header>
+                                <mat-panel-description>
+                                    <div class="row" style="padding:0px;margin:0px;">
+                                        <div class="col-12 col-md-6 col-xl-4" *ngFor="let j of labelsTemplate | keyvalue">
+                                            <mat-form-field appearance="fill">
+                                                <mat-label>{{j.value}}</mat-label>
+                                                <input type="text" [(ngModel)]="labels[l.tag][j.key]" matInput placeholder="{{j.value}}">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-12" align="end" style="padding-bottom:15px;">
+                                            <hr>
+                                            <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+                                            <button mat-raised-button color="primary" (click)="saveData('Idioma')">Guardar idioma {{l.idioma}}</button>
+                                        </div>
+                                    </div>
+                                </mat-panel-description>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                        <br>
+                    </div>
+                </mat-tab> -->
+
+
+                <!-- Multimedia -->
+                <mat-tab label="Multimedia">
+                    <div class="row">
+                        <div class="col-12">
+                            <h2>Multimedia</h2>
+                            <hr>
+                        </div>
+                        <div class="col-12">
+                            <div class="mat-elevation-z8">
+                                <table class="tblPaginaContenido">
+                                    <thead>
+                                        <tr>
+                                            <th>Archivo</th>
+                                            <th>Nombre</th>
+                                            <th>Link</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let i of multimedia | keyvalue">
+                                            <td align="center">
+                                                <input hidden type="file" (change)="changeFile(i.key)" #inputLogotipo [id]="'inputLogotipo'+i.key">
+                                                <img *ngIf="multimedia[i.key].pathfile !== null" class="imgPreview" id="logotipo_{{i.key}}" [src]="multimedia[i.key].pathfile" alt="{{multimedia[i.key].nombre}}">
+                                                <div>
+                                                    <button *ngIf="oldPathfile[i.key]===null" type="button" mat-icon-button color="primary" (click)="inputLogotipo.click()"><span class="material-icons">change_circle</span></button>
+                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button (click)="uploadFile(i.key)"><span class="material-icons">cloud_upload</span></button>
+                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile(i.key)"><span class="material-icons">cancel</span></button>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>Nombre</mat-label>
+                                                    <input type="text" [(ngModel)]="multimedia[i.key].nombre" matInput placeholder="Nombre">
+                                                </mat-form-field>
+                                            </td>
+                                            <td align="center">
+                                                <mat-form-field appearance="fill">
+                                                    <mat-label>URL</mat-label>
+                                                    <input type="text" [(ngModel)]="multimedia[i.key].url" matInput placeholder="URL">
+                                                </mat-form-field>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <mat-divider></mat-divider>
+                    <mat-action-row align="end">
+                        <a [routerLink]="['/dashboard']" mat-raised-button color="warn">Cancelar</a>
+                        <button mat-raised-button color="primary" (click)="saveData('Multimedia')">Guardar multimedia</button>
+                    </mat-action-row>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</div>

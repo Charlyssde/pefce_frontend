@@ -1,0 +1,16 @@
+.imgPreview{
+    width: 50%;
+    height: auto;
+}
+
+.incorrect{
+    background-color: rgb(175,63,54) !important;
+    border: solid 2px rgb(175,63,54) !important;
+    color: white !important;
+}
+
+.correct{
+    background-color: rgb(88, 175, 54) !important;
+    border: solid 2px rgb(88, 175, 54) !important;
+    color: white !important;
+}

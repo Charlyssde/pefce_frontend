@@ -1,0 +1,122 @@
+<div class="mat-elevation-z8">
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12" align="right">
+                    <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+                        <mat-icon>help</mat-icon></button>
+                </div>
+            </div>
+            <form [formGroup]="formUser" #form="ngForm" (ngSubmit)="onSubmitForm()">
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos generales</h3>
+                        <hr>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre completo</mat-label>
+                            <input type="text" formControlName="nombre" matInput placeholder="Nombre completo"
+                                title="Nombre completo" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input type="email" formControlName="email" matInput placeholder="Correo electrónico"
+                                title="Correo electrónico" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Teléfono</mat-label>
+                            <input type="text" formControlName="telefono" matInput placeholder="Teléfono"
+                                title="Teléfono">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-label>Sexo</mat-label>
+                        <br>
+                        <mat-radio-group formControlName="sexo">
+                            <mat-radio-button class="inline-radio-button" color="primary" [value]="'M'">Masculino </mat-radio-button>
+                            <mat-radio-button class="inline-radio-button" color="primary" [value]="'F'">Femenino </mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <section>
+                            <mat-label>Recibir campaña de correos</mat-label>
+                            <br>
+                            <mat-checkbox formControlName="recibirPublicidad" color="primary"></mat-checkbox>
+                        </section>
+                    </div>
+                    <div class="col-12">
+                        <mat-slide-toggle color="primary" [(ngModel)]="changePassword"
+                            [ngModelOptions]="{standalone: true}" (change)="changePass($event.checked)">{{ userId > 0 ?
+                            'Cambiar contraseña?' : 'Asignar contraseña manualmente' }}</mat-slide-toggle>
+                        <small *ngIf="userId === 0">
+                            <br> * Si el interruptor está apagado, se asignará una contraseña de manera automática
+                        </small>
+                    </div>
+                </div>
+                <div *ngIf="showPasswordInputs" class="row">
+                    <div class="col-12">
+                        <small>* Utilizar mínimo 8 caracteres</small>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Contraseña</mat-label>
+                            <input type="password" matInput [(ngModel)]="firstPassword"
+                                [ngModelOptions]="{standalone: true}" placeholder="Contraseña" autocomplete="off"
+                                required />
+                            <mat-icon matSuffix *ngIf="validPasswords">done</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Repita contraseña *</mat-label>
+                            <input type="password" matInput [disabled]="(firstPassword.length < 8) ? true : null"
+                                [(ngModel)]="secondPassword" [ngModelOptions]="{standalone: true}" minlength="8"
+                                placeholder="Confirmar Contraseña" autocomplete="off"
+                                (ngModelChange)="formValidPasswords()">
+                            <mat-icon matSuffix *ngIf="validPasswords">done</mat-icon>
+                            <span *ngIf="repeatPasswordError" style="color: red;">Las contraseñas no coinciden</span>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <div class="col-12">
+                    <h3>Perfiles disponibles</h3>
+                    <hr>
+                </div>
+            </div>
+            
+            <div class="row profiles-container" *ngIf="profiles.length>0">
+                <div class="col-12 col-md-6 col-lg-3 mb-1" *ngFor="let profile of profiles; let index = index;">
+                    <mat-card [class]="(profile.activo ? 'mat-card selected-profile' : 'mat-card')">
+                        <mat-card-content>
+                            <mat-checkbox [(ngModel)]="profile.activo" (ngModelChange)="onChangeProfileCheckbox()"
+                                color="primary">
+                                <b>{{ profile.nombre }}</b>
+                            </mat-checkbox>
+                            <br>
+                            <span>Área: {{ profile.area !== null ? areasList[profile.area] : 'N/A' }}</span>
+                            <br>
+                            <small><i>Nivel: {{profile.nivel}}</i></small>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+            </div>
+            <div class="row profiles-container" *ngIf="profiles.length === 0">
+                <div class="col-12" align="center">
+                    <h4>Tu perfil no cuenta decendientes jerárquicos</h4>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button type="button" mat-raised-button color="primary" (click)="form.ngSubmit.emit()">Guardar</button>
+            <a [routerLink]="['/usuarios']" mat-raised-button color="warn">Volver</a>
+        </mat-card-actions>
+    </mat-card>
+</div>

@@ -1,0 +1,11 @@
+<div class="modal-component">
+  <div class="modal-header">
+    <strong>{{data.evento}}</strong>
+  </div>
+  <div class="modal-content">
+    <video [src]="data.video" [autoplay]="true" controls></video>
+  </div>
+  <div class="modal-actions">
+    <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

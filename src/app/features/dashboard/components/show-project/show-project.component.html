@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-12">
+    <h3 style="margin-bottom:5px;">Proyecto P-{{ (data.id).toString().padStart(10,'0') }}</h3>
+    <small>Empresa: {{ data.empresaId?.nombreComercial }}</small>
+    <hr>
+  </div>
+  <div class="col-12">
+    <small>
+      <span>Fecha de inicio: {{ data.fechaInicio | date: 'dd/MM/yyyy' }}</span><span *ngIf="data.fechaFin"> - Fecha
+        de término: {{ data.fechaFin | date: 'dd/MM/yyyy' }}</span>
+    </small>
+  </div>
+  <div class="col-12">
+    <h4 style="margin-bottom:5px;">{{ data.nombreProyecto }}</h4>
+    <p align="justify" [innerHtml]="data.descripcion ? data.descripcion : 'No hay descripción para este proyecto.'"></p>
+    <span>Colaboradores activos: {{ data.colaboradores.length }}</span>
+  </div>
+  <div class="col-12" style="text-align:right;">
+    <hr>
+    <button type="button" mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

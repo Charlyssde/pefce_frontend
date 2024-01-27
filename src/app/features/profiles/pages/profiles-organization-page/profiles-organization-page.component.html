@@ -1,0 +1,24 @@
+<div>
+    <a [routerLink]="['/perfiles']" mat-fab color="warn" class="btn-regresar-esquina" matTooltip="Volver">
+        <mat-icon>arrow_back</mat-icon>
+    </a>
+
+    <shared-dashboard-title [title]="'Perfiles'"></shared-dashboard-title>
+
+    <div class="mat-elevation-z8">
+        <div class="row">
+            <div class="col-12" align="end">
+                <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 scroll-container">
+                <div>
+                    <ngx-org-chart [nodes]="nodes" direction="vertical"></ngx-org-chart>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

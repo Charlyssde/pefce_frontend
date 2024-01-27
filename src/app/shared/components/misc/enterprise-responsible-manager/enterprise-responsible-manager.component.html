@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-12">
+    <h4>Responsable de la empresa</h4>
+    <hr>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <div *ngIf="!showEnterprises_EnterpriseResponsibleSelect()">
+      <h5>Empresa: <b>{{ selectedEnterprise?.empresa }}</b></h5>
+    </div>
+    <shared-select-with-filter *ngIf="showEnterprises_EnterpriseResponsibleSelect()" [placeholder]="'Empresas'"
+      [keyName]="'empresa'" [valueSetted]="selectedEnterprise" [optionsList]="enterprisesList"
+      (emitSelectedValue)="setSelectedEnterprise($event)"></shared-select-with-filter>
+  </div>
+  <div class="col-12 col-sm-6 col-md-6">
+    <div *ngIf="!showEnterprises_EnterpriseResponsibleSelect()">
+      <h5>Responsable: <b>{{ selectedResponsible?.nombre }}</b></h5>
+    </div>
+    <shared-select-with-filter *ngIf="showEnterprises_EnterpriseResponsibleSelect()"
+      [placeholder]="'Responsable de empresa'" [keyName]="'nombre'" [valueSetted]="selectedResponsible"
+      [optionsList]="responsiblesList" (emitSelectedValue)="setSelectedEnterpriseResponsible($event)"></shared-select-with-filter>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+.mat-elevation-z8 {
+    padding: 10px;
+    background-color: white;
+    box-shadow: 0px 10px 10px -1px rgb(0 0 0 / 20%) !important;
+    margin-bottom: 2rem;
+}
+
+.mat-elevation-z8::-webkit-scrollbar {
+    width: 0px;
+}
+
+.mat-elevation-z8>.row {
+    margin: auto !important;
+}
+
+.mat-elevation-z8>table {
+    width: calc(100% - 20px) !important;
+    margin: 5px auto !important;
+}
+
+.mat-elevation-z8 table td{
+    vertical-align: top !important;
+    text-align: justify;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-center a {
+    margin: auto 2px;
+}
+
+::ng-deep #calendar-container{
+    height: calc(100vh - 350px) !important;
+    max-height: calc(100vh - 350px) !important;
+    min-height: calc(100vh - 350px) !important;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 48
+}
+
+.inline-list{
+    display: inline-block;
+    margin-right: 1em;
+}
+
+::ng-deep .helpIcon{
+    font-size: 20px !important;
+}
+
+::ng-deep .oldEventIcon{
+    color: #bec4cf !important;
+}
+
+::ng-deep .inTimeEventIcon{
+    color: #5cb85c !important;
+}
+
+::ng-deep .warningEventIcon{
+    color:#f0ad4e !important;
+}
+
+::ng-deep .dangerEventIcon{
+    color:#d9534f !important;
+}
+
+::ng-deep .todayEventIcon{
+    color:#0275d8 !important;
+}

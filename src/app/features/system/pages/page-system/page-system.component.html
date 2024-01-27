@@ -1,0 +1,103 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Configuración del sistema</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encargado SUBIN</mat-label>
+            <mat-select formControlName="subinresponsable" required>
+              <mat-option *ngFor="let subin of subins" [value]="subin.id">
+                {{subin.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+ 
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encargado DCE</mat-label>
+            <mat-select formControlName="dceresponsable" required>
+              <mat-option *ngFor="let dce of dces" [value]="dce.id">
+                {{dce.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encargado DAIN</mat-label>
+            <mat-select formControlName="dainresponsable" required>
+              <mat-option *ngFor="let dain of dains" [value]="dain.id">
+                {{dain.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encargado CPDIT</mat-label>
+            <mat-select formControlName="cpditresponsable" required>
+              <mat-option *ngFor="let cpdit of cpdits" [value]="cpdit.id">
+                {{cpdit.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encuesta capacitación</mat-label>
+            <mat-select formControlName="capacitacion" required>
+              <mat-option *ngFor="let encuesta of encuestas" [value]="encuesta.id">
+                {{encuesta.titulo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encuesta eventos</mat-label>
+            <mat-select formControlName="subarea" required>
+              <mat-option *ngFor="let encuesta of encuestas" [value]="encuesta.id">
+                {{encuesta.titulo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encuesta solicitudes</mat-label>
+            <mat-select formControlName="subarea" required>
+              <mat-option *ngFor="let encuesta of encuestas" [value]="encuesta.id">
+                {{encuesta.titulo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Encuesta proyectos</mat-label>
+            <mat-select formControlName="subarea" required>
+              <mat-option *ngFor="let encuesta of encuestas" [value]="encuesta.id">
+                {{encuesta.titulo}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>                                                
+      </mat-grid-list>
+      <span>* Campos obligatorios</span>
+    </form>
+  </mat-card-content>
+</mat-card>

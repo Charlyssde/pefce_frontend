@@ -1,0 +1,19 @@
+.rs-container{
+  min-height: 8rem;
+  margin:60px auto;
+  text-align:center;
+}
+.b-cell{
+  text-align: center;
+}
+.icon-container{
+  display: flex;
+}
+.sn-icon{
+  font-size: 5rem;
+  cursor: pointer;
+  margin:1rem auto;
+}
+.sn-icon:hover{
+  font-size: 6rem;
+}

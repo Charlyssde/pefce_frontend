@@ -1,0 +1,65 @@
+<div>
+  <shared-dashboard-title [title]="'Logs de sesiones'"></shared-dashboard-title>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+        <div class="col-12" align="end">
+            <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+                <mat-icon>help</mat-icon></button>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-12 col-lg-6">
+            <mat-form-field appearance="fill">
+                <mat-icon matPrefix>search</mat-icon>
+                <mat-label>Buscar</mat-label>
+                <input matInput [(ngModel)]="nombre" type="text" placeholder="Buscar por nombre, email o perfil" autocomplete="off"
+                    (ngModelChange)="handleFilter()">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3" align="end">
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Perfil</th>
+                        <th>Inicio</th>
+                        <th>Fin</th>
+                        <th>Estatus</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="dataset && dataset.length === 0">
+                        <td style="text-align:center;" colspan="7">
+                            <h4>No hay registros para mostrar</h4>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let data of dataset; let index1 = index;">
+                        <td>{{ data.usuario.nombre }}</td>
+                        <td>{{ data.usuario.email }}</td>
+                        <td>{{ data.profile.nombre }}</td>
+                        <td align="right">{{ data.sesionInicio | date: 'dd/MM/y H:mm:ss' }}</td>
+                        <td align="right">{{ data.sesionFin | date: 'dd/MM/y H:mm:ss' }}</td>
+                        <td align="center">{{ data.estatus ? 'Activo' : 'Inactivo' }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+                [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+                [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+                [pageIndex]="pageIndex" aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>
+</div>

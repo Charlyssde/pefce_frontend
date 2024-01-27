@@ -1,0 +1,79 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Datos generales de la pregunta</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="3" rowHeight="100px" [cols]="breakpoint" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Pregunta</mat-label>
+            <textarea matInput placeholder="Pregunta" formControlName="pregunta" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Detalle</mat-label>
+            <textarea matInput placeholder="Detalle" formControlName="detalle" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-card-content>
+            <div class="row">
+              <div class="col-4">
+                <p>Recurso (Imagen opcional)</p>
+              </div>
+              <div class="col-4">
+                <input hidden type="file" (change)="changeFile('inputRecurso')" #inputRecurso id="inputRecurso">
+                <img *ngIf="pathfileRecurso" class="imgPreview" id="Recurso" [src]="pathfileRecurso" (click)="openModalImage(pathfileRecurso)" title="Click para vista previa"/>
+              </div>
+              <div class="col-4">
+                <button *ngIf="oldPathfileRecurso == null" type="button" mat-icon-button color="primary" (click)="inputRecurso.click()"><span class="material-icons">change_circle</span></button>
+                <button *ngIf="oldPathfileRecurso != null" type="button" mat-icon-button (click)="uploadFile('inputRecurso')"><span class="material-icons">cloud_upload</span></button>
+                <button *ngIf="oldPathfileRecurso != null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile('inputRecurso')"><span class="material-icons">cancel</span></button>
+              </div>
+            </div>
+            </mat-card-content>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta A</mat-label>
+            <textarea matInput placeholder="Respuesta A" formControlName="respuestaA" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta B</mat-label>
+            <textarea matInput placeholder="Respuesta B" formControlName="respuestaB" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta C</mat-label>
+            <textarea matInput placeholder="Respuesta C" formControlName="respuestaC" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta D</mat-label>
+            <textarea matInput placeholder="Respuesta D" formControlName="respuestaD" required></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Respuesta correcta</mat-label>
+            <mat-select formControlName="respuestaCorrecta" required>
+              <mat-option *ngFor="let respuestaCorrecta of respuestasCorrectas" [value]="respuestaCorrecta.value">
+                {{respuestaCorrecta.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <span>* Campos obligatorios</span>
+    </form>
+  </mat-card-content>
+</mat-card>

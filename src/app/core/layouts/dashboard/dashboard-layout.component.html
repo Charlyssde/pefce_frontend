@@ -1,0 +1,78 @@
+<mat-toolbar>
+    <button mat-icon-button (click)="drawer.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <span class="toolbar-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="userOptions">
+        Cuenta <mat-icon>account_circle</mat-icon>
+    </button>
+
+    <mat-menu #userOptions="matMenu">
+        <div class="user-card">
+            <mat-icon>account_circle</mat-icon>
+            <h5>{{ userSession ? userSession.nombre : '-'}}</h5>
+            <small>{{ userSession ? userSession.perfil.nombre : '-' }}</small>
+        </div>
+        <mat-divider></mat-divider>
+        <!-- <button mat-menu-item [routerLink]="['/mi-perfil']">Ir a mi perfil</button> -->
+        <button mat-menu-item (click)="onClickLogout()">Cerrar sesión</button>
+    </mat-menu>
+</mat-toolbar>
+
+<mat-drawer-container class="sidebar-container" autosize [hasBackdrop]="false">
+    <mat-drawer #drawer class="sidenav" mode="over">
+        <div class="sidenav-logo">
+            <img [src]="'./assets/img/default/logos/tu-estado-industrial-logo.png'" alt="logo" title="Inicio" (click)="onClickLogo()">
+        </div>
+        <mat-divider></mat-divider>
+        <mat-nav-list>
+            <div>
+                <a [routerLink]="[ '/dashboard' ]" mat-list-item (click)="drawer.toggle()">
+                    <mat-icon>home</mat-icon> Inicio
+                </a>
+            </div>
+            <mat-divider></mat-divider>
+            <div *ngFor="let menuOption of menuOptions">
+                <a mat-list-item [routerLink]="[ menuOption.urlModulo ]" *ngIf="!menuOption.subModulos;else submenu" (click)="drawer.toggle()">
+                    <mat-icon>{{menuOption.icon}}</mat-icon>{{menuOption.nombreEtiqueta}}
+                </a>
+                <ng-template #submenu>
+                    <mat-nav-list>
+                        <a mat-list-item class="ml-2" [matMenuTriggerFor]="subMenu">
+                            <mat-icon>{{menuOption.icon}}</mat-icon> {{menuOption.nombreEtiqueta}}
+                        </a>
+                        <mat-menu #subMenu>
+                            <div *ngFor="let subModulos of menuOption.subModulos">
+                                <a mat-menu-item [routerLink]="[ subModulos.urlModulo ]" (click)="drawer.toggle()"> {{subModulos.nombreEtiqueta}}</a>
+                            </div>
+                        </mat-menu>
+                    </mat-nav-list>
+                </ng-template>
+            </div>
+            <mat-divider></mat-divider>
+            <!--
+            <div>
+                <a mat-list-item [routerLink]="['/mi-perfil']" (click)="drawer.toggle()">
+                    Mi perfil
+                </a>
+            </div>
+            -->
+            <div>
+                <a mat-list-item (click)="onClickLogout()">
+                    Cerrar sesión
+                </a>
+            </div>
+        </mat-nav-list>
+    </mat-drawer>
+
+    <div class="sidenav-content">
+        <div class="container-fluid">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+    <footer class="dashboard-footer">
+        <small>Tu estado industrial</small>
+    </footer>
+
+</mat-drawer-container>

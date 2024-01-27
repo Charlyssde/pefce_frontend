@@ -1,0 +1,8 @@
+<mat-form-field class="selectWithFilter" [appearance]="appearance">
+  <mat-label>{{ placeholder }}</mat-label>
+  <mat-select [(ngModel)]="selectedValue" (ngModelChange)="onChangeSelectedValue()" [compareWith]="utils.objectComparisonFunction">
+    <input class="dynamicFilterInput" [(ngModel)]="dynamicFilterInput" (ngModelChange)="onChangeDynamicFilterInput()" matInput type="text" placeholder="Buscar">
+    <mat-option [value]="null">Ninguno</mat-option>
+    <mat-option *ngFor="let option of options" [value]="option">{{ option[keyName] }}</mat-option>
+  </mat-select>
+</mat-form-field>

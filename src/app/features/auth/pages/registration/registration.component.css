@@ -1,0 +1,32 @@
+.auth-logo {
+    max-width: 350px;
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+}
+
+.auth-content .mat-card {
+    height: auto;
+}
+
+@media(min-width: 768px) {
+    .auth-content .mat-card {
+        width: 95vw !important;
+        min-width: 95vw !important;
+        max-width: 95vw !important;
+        height: calc(100vh - 150px) !important;
+        min-height: calc(100vh - 150px) !important;
+        max-height: calc(100vh - 150px) !important;
+        margin-top: 100px;
+    }
+    #formRegistrationContainer {
+        position: absolute;
+        height: calc(100vh - 250px) !important;
+        min-height: calc(100vh - 250px) !important;
+        max-height: calc(100vh - 250px) !important;
+        overflow-y: auto;
+    }
+    #formRegistrationContainer::-webkit-scrollbar {
+        display: none;
+    }
+}

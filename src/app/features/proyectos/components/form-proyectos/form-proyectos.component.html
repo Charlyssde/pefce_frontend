@@ -1,0 +1,152 @@
+<div class="mat-elevation-z8">
+  <mat-card>
+    <mat-card-content>
+      <div class="row">
+        <div class="col-12" style="text-align:right;">
+          <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+            <mat-icon>help</mat-icon></button>
+        </div>
+        <div class="col-12">
+          <small>Los campos marcados con asterisco (*) son requeridos</small>
+          <hr>
+        </div>
+      </div>
+
+      <form [formGroup]="formProject" #form="ngForm" (ngSubmit)="onSubmitForm()">
+        <div class="row">
+
+          <div class="col-12">
+            <h5>Folio: <strong>{{ folio }}</strong></h5>
+          </div>
+
+          <div class="col-12">
+            <h3>Datos generales del proyecto</h3>
+            <hr>
+          </div>
+
+          <div class="col-12">
+            <mat-form-field appearance="fill">
+              <mat-label>Nombre del proyecto</mat-label>
+              <input matInput placeholder="Nombre del proyecto" formControlName="nombre" required>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 mb-1 ">
+            <span class="mb-1">Descripción</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Descripción"
+              formControlName="descripcion"></quill-editor>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Tipo</mat-label>
+              <mat-select formControlName="tipoId">
+                <mat-option [value]="null" selected>Ninguno</mat-option>
+                <mat-option *ngFor="let type of typesList;" [value]="type">{{ type.nombre }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de inicio</mat-label>
+              <input matInput [matDatepicker]="fechaInicio" formControlName="fechaInicio">
+              <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+              <mat-datepicker #fechaInicio></mat-datepicker>
+            </mat-form-field>
+          </div>
+          
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha de finalización</mat-label>
+              <input matInput [matDatepicker]="fechaFin" formControlName="fechaFin">
+              <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+              <mat-datepicker #fechaFin></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Prioridad</mat-label>
+              <mat-select formControlName="prioridad">
+                <mat-option [value]="null" selected>Ninguno</mat-option>
+                <mat-option *ngFor="let priority of prioritiesList | keyvalue" [value]="priority.key">{{ priority.value
+                  }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Estatus</mat-label>
+              <mat-select formControlName="estatus">
+                <mat-option [value]="null" selected>Ninguno</mat-option>
+                <mat-option *ngFor="let status of statusList | keyvalue" [value]="status.key">{{ status.value
+                  }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Monto previsto</mat-label>
+              <input matInput placeholder="Monto previsto" formControlName="montoPrevisto">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Empleos directos</mat-label>
+              <input type="number" step="1" min="0" matInput placeholder="Empleos directos"
+                formControlName="empleosDirectos">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Empleos indirectos</mat-label>
+              <input type="number" step="1" min="0" matInput placeholder="Empleos indirectos"
+                formControlName="empleosIndirectos">
+            </mat-form-field>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+            <mat-form-field appearance="fill">
+              <mat-label>Oficio/Turno</mat-label>
+              <input matInput placeholder="Oficio/Turno" formControlName="oficioTurno">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <shared-institution-responsible-manager *ngIf="session.perfil.tipo !== 'empresa'"
+        [area]="area"
+        [responsible]="institutionResponsible?.usuarioId"
+        (emitSelectedArea)="getSelectedArea($event)" 
+        (emitSelectedResponsible)="getSelectedInstitutionResponsible($event)"></shared-institution-responsible-manager>
+
+        <shared-enterprise-responsible-manager 
+        [enterprise]="enterprise"
+        [interested]="enterpriseResponsible?.usuarioId" 
+        (emitSelectedEnterprise)="getSelectedEnterprise($event)" 
+        (emitSelectedResponsible)="getSelectedEnterpriseResponsible($event)"></shared-enterprise-responsible-manager>
+
+        <div class="row">
+          <div class="col-12 mb-1">
+            <span class="mb-1">Observaciones</span>
+            <br>
+            <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Observaciones"
+              formControlName="observaciones"></quill-editor>
+          </div>
+        </div>
+
+        <!-- <br> -->
+
+        <div class="row">
+          <div class="col-12" align="end">
+            <button type="button" mat-raised-button color="primary" (click)="form.ngSubmit.emit()">Guardar</button>
+            <a [routerLink]="['/proyectos']" mat-raised-button color="warn">Cancelar</a>
+          </div>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

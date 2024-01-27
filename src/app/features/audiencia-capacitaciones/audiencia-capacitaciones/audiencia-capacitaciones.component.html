@@ -1,0 +1,42 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Capacitaciones
+  </mat-card-title>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <mat-tab-group>
+
+      <mat-tab label="Mis capacitaciones ({{ capacitacionesRegistradas.length }})">
+        <div class="row" *ngIf="(capacitacionesRegistradas.length > 0)">
+          <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let capacitacion of capacitacionesRegistradas; let i = index">
+            <div class="card-capacitacion-container">
+              <app-card-capacitacion [capacitacion]="capacitacion" [tipo]="2" (reload)=reload()></app-card-capacitacion>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="(capacitacionesRegistradas.length === 0)">
+          <div class="col-12" align="center">
+            <h3>No tiene registrada alguna capacitación</h3>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Capacitaciones disponibles ({{ capacitacionesNoRegistradas.length }})">
+        <div *ngIf="(capacitacionesNoRegistradas.length > 0)"  class="row">
+          <div class="col-12 col-sm-6 col-lg-4 col-xl-3" *ngFor="let capacitacion of capacitacionesNoRegistradas; let i = index">
+            <div class="card-capacitacion-container">
+              <app-card-capacitacion [capacitacion]="capacitacion" [tipo]="1" (reload)=reload()></app-card-capacitacion>
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="(capacitacionesNoRegistradas.length === 0)">
+          <div class="col-12" align="center">
+            <h3>No hay capacitaciones disponibles</h3>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

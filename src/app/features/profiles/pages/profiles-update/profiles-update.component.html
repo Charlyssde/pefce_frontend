@@ -1,0 +1,5 @@
+<div>
+    <shared-dashboard-title [title]="'Editar perfil'"></shared-dashboard-title>
+
+    <app-profile-form [helpsSettings]="helpsSettings" [profileId]="profileId" [profile]="profile" [menuList]="menuList" [profilesList]="profilesList" (profileOut)="submitProfile($event)"></app-profile-form>
+</div>

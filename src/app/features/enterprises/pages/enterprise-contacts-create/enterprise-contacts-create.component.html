@@ -1,0 +1,10 @@
+<div>
+  <shared-dashboard-title [title]="'Nuevo contacto de empresa'"></shared-dashboard-title>
+
+  <a [routerLink]="['/empresas/'+enterpriseId+'/contactos']" mat-fab color="warn" class="btn-regresar-esquina" matTooltip="Volver">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+  
+  <app-enterprise-contact-form [helpsSettings]="helpsSettings" [enterpriseIdIn]="enterpriseId" [contactId]="contactId" [contactIn]="contact" (contactOut)="submitContact($event)"></app-enterprise-contact-form>
+
+</div>

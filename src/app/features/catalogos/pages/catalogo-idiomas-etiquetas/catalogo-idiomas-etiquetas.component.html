@@ -1,0 +1,31 @@
+<div>
+  <shared-dashboard-title [title]="helpsSettings.module_name"></shared-dashboard-title>
+
+  <a [routerLink]="'/catalogos/idiomas'" mat-fab color="warn" class="btn-regresar-esquina" matTooltip="Volver" *ngIf="padreId">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+      <div class="col-12">
+        <h3>Etiquetas del idioma {{ language?.idioma }}</h3>
+        <hr>
+      </div>
+      <div class="col-12">
+        <div class="row" id="labelsContainer">
+          <div class="col-12" *ngFor="let item of templateLabels | keyvalue">
+            <small for="idioma">* Plantilla base: {{ item.value }}</small>
+            <mat-form-field appearance="fill">
+              <mat-label>Clave: {{ item.key }}</mat-label>
+              <textarea matInput rows="5" [(ngModel)]="languageLabels[item.key]"></textarea>
+            </mat-form-field>
+            <div style="text-align: right;">
+              <button type="button" mat-button color="primary" (click)="updateLanguage()">Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,107 @@
+@media(max-width:768px){
+    ::ng-deep .fc-left,
+    ::ng-deep .fc-right{
+        width: 100% !important;
+        margin-bottom: 2rem;
+    }
+    ::ng-deep .fc-toolbar {
+        display: block !important;
+        text-align: center !important;
+    }
+}
+
+::ng-deep .fc-button-primary{
+    background-color: #b03e36 !important;
+    border-color: #b03e36 !important;
+}
+::ng-deep .fc-button-primary.fc-button-active{
+    background-color: #b03e36BB !important;
+    font-weight: bold !important;
+}
+
+::ng-deep .fc-unthemed .fc-today{
+    background-color: #b3b7ba33 !important;
+    color: black !important;
+}
+
+.material-symbols-outlined {
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48
+  }
+  
+  .inline-list{
+      display: inline-block;
+      margin-right: 1em;
+      cursor: pointer;
+  }
+  
+  ::ng-deep .helpIcon{
+      font-size: 20px !important;
+  }
+  
+  ::ng-deep .oldEventIcon{
+      color: #bec4cf !important;
+  }
+  
+  ::ng-deep .inTimeEventIcon{
+      color: #5cb85c !important;
+  }
+  
+  ::ng-deep .warningEventIcon{
+      color:#f0ad4e !important;
+  }
+  
+  ::ng-deep .dangerEventIcon{
+      color:#d9534f !important;
+  }
+  
+  ::ng-deep .todayEventIcon{
+      color:#0275d8 !important;
+  }
+
+::ng-deep .oldEvent,
+::ng-deep .oldEvent td,
+::ng-deep .oldEvent td>a{
+    background-color: #bec4cf !important;
+    border-color: #bec4cf !important;
+    color: white !important;
+}
+::ng-deep .inTimeEvent,
+::ng-deep .inTimeEvent td,
+::ng-deep .inTimeEvent td>a{
+    background-color: #5cb85c !important;
+    border-color: #5cb85c !important;
+    color: white !important;
+}
+::ng-deep .warningEvent,
+::ng-deep .warningEvent td,
+::ng-deep .warningEvent td>a{
+    background-color: #f0ad4e !important;
+    border-color: #f0ad4e !important;
+    color: white !important;
+}
+::ng-deep .dangerEvent,
+::ng-deep .dangerEvent td,
+::ng-deep .dangerEvent td>a{
+    background-color: #d9534f !important;
+    border-color: #d9534f !important;
+    color: white !important;
+}
+::ng-deep .todayEvent,
+::ng-deep .todayEvent td,
+::ng-deep .todayEvent td>a{
+    background-color: #0275d8 !important;
+    border-color: #0275d8 !important;
+    color: white !important;
+}
+
+::ng-deep .mainEvent:hover,
+::ng-deep .mainEvent:hover td,
+::ng-deep .mainEvent:hover td>a{
+    background-color: #b3b7ba !important;
+    border-color: #b3b7ba !important;
+    color:black !important;
+}

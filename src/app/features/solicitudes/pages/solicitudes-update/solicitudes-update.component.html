@@ -1,0 +1,16 @@
+<div>
+  <mat-card class="formHeader">
+    <mat-card-title>Editar solicitud</mat-card-title>
+  </mat-card>
+  <br>
+  <mat-card>
+    <mat-card-content>
+      <app-solicitudes-form [idSolicitud]="idSolicitud"></app-solicitudes-form>
+    </mat-card-content>
+    <mat-divider></mat-divider>
+    <mat-card-actions align="end">
+      <a [routerLink]="['/solicitudes']" routerLinkActive="router-link-active"  mat-raised-button color="warn">Regresar</a>
+      <button mat-raised-button color="primary" (click)="save()" >Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

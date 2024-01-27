@@ -1,0 +1,48 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Datos generales de la capacitación
+  </mat-card-title>
+</mat-card>
+
+<mat-card>
+  <mat-card-content>
+    <mat-grid-list cols="3" rowHeight="80px">
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Capacitación:</h3>
+          {{capacitacion.nombre}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Descripción</h3>
+          {{capacitacion.descripcion}}
+        </div>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <div style="text-align:justify;width:100%;padding:15px 10px;">
+          <h3>Subárea</h3>
+          {{capacitacion.subarea}}
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card-content>
+</mat-card>
+<br>
+<div *ngIf="showCreate">
+  <app-create-modulo (goPage)=goToPage() [capacitacion]="capacitacion"></app-create-modulo>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="warn" class="mat-stroked-button btn-regresar" [routerLink]="['/capacitaciones']">
+    <mat-icon>arrow_back_ios_new</mat-icon>
+  </a>
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" *ngIf="scriptGL.getCanCreateRol('/capacitaciones')">
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-modulo [idCapacitacion]="id_capacitacion" (goUpdate)="goToUpdate($event)"></app-page-modulo>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-modulo [idForm]="idForm" [capacitacion]="capacitacion" (goPage)=goToPage()></app-update-modulo>
+</div>

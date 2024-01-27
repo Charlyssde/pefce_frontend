@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-12">
+    <h3 style="margin-bottom:5px;">Notificación</h3>
+    <small *ngIf="data.canal">Canal: {{ data.canal.nombre }}</small>
+    <small *ngIf="data.destinatario">Usuario: {{ data.destinatario.nombre }}</small>
+    <hr>
+  </div>
+  <div class="col-12">
+    <small>
+      <span>Tipo de notificación: {{ dashboardService.getNotificationType(data.tipo) }}</span>
+      <br>
+      <span>Fecha y hora de recibido: {{ data.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+    </small>
+  </div>
+  <div class="col-12">
+    <h4 style="margin-bottom:5px;">Contenido:</h4>
+    <p align="justify" [innerHtml]="data.texto"></p>
+  </div>
+  <div class="col-12" style="text-align:right;">
+    <hr>
+    <button type="button" mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

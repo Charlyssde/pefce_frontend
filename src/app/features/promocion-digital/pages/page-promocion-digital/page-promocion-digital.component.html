@@ -1,0 +1,209 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    {{isSending?"Enviar plantilla":"Listado de plantillas"}}
+  </mat-card-title>
+</mat-card>
+<div>
+  <mat-card>
+    <div *ngIf="!isSending">
+      <mat-card-content>
+        <mat-form-field class="filter_field">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input [disabled]="dataSource === null" autocomplete="off">
+        </mat-form-field>
+        <br>
+        <div class="mat-elevation-z8">
+          <table #sort="matSort" class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort [hidden]="!dataSource && !isCharge">
+            <ng-container matColumnDef="nombre">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+              <td mat-cell *matCellDef="let element" (click)="preview(element)" title="Ver plantilla" style="cursor: pointer;"> {{element?.nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="updatedAt">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha<br>actualización</th>
+              <td mat-cell *matCellDef="let element" (click)="preview(element)" title="Ver plantilla" style="cursor: pointer;"> {{element?.updatedAt | date:'dd MMM yyyy HH:mm'}}hrs</td>
+            </ng-container>
+            <ng-container matColumnDef="acciones">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
+              <td mat-cell *matCellDef="let element" (click)="preview(element)" title="Ver plantilla" style="cursor: pointer;" class="tdActions">
+                <mat-button-toggle-group>
+                  <mat-button-toggle color="warn" title="Enviar" (click)="enviar(element)" ><span class="material-icons">forward_to_inbox</span></mat-button-toggle>
+                  <mat-button-toggle color="primary" title="Editar" (click)="editar(element)" ><span class="material-icons">edit</span></mat-button-toggle>
+                  <mat-button-toggle color="warn" title="Eliminar" (click)="eliminar(element)" ><span class="material-icons">delete</span></mat-button-toggle>
+                </mat-button-toggle-group>
+              </td>
+            </ng-container>
+            <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No hay resultados para la búsqueda con "{{input.value}}"</td>
+            </tr>
+          </table>
+          <div>
+            <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+            <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+              <td>No existen registros</td>
+            </tr>
+          </div>
+          <mat-paginator #paginator="matPaginator" [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-card-content>
+    </div>
+    <div #tlPlantillaSeleccionada tabindex="-1">
+      <mat-label>Nombre: {{nombrePreview==""?"Seleccione una plantilla":nombrePreview}}</mat-label><br>
+      <div style="border: solid 2px; border-color: black; height: 400px;">
+        <quill-view [content]="plantillaPreview" format="text"></quill-view>
+      </div> <br>
+    </div>
+    <div *ngIf="isSending">
+      <h2 #tlAdminDestinatarios tabindex="-1">Administración de destinatarios</h2>
+      <mat-card-content>
+        <!-- para filtrarcolumnastabla -->
+        <div>
+          <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;">
+            <mat-label>Filtrar {{filter.name}}</mat-label>
+            <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue" (change)="filterChange(filter,$event)">
+              <option value="">-- Sin filtro --</option>
+              <option [value]="item" *ngFor="let item of filter.options">{{item}}</option>
+            </select>
+          </mat-form-field>
+          
+          <button style="margin-left: 10px;" mat-flat-button color="warn" (click)="resetFilters()" title="Quitar filtros y selección">Limpiar filtros</button><br>
+          <div style="text-align: center;">
+            <span>Contactos seleccionados: <strong>{{selectionDSDestinatarios.selected.length}}</strong> ¿Desea
+              <button mat-flat-button title="Agregar a lista de destinatarios" color="primary" (click)="addRemoveSelectedDestinatarios(true)" [disabled]="!selectionDSDestinatarios.hasValue()">Agregarlos</button> ó
+              <button mat-flat-button title="Remover de la lista de destinatarios" color="warn" (click)="addRemoveSelectedDestinatarios(false)" [disabled]="!selectionDSDestinatarios.hasValue()">Removerlos</button> de la
+              <button mat-flat-button title="Ir a la lista de destinatarios" color="primary" (click)="goToInPage('tlListaDestinatarios')">Lista de destinatarios ({{dataSourceDestinatariosCorreo.data.length}})</button>?
+            </span>
+          </div>
+        </div>
+        <div class="mat-elevation-z8">
+          <table #sortDestinatarios="matSort" class="sedecopTable" mat-table [dataSource]="dataSourceDestinatarios" multiTemplateDataRows matSort [hidden]="!dataSourceDestinatarios && !isChargeDestinatarios">
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox color="primary" (change)="$event ? masterToggle(false) : null" [checked]="selectionDSDestinatarios.hasValue() && isAllSelected()" [indeterminate]="selectionDSDestinatarios.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell *matCellDef="let row">
+                <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selectionDSDestinatarios.toggle(row) : null" [checked]="selectionDSDestinatarios.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="nombreLegal">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre legal<br>(empresa)</th>
+              <td mat-cell *matCellDef="let element">{{element?.empresa}} </td>
+            </ng-container>
+            <ng-container matColumnDef="giroComercial">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Giro comercial<br>(empresa)</th>
+              <td mat-cell *matCellDef="let element">{{element?.subsector.nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nombreCompleto">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="correo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].email}} </td>
+            </ng-container>
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].estatus}} </td>
+            </ng-container>
+            <ng-container matColumnDef="municipio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Municipio<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.domicilios[0]?.municipio ? element?.domicilios[0]?.municipio : "" }} </td>
+            </ng-container>
+            <ng-container matColumnDef="codigoPostal">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Código postal<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.domicilios[0]?.codigoPostal ? element?.domicilios[0]?.codigoPostal : ""}} </td>
+            </ng-container>
+            <ng-container matColumnDef="recibirCorreos">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Recibe correos<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].recibirPublicidad?'Si':'No'}} </td>
+            </ng-container>
+            <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumnsDestinatarios"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsDestinatarios;"></tr>
+          </table>
+          <div>
+            <div *ngIf="dataSourceDestinatarios === null && !isChargeDestinatarios"><br>
+              <div style="text-align: center;">Cargando lista de contactos...</div>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+            <tr class="mat-row" *ngIf="dataSourceDestinatarios === null && isChargeDestinatarios"><br>
+              <td>No existen registros</td>
+            </tr>
+          </div>
+          <mat-paginator #paginatorDestinatarios="matPaginator" hidePageSize="true" [pageSizeOptions]="[999999999]"></mat-paginator>
+        </div>
+      </mat-card-content>
+
+
+      <h2 #tlListaDestinatarios tabindex="-1">Lista de destinatarios</h2>
+      <mat-card-content>
+        <div>
+          <button style="margin-left: 10px;" mat-flat-button color="primary" (click)="goToInPage('tlAdminDestinatarios')" title="Ir a la administración de destinatarios">Ir a la administración de destinatarios</button>
+          <button style="margin-left: 10px;" mat-flat-button color="primary" (click)="goToInPage('tlPlantillaSeleccionada')" title="Ir a la plantilla seleccionada">Ver la plantilla seleccionada</button>
+          <button style="margin-left: 10px;" mat-flat-button color="warn" (click)="enviarCorreoDestinatarios()" title="Enviar correos" [disabled]="!dataSourceDestinatariosCorreo || !dataSourceDestinatariosCorreo.data || !dataSourceDestinatariosCorreo.data.length">Enviar plantilla a los {{dataSourceDestinatariosCorreo.data.length}} destinatarios de la lista</button>
+        </div>
+        <div *ngIf="cargando">
+          <br>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+          <strong class="loader-text">{{cargandoTexto}}</strong>
+        </div>
+        <div class="mat-elevation-z8">
+          <table #sortDestinatariosCorreo="matSort" class="sedecopTable" mat-table [dataSource]="dataSourceDestinatariosCorreo" multiTemplateDataRows matSort [hidden]="!dataSourceDestinatariosCorreo && !isChargeDestinatariosCorreo">
+            <ng-container matColumnDef="nombreLegal">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre legal<br>(empresa)</th>
+              <td mat-cell *matCellDef="let element">{{element?.empresa}} </td>
+            </ng-container>
+            <ng-container matColumnDef="giroComercial">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Giro comercial<br>(empresa)</th>
+              <td mat-cell *matCellDef="let element">{{element?.subsector.nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="nombreCompleto">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="correo">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Correo<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].nombre}} </td>
+            </ng-container>
+            <ng-container matColumnDef="estado">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.contactos[0].estatus}} </td>
+            </ng-container>
+            <ng-container matColumnDef="municipio">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Municipio<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.domicilios[0]?.municipio ? element?.domicilios[0]?.municipio : ""}} </td>
+            </ng-container>
+            <ng-container matColumnDef="codigoPostal">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Código postal<br>(contacto)</th>
+              <td mat-cell *matCellDef="let element">{{element?.domicilios[0]?.codigoPostal ? element?.domicilios[0]?.codigoPostal: "" }} </td>
+            </ng-container>
+            <ng-container matColumnDef="recibirCorreos">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Recibe correos<br>(contacto)</th>
+              <td mat-cell *matCellDef=" let element">{{element?.contactos[0].recibirPublicidad?'Si':'No'}} </td>
+            </ng-container>
+            <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumnsDestinatariosCorreo"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsDestinatariosCorreo;"></tr>
+          </table>
+          <div>
+            <div *ngIf="dataSourceDestinatariosCorreo === null && !isChargeDestinatariosCorreo"><br>
+              <div style="text-align: center;">Cargando lista de destinatarios...</div>
+              <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            </div>
+            <tr class="mat-row" *ngIf="dataSourceDestinatariosCorreo === null && isChargeDestinatariosCorreo"><br>
+              <td>No existen registros</td>
+            </tr>
+          </div>
+          <mat-paginator #paginatorDestinatariosCorreo="matPaginator" hidePageSize="true" [pageSizeOptions]="[999999999]"></mat-paginator>
+        </div>
+      </mat-card-content>
+    </div>
+  </mat-card>
+</div>
+
+<div *ngIf="isSending">
+  <a mat-fab color="warn" class="mat-stroked-button btn-regresar-esquina" (click)="notSending()">
+    <mat-icon>arrow_back_ios_new</mat-icon>
+  </a>
+</div>

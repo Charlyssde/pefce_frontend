@@ -1,0 +1,17 @@
+<div style="max-height: 90vh; overflow-y: scroll;">
+  <div class="row">
+    <div class="col-12">
+      <span>Agregar actividad/acción al panel</span>
+      <hr>
+      <small>* Se recomienda cargar archivos en cualquier servicio de nube y generar una liga para su acceso</small>
+    </div>
+    <div class="col-12">
+      <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Actividad/Accion" [(ngModel)]="accion" required></quill-editor>
+      <hr>
+    </div>
+    <div class="col-12" style="text-align: right;">
+      <button mat-raised-button color="primary" (click)="createProyectoHistorico()" [disabled]="accion===null">Guardar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>

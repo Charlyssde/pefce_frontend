@@ -1,0 +1,67 @@
+{
+  "data":{},
+    "lang":{
+      "es":{
+        "lbl_slogan":"Trabajando por un veracruz industrial",
+        "lbl_pefce":"Plataforma electrónica para el fomento al comercio exterior, la atracción de inversiones y los proyectos estratégicos",
+        "lbl_pefce_desc": "El objetivo de esta plataforma es promover al comercio exterior y fomentar la atracción de inversiones al Estado de Veracruz mediante la difusión de nuestras fortalezas así como el impulso a los proyectos estratégicos, entre ellos, el Programa de Desarrollo del Istmo de Tehuantepec magnificando el alcance mediante el uso de tecnologías de la información.",
+        "lbl_pefce_title1": "Atracción de inversiones",
+        "lbl_pefce_content1": "Texto demostrativo",
+        "lbl_pefce_title2": "Comercio exterior",
+        "lbl_pefce_content2": "Texto demostrativo",
+        "lbl_pefce_title3": "Proyectos estratégicos",
+        "lbl_pefce_content3": "Texto demostrativo",
+        "lbl_pefce_url":"Ir a sección",
+        "lbl_target_title": "Comercialización de productos y servicios de forma virtual",
+        "lbl_target_content": "Ha surgido la necesidad de realizar ferias virtuales, exposiciones y mesas de negociación que coadyuve a diversificar las operaciones de exportación y fomentar el interés en los empresarios veracruzanos que aún no exportan, de ser partícipes en el comercio exterior, al que los altos costos de participación en pabellones internacionales es un obstáculo."
+      },
+      "en":{
+        "lbl_slogan":"Working for an industrial Veracruz",
+        "lbl_pefce":"Electronic platform for the promotion of foreign trade, investment attraction and strategic projects",
+        "lbl_pefce_desc": "The objective of this platform is to promote foreign trade and encourage the attraction of investments to the State of Veracruz by disseminating our strengths as well as promoting strategic projects, including the Tehuantepec Isthmus Development Program, magnifying the scope through the use of information technologies.",
+        "lbl_pefce_title1": "Investment attraction",
+        "lbl_pefce_content1": "Demo text",
+        "lbl_pefce_title2": "Foreign trade",
+        "lbl_pefce_content2": "Demo text",
+        "lbl_pefce_title3": "Strategic projects",
+        "lbl_pefce_content3": "Demo text",
+        "lbl_pefce_url":"Go to section",
+        "lbl_capsules_title":"Capsules",
+        "lbl_target_title": "Virtual marketing of products and services",
+        "lbl_target_content": "The need has arisen to hold virtual fairs, exhibitions and negotiation tables that help to diversify export operations and foster interest in Veracruz businessmen who have not yet exported, to be participants in foreign trade, to which the high costs of participation in international pavilions it is an obstacle."
+      }
+    },
+    "multimedia":{
+      "s1_logotipo_veracruz":{
+        "nombre":"Veracruz",
+        "pathfile":"portal/inicio/imagenes/s1_logotipo_veracruz.png",
+        "url":null
+      },
+      "s2_fondo_subareas":{
+        "nombre":"Fondo subáreas",
+        "pathfile":"portal/inicio/imagenes/s2_fondo_subareas.png",
+        "url":null
+      },
+      "s2_atraccion_inversiones":{
+        "nombre":"Atracción de inversiones",
+        "pathfile":"portal/inicio/imagenes/s2_atraccion_inversiones.png",
+        "url":null
+      },
+      "s2_comercio_exterior":{
+        "nombre":"Comercio exterior",
+        "pathfile":"portal/inicio/imagenes/s2_comercio_exterior.png",
+        "url":null
+      },
+      "s2_proyectos_estrategicos":{
+        "nombre":"Proyectos estratégicos",
+        "pathfile":"portal/inicio/imagenes/s2_proyectos_estrategicos.png",
+        "url":null
+      }
+    },
+    "videos":{
+      "s1_welcome":{
+        "nombre":"Presentación",
+        "pathfile":"portal/inicio/videos/presentacion.mp4"
+      }
+    }
+}

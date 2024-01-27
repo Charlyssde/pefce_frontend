@@ -1,0 +1,78 @@
+<div>
+    <shared-dashboard-title [title]="'Usuarios'"></shared-dashboard-title>
+
+    <a [routerLink]="['/usuarios/nuevo']" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro">
+        <mat-icon>add</mat-icon>
+    </a>
+
+    <div class="mat-elevation-z8">
+        <div class="row">
+            <div class="col-12" align="end">
+                <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+            </div>
+        </div>
+        <div class="row justify-content-between">
+            <div class="col-12 col-lg-6">
+                <mat-form-field appearance="fill">
+                    <mat-icon matPrefix>search</mat-icon>
+                    <mat-label>Buscar</mat-label>
+                    <input matInput [(ngModel)]="nombre" type="text" placeholder="Buscar" autocomplete="off" (ngModelChange)="handleFilter()">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-lg-3" align="end">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo electrónico</th>
+                            <th>Teléfono</th>
+                            <th>Sexo</th>
+                            <th>Perfiles</th>
+                            <th>Estatus</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngIf="dataset && dataset.length === 0">
+                            <td style="text-align:center;" colspan="6">
+                              <h4>No hay registros para mostrar</h4>
+                            </td>
+                          </tr>
+                        <tr *ngFor="let data of dataset; let index1 = index;">
+                            <td>{{ data.nombre }}</td>
+                            <td>{{ data.email }}</td>
+                            <td>{{ data.telefono }}</td>
+                            <td>{{ data.sexo !== null ? (data.sexo == "M" ? "Masculino" : (data.sexo == "F" ? "Femenino" : "No asignado")) : "No asignado" }}</td>
+                            <td>{{ joinProfiles(data.perfiles) }}</td>
+                            <td>{{ data.estatus ? 'Activo' : 'Inactivo' }}</td>
+                            <td align="center">
+                                <button mat-icon-button [matMenuTriggerFor]="options" matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
+                                <mat-menu #options="matMenu" xPosition="before">
+                                    <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                                    <mat-divider></mat-divider>
+                                    <a [routerLink]="['/usuarios/'+data.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro">
+                                        <mat-icon>edit</mat-icon>Editar</a>
+                                    <button mat-menu-item matTooltip="Cambiar estatus del registro" (click)="switchRegistrationStatus(data.id,!data.estatus,index1)"><mat-icon>change_circle</mat-icon>{{data.estatus ? 'Inactivar' : 'Activar' }}</button>
+                                    <button mat-menu-item matTooltip="Recuperar contraseña" *ngIf="!checkIfRootUser(data.perfiles)" (click)="onClickPasswordRecovery(data)"><mat-icon>lock_reset</mat-icon>Recuperar contraseña</button>
+                                    <button mat-menu-item matTooltip="Eliminar registro" *ngIf="!checkIfRootUser(data.perfiles)" (click)="onClickDelete(data)"><mat-icon>delete</mat-icon>Eliminar</button>
+                                </mat-menu>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize" [pageIndex]="pageIndex"
+                    aria-label="Select page">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>

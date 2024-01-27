@@ -1,0 +1,5 @@
+::ng-deep.custom-bread-crumb {
+    margin: 0px;
+    padding: 5px 2px !important;
+    border-bottom: solid 1px #ccc;
+}

@@ -1,0 +1,5 @@
+<div>
+    <shared-dashboard-title [title]="'Editar usuario'"></shared-dashboard-title>
+
+    <app-user-form [helpsSettings]="helpsSettings" [userId]="userId" [user]="user" [profilesList]="profilesList" (userOut)="submitUser($event)"></app-user-form>
+</div>

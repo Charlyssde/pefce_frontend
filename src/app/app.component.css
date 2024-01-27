@@ -1,0 +1,36 @@
+/* AUTH GLOBAL STYLES */
+
+.auth-background {
+    z-index: -1;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+}
+
+.loader-container {
+    z-index: 9999 !important;
+    top: 0px !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    /* background-color:rgba(0,0,0,0.75) !important; */
+    display: flex !important;
+}
+
+::ng-deep.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: #992449 !important;
+}
+
+.loader-space {
+    margin: auto !important;
+    padding: 10px !important;
+}
+
+.loader-text {
+    color: #af3f36 !important;
+}
+
+.mat-dialog-content .site-content-video-player {
+    object-fit: contain;
+}

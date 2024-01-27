@@ -1,0 +1,76 @@
+<h3 mat-dialog-title>{{ edit ? 'Editar':'Nuevo' }} evento de agenda</h3>
+<div mat-dialog-content>
+  <form [formGroup]="formAgenda" #form="ngForm" (ngSubmit)="onSubmitForm()">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Título</mat-label>
+          <input matInput type="text" formControlName="titulo" placeholder="Título" required>
+        </mat-form-field>
+      </div>
+
+      <div class="mb-1 col-12">
+        <span class="mb-1">Descripción del evento *</span>
+        <br>
+        <quill-editor [styles]="editorStyles" [modules]="editorModules" formControlName="descripcion"
+          placeholder="Descripción del evento *" required></quill-editor>
+      </div>
+
+      <div class="mb-1 col-12">
+        <span class="mb-1">Día completo</span>
+        <br>
+        <mat-checkbox color="primary" [checked]="formAgenda.controls['diaCompleto'].value" (change)="onChangeAllDay()"
+          formControlName="diaCompleto"></mat-checkbox>
+      </div>
+
+      <div class="col-12">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha/Hora inicio</mat-label>
+              <input matInput type="datetime-local" format-value="yyyy-MM-ddTHH:mm" formControlName="inicio" required
+                [min]="minDatetime.slice(0,16)" [max]="maxDatetime.slice(0,16)" (change)="onChangeMinDatetime()">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="fill">
+              <mat-label>Fecha/Hora fin</mat-label>
+              <input matInput type="datetime-local" format-value="yyyy-MM-ddTHH:mm" formControlName="fin" required
+                [min]="minEndDatetime.slice(0,16)" [max]="maxDatetime.slice(0,16)">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label>Tipo de evento</label>
+        <h4 style="margin: 5px auto;">{{ formAgenda.controls['tipoEvento'].value }}</h4>
+        <input type="text" hidden formControlName="tipoEvento" required>
+      </div>
+
+
+
+    </div>
+    <div class="row">
+      <div class="col-12 mb-1" *ngIf="formAgenda.controls['tipoEvento'].value === 'PERSONAL' && edit"
+        style="padding-top: 10px;">
+        <mat-checkbox color="primary" [(ngModel)]="showDeleteOptions" [ngModelOptions]="{standalone:true}"><span
+            class="mb-1">¿Eliminar evento?</span></mat-checkbox>
+      </div>
+      <div class="col-12 mb-1" *ngIf="edit && showDeleteOptions">
+        <div class="alerts">
+          <span style="text-align: justify;">¿Deseas eliminar este eveto? Esta acción es irreversible.</span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button *ngIf="edit && !showDeleteOptions" mat-raised-button color="accent" #addCalendarButton (click)="addToCalendarButton()">Agregar a mi calendario personal</button>
+  <button type="button" *ngIf="showDeleteOptions" mat-raised-button color="primary"
+    (click)="deleteAgendaEvent()">Eliminar</button>
+  <button type="button" *ngIf="!showDeleteOptions" mat-raised-button color="primary"
+    (click)="form.ngSubmit.emit()">Guardar</button>
+  <button type="button" mat-raised-button color="warn" matDialogClose>Cancelar</button>
+</div>

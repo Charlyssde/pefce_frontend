@@ -1,0 +1,98 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/js/all.min.js"></script>
+
+<!-- Welcome section -->
+<app-welcome-section *ngIf="data && labels && multimedia" [video]="videos.s1_welcome.pathfile"
+  >
+</app-welcome-section>
+
+<!-- Internal links section 
+<app-internal-links-section *ngIf="data && labels && multimedia" [links]="links">
+</app-internal-links-section>
+-->
+<!-- Title area section -->
+<app-title-area-section *ngIf="data && labels && multimedia" [background]="multimedia.s1_background_title?.pathfile"
+  [title]="'proyectos_estrategicos.title' | translate" [subtitle]="'proyectos_estrategicos.subtitle' | translate"
+  [description]="'proyectos_estrategicos.content' | translate"></app-title-area-section>
+
+<!-- Carousel eventos -->
+<app-portal-carousel *ngIf="eventos.length>0" [title]="'carousel.events' | translate" [slidesData]="eventos"></app-portal-carousel>
+
+
+<div class="container contentPageContainer">
+  <div class="row">
+    <!-- Sección 9 -->
+    <div class="col-12 seccion9">
+      <img
+        src="https://www.gob.mx/cms/uploads/image/file/527017/PPP_postales_11_DESARROLLO_DEL_ISTMO_DE_TEHUANTEPEC_V2.png"
+        alt="infografía">
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- Sección 10 -->
+    <div class="col-12 seccion10">
+      <div class="row" style="justify-content: center; padding-top: 0px;">
+        <div class="col-12 col-sm-6 col-lg-4 tarjeta">
+          <a href="https://www.gob.mx/programaistmo/articulos/infraestructura-social-y-productiva?state=publishedEconomia"
+            target="_BLANK">
+            <img src="https://www.gob.mx/cms/uploads/image/file/688902/thumb_IFSP2.png" alt="tarjeta">
+            <br>
+            <span>{{ 'proyectos_estrategicos.infraestructurasocial' | translate}}</span>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 tarjeta">
+          <a href="https://www.gob.mx/programaistmo/articulos/economia-para-el-bienestar?state=publishedAtenci%F3n"
+            target="_BLANK">
+            <img src="https://www.gob.mx/cms/uploads/image/file/688897/thumb_EPNB.png" alt="tarjeta">
+            <br>
+            <span>{{ 'proyectos_estrategicos.economiabienestar' | translate}}</span>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 tarjeta">
+          <a href="https://www.gob.mx/programaistmo/articulos/atencion-prioritaria?state=publishedEnfoque"
+            target="_BLANK">
+            <img src="https://www.gob.mx/cms/uploads/image/file/688898/thumb_AP.png" alt="tarjeta">
+            <br>
+            <span>{{ 'proyectos_estrategicos.atencionprioritaria' | translate}}</span>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 tarjeta">
+          <a href="https://www.gob.mx/programaistmo/articulos/enfoque-sustentable?state=publishedDiversidad"
+            target="_BLANK">
+            <img src="https://www.gob.mx/cms/uploads/image/file/688899/thumb_MA.png" alt="tarjeta">
+            <br>
+            <span>{{ 'proyectos_estrategicos.enfoquesustentable' | translate}}</span>
+          </a>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 tarjeta">
+          <a href="https://www.gob.mx/programaistmo/articulos/diversidad-cultural?state=published" target="_BLANK">
+            <img src="https://www.gob.mx/cms/uploads/image/file/688900/thumb_DC.png" alt="tarjeta">
+            <br>
+            <span>{{ 'proyectos_estrategicos.divesidadcultural' | translate}}</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Carousel capacitaciones -->
+<app-portal-carousel *ngIf="capacitaciones.length>0" [title]="'carousel.courses' | translate" [slidesData]="capacitaciones">
+</app-portal-carousel>
+
+<!-- Social Networks -->
+<app-social-networks [socialNetworks]="socialNetworks"></app-social-networks>
+
+<!-- Video player -->
+<app-portal-video-player [capsulas]="capsulas" [title]="'player.capsules' | translate" [pagename]="'atraccionInversiones'">
+</app-portal-video-player>
+
+<!-- Interesting sites -->
+<app-interesting-sites-section></app-interesting-sites-section>
+
+<!-- Contact section -->
+<app-contact-section [contactos]="contactos" [title]="'DIRECCIÓN DE PROYECTOS ESTRATÉGICOS'"></app-contact-section>

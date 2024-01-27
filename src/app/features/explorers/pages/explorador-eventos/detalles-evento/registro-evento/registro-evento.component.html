@@ -1,0 +1,20 @@
+<div class="modal-component">
+  <div class="modal-header">
+    <strong>Solicitud de registro a evento {{ data.evento.nombreEvento }}</strong>
+  </div>
+
+  <div class="modal-content">
+    <div class="row">
+      <div class="col-12">
+        ¿Realmente desea solicitar el registro de su empresa al evento <strong>{{ data.evento.nombreEvento }}</strong> de modalidad <strong>{{ lib.eModalidadEvento[data.evento.modalidad] }}</strong>?
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="modal-actions">
+    <button mat-raised-button color="primary" (click)="saveEventoEmpresa(data.usuarioEmpresa,data.evento)">Guardar registro</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

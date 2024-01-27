@@ -1,0 +1,8 @@
+<mat-grid-list cols="{{modulo.temas.length}}" rowHeight="250px">
+  <mat-grid-tile *ngFor="let tema of modulo.temas">
+    <div>
+      <h4>Tema: {{tema.nombre}}</h4>
+      <app-progreso-preguntas [preguntas]="tema.preguntas"></app-progreso-preguntas>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>

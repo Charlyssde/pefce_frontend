@@ -1,0 +1,104 @@
+<div>
+    <mat-card class="formHeader">
+        <mat-card-title>Mi perfil</mat-card-title>
+    </mat-card>
+    <br>
+    <mat-card>
+        <form [formGroup]="formProfile" (submit)="onSubmit()" autocomplete="off">
+            <mat-card-content>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos de acceso a la plataforma</h3>
+                        <hr>
+                    </div>
+                    <div class="col-12 col-lg-8">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Nombre completo</mat-label>
+                            <input formControlName="nombre" matInput type="text" placeholder="Nombre completo"
+                                required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Email</mat-label>
+                            <input formControlName="email" matInput type="email" placeholder="Email" required />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Teléfono</mat-label>
+                            <input formControlName="telefono" matInput type="text" maxlength="15" placeholder="Teléfono" />
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <section>
+                            <mat-label>Género</mat-label>
+                            <br>
+                            <mat-radio-group class="radio-group" formControlName="sexo">
+                                <mat-radio-button color="primary" class="radio-button" [value]="'M'">Masculino</mat-radio-button>
+                                <mat-radio-button color="primary" class="radio-button" [value]="'F'">Femenino</mat-radio-button>
+                            </mat-radio-group>
+                        </section>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <section>
+                            <mat-label>Recibir publicidad/notificaciones</mat-label>
+                            <br>
+                            <mat-checkbox formControlName="recibirPublicidad" color="primary"></mat-checkbox>
+                        </section>
+                    </div>
+                    <div class="col-12 col-lg-4">
+                        <mat-label>Perfiles de usuario asignados</mat-label>
+                        <mat-list>
+                            <mat-list-item *ngFor="let perfil of perfiles">
+                                <mat-icon>person</mat-icon> {{ perfil.nombre }}
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="col-12">
+                        <mat-slide-toggle color="primary" [(ngModel)]="changePassword"
+                            [ngModelOptions]="{standalone: true}" (change)="changePass($event.checked)">Cambiar
+                            contraseña</mat-slide-toggle>
+                    </div>
+                </div>
+                <div *ngIf="showPasswordInputs" class="row">
+                    <div class="col-12">
+                        <small>* Utilizar mínimo 8 caracteres</small>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Contraseña</mat-label>
+                            <input type="password" matInput [(ngModel)]="firstPassword"
+                                [ngModelOptions]="{standalone: true}" placeholder="Contraseña" autocomplete="off"
+                                required />
+                            <mat-icon matSuffix *ngIf="validPasswords">done</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Repita contraseña *</mat-label>
+                            <input type="password" matInput [disabled]="(firstPassword.length < 8) ? true : null"
+                                [(ngModel)]="secondPassword" [ngModelOptions]="{standalone: true}" minlength="8"
+                                placeholder="Confirmar Contraseña" autocomplete="off"
+                                (ngModelChange)="formValidPasswords()">
+                            <mat-icon matSuffix *ngIf="validPasswords">done</mat-icon>
+                            <span *ngIf="repeatPasswordError" style="color: red;">Las contraseñas no coinciden</span>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Domicilio</h3>
+                        <hr>
+                    </div>
+                </div>
+                <shared-address-component [addressIn]="domicilio"
+                    (addressOut)="updateProfileAddressData($event)"></shared-address-component>
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button type="submit" mat-raised-button color="primary" title="Guardar cambios">Actualizar
+                    perfil</button>
+            </mat-card-actions>
+        </form>
+    </mat-card>
+</div>

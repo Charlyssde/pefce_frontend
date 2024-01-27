@@ -1,0 +1,22 @@
+<!-- CAPSULAS -->
+<div class="container contentPageContainer">
+  <div class="row">
+    <div class="col-12">
+      <h2 align="center">{{title}}</h2>
+    </div>
+    <div class="col-12 col-md-6 col-lg-7">
+      <div class="videoContainer">
+        <video id="videoPlayer" [src]="srcCapsula" controls></video>
+      </div>
+      <h4>{{titleCapsula}}</h4>
+    </div>
+    <div class="col-12 col-md-6 col-lg-5">
+      <div class="capsulePlaylist">
+        <div id="titleCapsule_{{x}}" class="titleCapsule {{(pagename === 'inicio' ? '' : (i.categoria === pagename ? '' : 'hideListItem'))}}" *ngFor="let i of capsulas;let x = index;" (click)="watchVideo(i.pathfile,i.titulo,x,$event)" style="cursor:pointer;">
+          <span class="material-icons" *ngIf="playVid === x">play_arrow</span><span class="content-title">{{i.titulo}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- CAPSULAS -->

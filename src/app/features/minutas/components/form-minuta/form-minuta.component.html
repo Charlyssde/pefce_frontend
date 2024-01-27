@@ -1,0 +1,200 @@
+<mat-card>
+  <mat-card-content>
+    <form [formGroup]="formulario" autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Datos generales de la minuta</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="2" rowHeight="100px" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Folio</mat-label>
+            <input matInput placeholder="Folio" formControlName="folio" [required]="isUpdate" disabled>
+            <mat-hint *ngIf="!isUpdate">El folio se autogenera</mat-hint>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Asunto</mat-label>
+            <input matInput placeholder="Asunto" formControlName="asunto" required>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Objetivo</mat-label>
+            <input matInput placeholder="Objetivo" formControlName="objetivo" required>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Código postal</mat-label>
+            <input matInput placeholder="Código postal" formControlName="codigoPostal">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Estado</mat-label>
+            <mat-select name="estado" formControlName="estado" [(ngModel)]="estadoPrev" [compareWith]="scriptGL.objectComparisonFunction">
+              <mat-option *ngFor="let estado of estados" [value]="estado">
+                {{estado.estado}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Municipio</mat-label>
+            <mat-select name="municipio" formControlName="municipio" [(ngModel)]="municipioPrev" [compareWith]="scriptGL.objectComparisonFunction">
+              <mat-option *ngFor="let municipio of municipios" [value]="municipio">
+                {{municipio.municipio}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Ciudad</mat-label>
+            <input matInput placeholder="Ciudad" formControlName="ciudad">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Sede</mat-label>
+            <input matInput placeholder="Sede" formControlName="sede" required>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Tipo de minuta</mat-label>
+            <mat-select name="tipoMinuta" formControlName="tipoMinuta" [(ngModel)]="tipoMinutaPrev" [compareWith]="scriptGL.objectComparisonFunction" required>
+              <mat-option *ngFor="let tipoMinuta of tiposMinutas" [value]="tipoMinuta">
+                {{tipoMinuta.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="fecha" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker touchUi #picker></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Temas</mat-label>
+            <mat-select name="temas" formControlName="temas" [(ngModel)]="temasPrev" [compareWith]="scriptGL.objectComparisonFunction" multiple required>
+              <mat-option *ngFor="let tema of temas" [value]="tema">
+                {{tema.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Proyecto vinculado</mat-label>
+            <mat-select name="proyectos" formControlName="proyectos" [(ngModel)]="proyectoPrev">
+              <mat-option *ngFor="let proyecto of proyectosVigentes" [value]="proyecto">
+                {{proyecto.nombre}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+      
+      <div class="row">
+        <div class="col-12">
+          <h3>Participantes</h3>
+          <hr>
+        </div>
+        <div class="col-12">
+          <h4>SEDECOP</h4>
+        </div>
+      </div>
+      <mat-grid-list cols="1" rowHeight="100px" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Participantes</mat-label>
+            <mat-select name="participantes" formControlName="participanteSedecop" [(ngModel)]="participantesPrevSedecop" multiple [compareWith]="scriptGL.objectComparisonFunction" required>
+              <mat-option *ngFor="let participante of participantesSedecop" [value]="participante">
+                {{participante.nombre}} ({{participante.puesto}})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <div class="row">
+        <div class="col-12">
+          <h4>Externos</h4>          
+        </div>
+      </div>
+      <mat-grid-list cols="1" rowHeight="100px" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Participantes</mat-label>
+            <mat-select name="participantes" formControlName="participanteExternos" [(ngModel)]="participantesPrevExternos" multiple [compareWith]="scriptGL.objectComparisonFunction" required>
+              <mat-option *ngFor="let participante of participantesExternos" [value]="participante">
+                {{participante.nombre}} ({{participante.puesto}})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>      
+      <div class="row">
+        <div class="col-12">
+          <h3>Puntos</h3>
+          <hr>
+        </div>
+      </div>
+      <mat-grid-list cols="1" rowHeight="500px" (window:resize)="onResize($event)">
+        <mat-grid-tile>
+          <quill-editor [styles]="editorStyles" placeholder="Inserte los puntos tratados..." formControlName="puntosTratados"></quill-editor>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <div class="row">
+        <div class="col-12">
+          <mat-card>
+            <mat-card-content>
+              <div class="tareas-header">
+                <div style="display: inline-block;width:100%;">
+                  <span style="float:left;margin:10px auto;">Tareas</span>
+                  <button *ngIf="isUpdate" mat-icon-button style="float:right;" (click)="openNewTareaModal()">
+                    <mat-icon>add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+
+              <div class="tareas-content">
+                <div *ngIf="(minutaTareas).length>0; else sinTareas">
+                  <ul style="padding:0px !important;">
+                    <li (click)="openOptionsTareasModal(pT)" style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" *ngFor="let pT of tareas; let i = index;">
+                      ({{ ((minutaTareas).length - i) }}) <span class="{{ pT.estatus ? 'endedTask': '' }}" >{{ pT.tarea }}</span>
+                      <br>
+                      <small>({{ pT.usuarioId !== null ? pT.usuarioId.nombreCompleto : 'No asignado' }})</small>
+                      <mat-divider></mat-divider>
+                    </li>
+                  </ul>
+                </div>
+                <ng-template #sinTareas>
+                  <div *ngIf="isUpdate else elseBlock" style="text-align: center;padding: 5px 0px;">
+                    No hay tareas registradas
+                  </div>
+                  <ng-template #elseBlock>Por favor guarde la minuta antes de asignar tareas</ng-template>
+                </ng-template>
+              </div>
+
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </div>      
+
+      <span>* Campos obligatorios</span>
+    </form>
+  </mat-card-content>
+</mat-card>

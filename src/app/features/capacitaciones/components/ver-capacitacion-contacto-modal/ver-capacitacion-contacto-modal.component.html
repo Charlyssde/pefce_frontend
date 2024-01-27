@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Contactos asociados a la capacitación {{data.capacitacion.nombre}}</h1>
+<mat-dialog-content>
+  <div *ngIf="isPage">
+    <app-page-capacitacion-contacto [idCapacitacion]="idCapacitacion" (contactos)="setContactosCapacitacion($event)"></app-page-capacitacion-contacto>
+  </div>
+  <div *ngIf="isCreate">
+    <span>Agregar contacto a la capacitación</span>
+    <form [formGroup]="formulario" autocomplete="off">
+      <mat-grid-list cols="1" rowHeight="100px">
+        <mat-grid-tile>
+          <mat-form-field appearance="fill">
+            <mat-label>Seleccionar usuario a agregar:</mat-label>
+            <mat-select name="contacto" formControlName="contacto" required>
+              <mat-option *ngFor="let contacto of contactos" [value]="contacto">
+                {{contacto.nombreCompleto}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
+  </div>
+</mat-dialog-content>
+<div *ngIf="cargando">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  <strong class="loader-text">{{cargandoTexto}}</strong>
+</div>
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]="true" color="warn">Cancelar</button>
+  <button mat-button (click)="agregarContacto()" *ngIf="isPage && (data.capacitacion.tipo == 1 || data.capacitacion.tipo == 3 || data.capacitacion.tipo == 5)" color="primary">Agregar</button>
+  <button mat-button (click)="guardar()" *ngIf="isCreate" color="primary">Guardar</button>
+  <!-- <button mat-button (click)="enviarCorreos()" *ngIf="isPage && contactosCapacitacion.length>0" color="warn">Enviar correos</button> -->
+</mat-dialog-actions>

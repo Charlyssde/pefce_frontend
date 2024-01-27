@@ -1,0 +1,58 @@
+<div>
+  <h1 mat-dialog-title>Histórico de solicitud {{ data.solicitud.folio }}</h1>
+
+  <div class="mat-dialog-content">
+    <div class="row">
+      <div class="col-12">
+        <table class="sedecopTable"mat-table [dataSource]="dataSource" multiTemplateDataRows matSort>
+          <ng-container matColumnDef="accion">
+            <th mat-header-cell *matHeaderCellDef>Acción</th>
+            <td mat-cell *matCellDef="let historico">{{ historico.accion }}</td>
+          </ng-container>
+          <ng-container matColumnDef="usuarioId">
+            <th mat-header-cell *matHeaderCellDef>Usuario</th>
+            <td mat-cell *matCellDef="let historico">{{ historico.usuarioId.nombreCompleto }}</td>
+          </ng-container>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>Fecha</th>
+            <td mat-cell *matCellDef="let historico">{{ historico.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+          </ng-container>
+
+          <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="3">No hay resultados para la búsqueda</td>
+          </tr>
+        </table>
+
+        <div>
+          <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+          <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+            <td>No existen registros</td>
+          </tr>
+        </div>
+        <mat-paginator [pageSize]="5" [pageSizeOptions]="[5,10]" aria-label="Select page"></mat-paginator>
+      </div>
+
+      <div class="col-12" *ngIf="userSession.idUsuario === data.solicitud.usuarioEncargadoId.id && !data.solicitud.estatus">
+        <div class="row">
+          <div class="col-12">
+            <h4>Agregar acción en histórico</h4>
+            <hr>
+          </div>
+          <div class="col-12">
+            <mat-form-field appearance="fill">
+              <mat-label>Agregar acción</mat-label>
+              <textarea matInput [(ngModel)]="history.accion" rows="5" placeholder="Agregar acción"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions style="text-align: right;width:100% !important;">
+    <button *ngIf="userSession.idUsuario === data.solicitud.usuarioEncargadoId.id && !data.solicitud.estatus" mat-raised-button type="button" color="primary" (click)="save()">Guardar acción</button>
+    <button mat-raised-button type="button" color="warn" (click)="closeModal()">Cerrar</button>
+  </div>
+</div>

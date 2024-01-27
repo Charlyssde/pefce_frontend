@@ -1,0 +1,26 @@
+.areaPageTitle{
+  height: 250px;
+  color: #ffffff;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.areaPageTitle .overlay{
+  height: 100%;
+  background: rgb(0,0,0);
+  background: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0.84) 5%, rgba(56,56,56,0.75) 81%);
+  vertical-align: middle;
+  display: flex;
+}
+.areaPageTitle .overlay>div{
+  margin: auto;
+}
+
+.contentPageContainer{
+  color:#57585a !important;
+  font-size: 1.2em !important;
+  line-height: 1.7em !important;
+  z-index: 2 !important;
+}

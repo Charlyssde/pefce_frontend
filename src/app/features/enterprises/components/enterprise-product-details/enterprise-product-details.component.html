@@ -1,0 +1,112 @@
+<h2>{{ product.nombre }}</h2>
+<div mat-dialog-content class="details-container">
+  <div>
+    <div class="row">
+      <div class="col-12">
+        <mat-tab-group>
+          <mat-tab label="Descripción y detalles">
+            <div class="row">
+              <div class="col-12">
+                <h4>Descripción y detalles</h4>
+                <hr>
+              </div>
+              <div class="col-12" [innerHTML]="product.descripcion"></div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Empaque/Envasado</h4>
+                <div [innerHTML]="product.empaqueEnvasado  ? product.empaqueEnvasado  : 'No registrado'"></div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Embalaje</h4>
+                <div [innerHTML]="product.embalaje  ? product.embalaje  : 'No registrado'"></div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Estibado</h4>
+                <div [innerHTML]="product.estibado  ? product.estibado  : 'No registrado'"></div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Condiciones de almacenamiento</h4>
+                <div
+                  [innerHTML]="product.condicionesAlmacenamiento  ? product.condicionesAlmacenamiento  : 'No registrado'">
+                </div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Transporte</h4>
+                <div [innerHTML]="product.transporte  ? product.transporte  : 'No registrado'"></div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Vida en anaquel</h4>
+                <div [innerHTML]="product.vidaAnaquel  ? product.vidaAnaquel  : 'No registrado'"></div>
+              </div>
+              <div class="col-12 col-sm-6 col-lg-4">
+                <h4>Lugar de origen</h4>
+                <div [innerHTML]="product.lugarOrigen  ? product.lugarOrigen  : 'No registrado'"></div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Ficha técnica">
+            <div class="row">
+              <div class="col-12">
+                <h4>Ficha técnica</h4>
+                <hr>
+                <div class="pdf-container">
+                  <pdf-viewer [src]="setURI(product.fichaTecnica[0].url)" [original-size]="false"
+                    style="width: 90% !important; height: auto;"></pdf-viewer>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Imágenes del producto">
+            <div class="row">
+              <div class="col-12">
+                <h4>Imágenes del producto ({{ product.imagenes.length }})</h4>
+                <hr>
+                <div class="image-container">
+                  <mat-carousel timings="250ms ease-in" [autoplay]="true" interval="5000" color="black" maxHeight="45vh"
+                    slides="product.imagenes.length" [loop]="true" [hideArrows]="false" [hideIndicators]="false"
+                    [useKeyboard]="true" [useMouseWheel]="false" orientation="ltr">
+                    <mat-carousel-slide #matCarouselSlide *ngFor="let image of product.imagenes; let i = index"
+                      [hideOverlay]="true">
+                      <div style="height:100%;width:100%;display:flex;">
+                        <img [src]="setURI(image.url)" alt="image" style="margin: auto;height:100%; width:auto;">
+                      </div>
+                    </mat-carousel-slide>
+                  </mat-carousel>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+
+          <mat-tab label="Videos del producto">
+            <div class="row justify-content-center">
+              <div class="col-12">
+                <h4>Videos del producto ({{ product.videos.length }})</h4>
+                <hr>
+              </div>
+              <div class="col-12 col-md-9 col-lg-6">
+                <div class="row">
+                  <div class="col-12">
+                    <mat-form-field appearance="fill">
+                      <mat-label>Seleccionar video</mat-label>
+                      <mat-select [(ngModel)]="selectedVideo" (ngModelChange)="onSelectVideo()">
+                        <mat-option *ngFor="let video of product.videos;let index = index;" [value]="video">Ver video {{ index+1 }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-12" align="center" *ngIf="videoURI !== null">
+                    <video #videoPlayer id="videoPlayer" [src]="videoURI" [controls]="true" [autoplay]="true"></video>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+</div>

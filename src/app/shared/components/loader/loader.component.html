@@ -1,0 +1,6 @@
+<mat-progress-bar *ngIf="this.loaderService.getLoading()" class="progress-bar" [color]="'warn'" [mode]="'indeterminate'"></mat-progress-bar>
+<div *ngIf="this.loaderService.getLoading()" class="spinner_container">
+    <div class="spinner_item">
+        <mat-spinner></mat-spinner>
+    </div>
+</div>

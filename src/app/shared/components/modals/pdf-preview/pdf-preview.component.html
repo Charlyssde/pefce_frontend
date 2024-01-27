@@ -1,0 +1,8 @@
+<h3 mat-dialog-title>{{ this.titulo != null ? this.titulo : "Vista previa"}}</h3>
+<div mat-dialog-content class="pdf-container">
+  <pdf-viewer [src]="pdf" [original-size]="false" style="width: 90% !important; height: auto;"></pdf-viewer>
+</div>
+<div mat-dialog-actions align="end">
+  <a [href]="pdf" target="_blank" mat-raised-button color="warn" mat-dialog-close>Descargar</a>
+  <button mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+</div>

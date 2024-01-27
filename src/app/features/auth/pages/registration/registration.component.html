@@ -1,0 +1,35 @@
+<div [class]="'auth-background'" [ngStyle]="{ 'background': 'url(assets/img/default/backgrounds/enterprise-registration-background.jpg) center no-repeat fixed','backgroundSize':'cover' }">
+</div>
+
+<div [class]="'auth-content'">
+    <mat-card>
+        <div class="row">
+            <div class="col-12 col-md-3 col-lg-2" style="text-align: center;">
+                <div class="row mb-1">
+                    <div class="col-12">
+                        <img class="auth-logo" [src]="'./assets/img/default/logos/tu-estado-industrial-logo.png'" alt="logotipo" (click)="onClickLogo()">
+                    </div>
+                    <div class="col-12" style="text-align:center;">
+                        <h3 style="margin: 3px auto !important;">Plataforma electónica</h3>
+                        <h2 style="margin: 3px auto !important;">Veracruz <br> <i>Tu estado industrial</i></h2>
+                        <h4 style="margin: 3px auto !important;">Registrar empresa</h4>
+                    </div>
+                </div>
+                <div class="row justify-content-center mb-1">
+                    <div class="col-12 mb-1">
+                        <a class="btn-block" routerLink="/auth/login" mat-button color="primary">Iniciar sesión</a>
+                    </div>
+                    <div class="col-12 mb-1">
+                        <a class="btn-block" routerLink="/" mat-button color="warn">Cancelar registro</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-9 col-lg-10">
+                <div id="formRegistrationContainer">
+                    <component-form-enterprises (enterpriseOut)="onSubmitRegistration($event)"></component-form-enterprises>
+                </div>
+            </div>
+        </div>
+
+    </mat-card>
+</div>

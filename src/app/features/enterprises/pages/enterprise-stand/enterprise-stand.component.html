@@ -1,0 +1,10 @@
+<div>
+
+  <shared-chatbot></shared-chatbot>
+
+  <a [routerLink]="['/empresas']" mat-fab color="warn" matTooltip="Volver" class="btn-regresar">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+
+  <app-enterprise-stand-view [isAdminIn]="true" [helpsSettings]="helpsSettings" [enterpriseIn]="enterprise"></app-enterprise-stand-view>
+</div>

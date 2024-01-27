@@ -1,0 +1,180 @@
+<div>
+
+  <shared-dashboard-title [title]="isEnterprise ? 'Mi empresa' :'Empresas'"></shared-dashboard-title>
+
+  <a *ngIf="!isEnterprise" [routerLink]="['/empresas/nuevo']" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro">
+    <mat-icon>add</mat-icon>
+  </a>
+  <button *ngIf="!isEnterprise" mat-raised-button color="primary" (click)="crearReporte()">Reporte</button>
+
+  <div class="mat-elevation-z8">
+    <div class="row">
+      <div class="col-12" align="end">
+        <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+          <mat-icon>help</mat-icon></button>
+      </div>
+    </div>
+    <div class="row" *ngIf="!isEnterprise">
+      <div class="col-12 col-lg-6">
+        <mat-form-field appearance="fill">
+          <mat-icon matPrefix>search</mat-icon>
+          <mat-label>Buscar</mat-label>
+          <input matInput [(ngModel)]="nombre" type="text" placeholder="Buscar" autocomplete="off"
+            (ngModelChange)="handleFilter()">
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Filtrar por estatus</mat-label>
+          <mat-select [(ngModel)]="estatus" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por estatus</mat-option>
+            <mat-option *ngFor="let estatusItem of estatusList" [value]="estatusItem.estatus">{{ estatusItem.label
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-3">
+        <mat-label>Mostrar filtros especiales</mat-label>
+        <br>
+        <br>
+        <mat-slide-toggle (ngModelChange)="onChangeSpecialFilters($event)" [(ngModel)]="showSpecialFilters" color="primary">{{ showSpecialFilters ? 'Filtros especiales activos' : ''}}</mat-slide-toggle>
+      </div>
+    </div>
+    <div class="row" *ngIf="showSpecialFilters && !isEnterprise">
+      <div class="col-12">
+        <span>
+          <mat-icon>filter_alt</mat-icon> Filtros especiales
+          <hr>
+        </span>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-6" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Categoría</mat-label>
+          <mat-select [(ngModel)]="categoria" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por categoría</mat-option>
+            <mat-option *ngFor="let categoriaItem of categoriaList" [value]="categoriaItem.id">{{ categoriaItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-6 col-lg-6" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Régimen fiscal</mat-label>
+          <mat-select [(ngModel)]="regimenFiscal" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por régimen fiscal</mat-option>
+            <mat-option *ngFor="let regimenFiscalItem of regimenFiscalList" [value]="regimenFiscalItem.id">{{
+              regimenFiscalItem.nombre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-12 col-lg-12" align="end">
+        <mat-form-field appearance="fill">
+          <mat-label>Sector</mat-label>
+          <mat-select [(ngModel)]="sector" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por sector</mat-option>
+            <mat-option *ngFor="let sectorItem of sectorList" [value]="sectorItem.id">{{ sectorItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-sm-12 col-lg-12" align="end" *ngIf="sector !== null">
+        <mat-form-field appearance="fill">
+          <mat-label>Subsector</mat-label>
+          <mat-select [(ngModel)]="subsector" (ngModelChange)="handleFilter()">
+            <mat-option [value]="null">Sin filtro por subsector</mat-option>
+            <mat-option *ngFor="let subsectorItem of subsectorList" [value]="subsectorItem.id">{{ subsectorItem.nombre
+              }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Acciones</th>
+              <th>Empresa</th>
+              <th>RFC</th>
+              <th>Categoría</th>
+              <th>Régimen fiscal</th>
+              <th>Sector-Subsector</th>
+              <th>Contacto de la empresa</th>
+              <th>Usuario contacto</th>
+              <th>Estatus</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="dataset && dataset.length === 0">
+              <td style="text-align:center;" colspan="9">
+                <h4>No hay registros para mostrar</h4>
+              </td>
+            </tr>
+            <tr *ngFor="let data of dataset; let index1 = index;">
+              <td style="text-align:center !important;">
+                <button mat-icon-button [matMenuTriggerFor]="options"
+                  matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
+                <mat-menu #options="matMenu" xPosition="before">
+                  <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                  <mat-divider></mat-divider>
+                  <a *ngIf="data.estatus && !isEnterprise" [routerLink]="['/empresas/'+data.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro"><mat-icon>edit</mat-icon>Editar</a>
+                  <button *ngIf="data.estatus && !isEnterprise" mat-menu-item matTooltip="Eliminar registro" (click)="onClickDelete(data)"><mat-icon>delete</mat-icon>Eliminar</button>
+                  <button  *ngIf="(data.estatus || data.solicitudesAcceso.length>0)  && !isEnterprise" mat-menu-item matTooltip="Cambiar estatus del registro"
+                    (click)="switchRegistrationStatus(data.id,!data.estatus,index1)"><mat-icon>change_circle</mat-icon>{{data.estatus ? 'Inactivar' : 'Activar' }}</button>
+                  <button *ngIf="!data.estatus && data.solicitudesAcceso.length==0 && !isEnterprise" mat-menu-item matTooltip="Solicitud de activación" (click)="onClickAccessRequest(data, index1)"><mat-icon>change_circle</mat-icon>Solicitud de acceso</button>
+                  <button mat-menu-item matTooltip="Mostrar detalles de la empresa" (click)="onClickShowDetails(data)"><mat-icon>more</mat-icon>Mostrar detalles</button>
+                  <button *ngIf="data.solicitudesAcceso.length>0 && !isEnterprise" mat-menu-item matTooltip="Ver histórico de solicitudes de acceso" (click)="onClickHistoryAccessRequest(data)"><mat-icon>history</mat-icon>Histórico de solicitudes</button>
+                  <a *ngIf="data.estatus" [routerLink]="['/empresas/'+data.id+'/contactos']" mat-menu-item color="primary" matTooltip="Administrar contactos"><mat-icon>group</mat-icon>Contactos</a>
+                  <a *ngIf="data.estatus" [routerLink]="['/empresas/'+data.id+'/productos']" mat-menu-item color="primary" matTooltip="Administrar productos"><mat-icon>inventory_2</mat-icon>Productos</a>
+                  <a *ngIf="data.estatus" [routerLink]="['/empresas/'+data.id+'/imagen-comercial']" mat-menu-item color="primary" matTooltip="Imagen empresarial"><mat-icon>palette</mat-icon>Imagen empresarial</a>
+                  <a *ngIf="data.estatus" [routerLink]="['/empresas/'+data.id+'/pabellon']" mat-menu-item color="primary" matTooltip="Imagen comercial"><mat-icon>storefront</mat-icon>Pabellón</a>
+                  <a *ngIf="data.estatus && !isEnterprise" [routerLink]="['/promocionDigital']" mat-menu-item color="primary" matTooltip="Generar campañas de promoción"><mat-icon>mail</mat-icon>Ir a campañas de promoción por correo electrónico</a>
+                  <a *ngIf="data.estatus && !isEnterprise" mat-menu-item color="primary" matTooltip="Visualizar autodiagnostico" (click)="openNewAutodiagnosticoModal(data.id)">Autodiagnostico</a>
+                </mat-menu>
+              </td>              
+              <td style="min-width: 200px;">{{ data.empresa }}</td>
+              <td>{{ data.rfc }}</td>
+              <td>{{ data.categoria.nombre }}</td>
+              <td style="min-width: 250px;">{{ data.regimenFiscal.nombre }}</td>
+              <td style="min-width: 400px;">
+                <small>
+                  {{ 'Sector: '+data.sector.nombre }}
+                  <br *ngIf="data.subsector">
+                  {{ data.subsector ? 'Subsector: '+data.subsector.nombre : null }}
+                </small>
+              </td>
+              <td>
+                <small>
+                  {{ data.email }}
+                  <br>
+                  {{ data.telefono }}
+                </small>
+              </td>
+              <td>
+                <small>
+                  {{ data.contactos.length > 0 ? data.contactos[0].nombre : '-' }}
+                  <br>
+                  {{ data.contactos.length > 0 ? data.contactos[0].email : '-' }}
+                  <br>
+                  {{ data.contactos.length > 0 ? data.contactos[0].telefono : '-' }}
+                </small>
+              </td>
+              <td>{{ data.estatus ? 'Activo' : 'Inactivo' }}</td>
+
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled"
+          [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []"
+          [hidePageSize]="hidePageSize" [pageIndex]="pageIndex" aria-label="Select page">
+        </mat-paginator>
+      </div>
+    </div>
+  </div>
+
+</div>

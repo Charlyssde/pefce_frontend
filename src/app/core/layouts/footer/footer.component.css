@@ -1,0 +1,171 @@
+.videoContainer{
+  width: 100%;
+  padding-top: 56.25%;
+  height: 0px;
+  position: relative;
+}
+
+#videoPlayer{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left: 0;
+}
+
+.capsulePlaylist{
+  padding: 5px;
+  max-height: 300px;
+  height: 100%;
+  overflow-y: scroll;
+}
+.titleCapsule{
+  padding: 10px 5px;
+  border-bottom: 1px solid #808285;
+}
+.hideListItem{
+  display: none !important;
+}
+
+.playing{
+  background-color: #af3f36;
+  color: #ffffff;
+  border-bottom:none;
+}
+
+.contentPageContainer{
+  color:#57585a !important;
+  font-size: 1.2em !important;
+  line-height: 1.7em !important;
+  z-index: 2 !important;
+}
+.contentPageContainer mat-card-content{
+  color:#57585a !important;
+}
+.contentPageContainer .row{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.contentPageContainer h2{
+  text-transform: uppercase;
+  color:#57585a !important;
+}
+.contentPageContainer mat-card h3,
+.contentPageContainer mat-cart p{
+  text-align: center;
+}
+
+.contentPageContainer .cardsContainer{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  z-index: 2;
+}
+.contentPageContainer .cardsContainer mat-card-content{
+  text-align: center !important;
+}
+
+.divisor{
+  margin-top: -400px !important;
+  height: 400px;
+}
+.divisor .row{
+  height: 100%;
+}
+
+.numberInfo mat-card,
+.numberInfo mat-card mat-card-content{
+  background-color: #af3f36 !important;
+  background: #af3f36 !important;
+  color: #ffffff !important;
+}
+.numberInfo mat-card{
+  margin: 5px auto !important;
+}
+.numberInfo mat-card mat-card-content{
+  padding: 30px 5px;
+}
+.numberInfo mat-card h3{
+  margin-top: 5px !important;
+}
+.numberInfo mat-card span{
+  font-size: 3em !important;
+  font-weight: bold !important;
+}
+
+
+/* Footer */
+footer{
+  background-color: rgb(175,63,54);
+  color:#ffffff;
+  padding: 50px !important;
+  font-size: 14px !important;
+}
+footer ul>li{
+  list-style: none !important;
+  list-style-type: none !important;
+  font-size: 14px !important;
+}
+footer ul>li>a{
+  font-size: 14px !important;
+  padding: 3px 0px !important;
+}
+
+footer h3,
+footer .software-name{
+  text-align: center !important;
+}
+
+footer a{
+  color: #ffffff !important;
+  text-decoration: none !important;
+  margin: 0px 5px;
+  padding: 0px 5px;
+}
+footer a:hover{
+  color: #87868a !important;
+}
+/* Footer */
+
+
+#dataMexicoContent{
+  color: #ffffff !important;
+  padding: 100px auto !important;
+  font-size: 1.2em;
+}
+
+#dataMexicoContent table,
+#dataMexicoContent tr,
+#dataMexicoContent td{
+  border: none !important;
+  border-collapse: collapse !important;
+}
+
+
+df-messenger {
+  --df-messenger-bot-message: #878fac;
+  --df-messenger-button-titlebar-color: #af3f36;
+  --df-messenger-chat-background-color: #fafafa;
+  --df-messenger-font-color: white;
+  --df-messenger-send-icon: #878fac;
+  --df-messenger-user-message: #af3f36;
+
+  margin: 0;
+  padding: 0;
+  /* position: fixed; */
+  right: 0;
+  transform: translateX(50%) translateY(50%);
+  bottom: 0;
+}
+
+.df-chat div.chat-wrapper {
+  height: 450px !important;
+  bottom: 80px !important;
+}
+
+.df-chat #widgetIcon{
+  box-shadow: 0px 0px 15px -1px rgba(255,255,255,0.5);
+}
+.df-chat #widgetIcon:hover{
+  box-shadow: 0px 0px 15px -1px rgba(255,255,255,0.8);
+}
+

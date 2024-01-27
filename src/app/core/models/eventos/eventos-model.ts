@@ -1,0 +1,36 @@
+import { CatalogoModel } from '../catalogos/catalogo-model';
+import { UsuarioModel } from '../usuarios/usuario.model';
+import { FileModel } from 'src/app/core/models/files/file.model';
+export class EventoModel {
+    id: number;
+    responsableId: UsuarioModel;
+    tipoId: CatalogoModel;
+    //areaId: CatalogoModel;
+    //proyectoId: ProyectosModel;
+    //solicitudId: number;
+    //empresaId: DirectorioEmpresarialModel;
+    //usuarioEmpresaId: UsuarioModel;
+    //reunionesId: any;
+    //subarea: string;
+    nombreEvento: string;
+    ponentes: string;
+    descripcion: string;
+    fechaInicio: any;
+    fechaFin: any;
+    modalidad:string;
+    privacidad:string;
+    sede: string;
+    //cp: string;
+    //estado: string;
+    //municipio: string;
+    domicilio: string;
+    //pathfileCover: string;
+    //pathfileVideo: string;
+    estatus: number;
+    observaciones: string;
+    activo: Boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    archivoimagen: FileModel;
+    archivo: File;
+}

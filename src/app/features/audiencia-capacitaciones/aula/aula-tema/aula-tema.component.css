@@ -1,0 +1,20 @@
+.videoPreview{
+    width: 90%;
+    height: auto;
+    border: solid 1px lightgray;
+}
+.pdf-visor{
+  display: block;
+  position: relative;
+  height: 65vh;
+  bottom: 50px;
+  top: 0px;
+  width: 100%;
+  left: 0px;
+  right: 0px;
+}
+.ng2-pdf-viewer-container ::-webkit-scrollbar,
+.ng2-pdf-viewer-container ::-webkit-scrollbar-track,
+.ng2-pdf-viewer-container ::-webkit-scrollbar-thumb{
+  background-color: white !important;
+}

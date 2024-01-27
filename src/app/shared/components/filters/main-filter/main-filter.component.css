@@ -1,0 +1,14 @@
+.checkbox-margin {
+    margin: 10px 0px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    align-items: flex-start;
+}
+
+.radio-button {
+    margin: 5px;
+}

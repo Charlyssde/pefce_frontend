@@ -1,0 +1,158 @@
+<div class="details">
+  <div class="row">
+    <div class="col-12">
+      <h2>Detalles de la empresa</h2>
+    </div>
+    <div class="col-12">
+      <h3>Datos generales</h3>
+      <hr>
+    </div>
+    <div class="col-12 detail-group">
+      <span class="label-title">Nombre de la empresa</span>
+      <br>
+      <b>{{ enterprise.empresa }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">RFC</span>
+      <br>
+      <b>{{ enterprise.rfc }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Regimen fiscal</span>
+      <br>
+      <b>{{ enterprise.regimenFiscal.nombre }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Categoría</span>
+      <br>
+      <b>{{ enterprise.categoria.nombre }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Sector</span>
+      <br>
+      <b>{{ enterprise.sector.nombre }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Subsector</span>
+      <br>
+      <b>{{ enterprise.subsector.nombre }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Teléfono</span>
+      <br>
+      <b>{{ enterprise.telefono ? enterprise.telefono : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Email</span>
+      <br>
+      <b>{{ enterprise.email ? enterprise.email : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Website</span>
+      <br>
+      <b>{{ enterprise.website ? enterprise.website : '-' }}</b>
+    </div>
+    <div class="col-12 detail-group">
+      <span class="label-title">Descripción</span>
+      <br>
+      <b>{{ enterprise.descripcion ? enterprise.descripcion : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Calle</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].calle }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Colonia</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].colonia }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Código postal</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].codigoPostal }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Municipio</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].municipio }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Estado</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].estado }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">País</span>
+      <br>
+      <b>{{ enterprise.domicilios[0].pais }}</b>
+    </div>
+    <div class="col-12">
+      <h3>Datos adicionales</h3>
+      <hr>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Representante legal</span>
+      <br>
+      <b>{{ enterprise.representanteLegal ? enterprise.representanteLegal : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Número de colaboradores masculinos</span>
+      <br>
+      <b>{{ enterprise.numeroColaboradoresMasculinos ? enterprise.numeroColaboradoresMasculinos : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Número de colaboradores femeninos</span>
+      <br>
+      <b>{{ enterprise.numeroColaboradoresFemeninos ? enterprise.numeroColaboradoresFemeninos : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Número de colaboradores con capacidades diferentes</span>
+      <br>
+      <b>{{ enterprise.numeroColaboradoresCapacidadesDiferentes ? enterprise.numeroColaboradoresCapacidadesDiferentes : '-' }}</b>
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 detail-group">
+      <span class="label-title">Total de colaboradores</span>
+      <br>
+      <b>{{ enterprise.totalColaboradores ? enterprise.totalColaboradores : '-' }}</b>
+    </div>
+    <div class="col-12">
+      <h3>Contactos ({{ enterprise.contactos.length }})</h3>
+      <hr>
+    </div>
+    <div class="col-12">
+      <div class="row" *ngFor="let contacto of enterprise.contactos; let index=index;">
+        <div class="col-12">
+          <h4>Contacto {{ (index+1) }} {{ index == 0 ? ' (Principal)' : '' }}</h4>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 detail-group">
+          <span class="label-title">Nombre</span>
+          <br>
+          <b>{{ contacto.nombre }}</b>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 detail-group">
+          <span class="label-title">Email</span>
+          <br>
+          <b>{{ contacto.email }}</b>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 detail-group">
+          <span class="label-title">Email</span>
+          <br>
+          <b>{{ contacto.telefono ? contacto.telefono : '-' }}</b>
+        </div>
+        <div class="col-12 detail-group" *ngIf="contacto.domicilios.length>0">
+          <span class="label-title">Domicilio</span>
+          <br>
+          <b>
+            {{ contacto.domicilios[0].calle }} {{ contacto.domicilios[0].colonia }} C.P. {{ contacto.domicilios[0].codigoPostal }} {{ contacto.domicilios[0].municipio }} {{ contacto.domicilios[0].estado }} {{ contacto.domicilios[0].pais }}
+          </b>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12" style="text-align: right;">
+      <button type="button" mat-raised-button color="warn" mat-dialog-close>Cerrar</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,117 @@
+<div class="mat-elevation-z8">
+    <mat-card>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-12" align="right">
+                    <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda <mat-icon>help</mat-icon></button>
+                </div>
+            </div>
+            <form [formGroup]="formProfile" #form="ngForm" (ngSubmit)="onSubmitForm()">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h3>Datos generales</h3>
+                        <hr>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Perfil</mat-label>
+                            <input formControlName="nombre" matInput type="text" placeholder="Perfil" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tipo</mat-label>
+                            <mat-select formControlName="tipo" required>
+                                <mat-option disabled>Seleccionar uno</mat-option>
+                                <mat-option value="root">Root</mat-option>
+                                <mat-option value="institución">Institución</mat-option>
+                                <mat-option value="empresa">Empresa</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="formProfile.controls['tipo'].value === 'institución'">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Perfil padre</mat-label>
+                            <mat-select formControlName="perfilId" (selectionChange)="onChangeParentProfile($event.value)">
+                                <mat-option disabled>Seleccione uno</mat-option>
+                                <mat-option value="0">Ninguno</mat-option>
+                                <mat-option *ngFor="let profile of profilesList" [value]="profile.id">{{ profile.nombre }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="formProfile.controls['tipo'].value === 'institución' && formProfile.controls['perfilId'].value > 0">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Área</mat-label>
+                            <mat-select formControlName="area">
+                                <mat-option [value]="null">Nunguno</mat-option>
+                                <mat-option *ngFor="let area of areasList | keyvalue" [value]="area.key">{{area.value}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4" *ngIf="formProfile.controls['tipo'].value === 'institución' && formProfile.controls['perfilId'].value > 0">
+                        <mat-label>Nivel</mat-label>
+                        <input type="hidden" formControlName="nivel" value="1">
+                        <h3 style="margin:5px auto;">{{ formProfile.controls['nivel'].value }}</h3>
+                    </div>
+                </div>
+            </form>
+
+            <div class="row">
+                <div class="col-12">
+                    <h3>Permisos del perfil ({{ formProfile.controls['permisos'].value.length }})</h3>
+                    <hr>
+                    <div *ngIf="formProfile.controls['tipo'].value === 'institución' && formProfile.controls['perfilId'].value > 0">
+                        <mat-checkbox color="primary" [(ngModel)]="switchParentProfilePermissions" (ngModelChange)="onChangePerentProfilePermissions($event)">Heredar los permisos del perfil padre</mat-checkbox>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Menú</th>
+                                    <th>Leer</th>
+                                    <th>Registrar</th>
+                                    <th>Editar</th>
+                                    <th>Eliminar</th>
+                                    <th>Reportes</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="menus != null">
+
+                                <tr *ngFor="let menu of menus; let index = index;">
+                                    <td>
+                                        <mat-checkbox color="primary" [(ngModel)]="menus[index].activo" (ngModelChange)="onChangeMenuCheck(index)">{{ menu.nombre }}
+                                        </mat-checkbox>
+                                    </td>
+                                    <td align="center">
+                                        <mat-checkbox color="primary" [disabled]="!menus[index].activo" [(ngModel)]="menus[index].leer"></mat-checkbox>
+                                    </td>
+                                    <td align="center">
+                                        <mat-checkbox color="primary" [disabled]="!menus[index].activo" [(ngModel)]="menus[index].crear"></mat-checkbox>
+                                    </td>
+                                    <td align="center">
+                                        <mat-checkbox color="primary" [disabled]="!menus[index].activo" [(ngModel)]="menus[index].actualizar"></mat-checkbox>
+                                    </td>
+                                    <td align="center">
+                                        <mat-checkbox color="primary" [disabled]="!menus[index].activo" [(ngModel)]="menus[index].eliminar"></mat-checkbox>
+                                    </td>
+                                    <td align="center">
+                                        <mat-checkbox color="primary" [disabled]="!menus[index].activo" [(ngModel)]="menus[index].reportar"></mat-checkbox>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+            <button type="button" mat-raised-button color="primary" (click)="form.ngSubmit.emit()">Guardar</button>
+            <a [routerLink]="['/perfiles']" mat-raised-button color="warn">Volver</a>
+        </mat-card-actions>
+    </mat-card>
+</div>

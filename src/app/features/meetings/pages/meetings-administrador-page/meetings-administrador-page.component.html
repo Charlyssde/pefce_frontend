@@ -1,0 +1,78 @@
+<div>
+  <mat-card class="formHeader">
+    <mat-card-title>Listado de cuentas para meetings</mat-card-title>
+  </mat-card>
+
+  <br>
+
+  <a [routerLink]="['/meetings/cuentas/nuevo']" routerLinkActive="router-link-active" mat-fab color="primary"
+    class="btn-registrar">
+    <mat-icon>add</mat-icon>
+  </a>
+
+  <mat-card>
+    <mat-card-content>
+      <div class="mat-elevation-z8">
+        <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort
+          [hidden]="!dataSource && !isCharge">
+
+          <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Cuenta</th>
+            <td mat-cell *matCellDef="let cuenta">{{ cuenta.name }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="area">
+            <th mat-header-cell *matHeaderCellDef>Área/Uso</th>
+            <td mat-cell *matCellDef="let cuenta">{{ cuenta.areasId === null ? 'General' : cuenta.areasId.nombre }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="activo">
+            <th mat-header-cell *matHeaderCellDef>Activo</th>
+            <td mat-cell *matCellDef="let cuenta" align="center">{{ cuenta.activo ? "Si" : "No" }}</td>
+          </ng-container>
+          <ng-container matColumnDef="testCuenta">
+            <th mat-header-cell *matHeaderCellDef>Verificar cuenta</th>
+            <td mat-cell *matCellDef="let cuenta" align="center">
+              <button (click)="verifyAccountCredentials(cuenta)" mat-raised-button color="warn" title="Verificar cuenta">
+                <mat-icon>published_with_changes</mat-icon> Verificar cuenta
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef>Acciones</th>
+            <td mat-cell *matCellDef="let cuenta" align="center">
+              <a mat-button [matMenuTriggerFor]="matMenu"><span class="material-icons">menu</span></a>
+              <mat-menu #matMenu="matMenu">
+                <mat-divider></mat-divider>
+                <a [routerLink]="['/meetings/cuentas/'+cuenta.id]+'/zoom'" routerLinkActive="router-link-active" mat-menu-item>Ver meetings</a>
+                <mat-divider></mat-divider>
+                <a [routerLink]="['/meetings/cuentas/editar/'+cuenta.id]" routerLinkActive="router-link-active" mat-menu-item>Editar</a>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+
+          <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td align="center" class="mat-cell" [attr.colspan]="displayedColumns.length">No hay resultados para la
+              búsqueda</td>
+          </tr>
+        </table>
+
+        <div>
+          <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+          <div class="row" *ngIf="dataSource === null && isCharge">
+            <div class="col-12" align="center">
+              <span>No existen registros</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+
+</div>

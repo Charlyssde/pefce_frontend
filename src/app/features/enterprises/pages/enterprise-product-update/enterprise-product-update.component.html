@@ -1,0 +1,11 @@
+<div>
+
+  <shared-dashboard-title [title]="'Editar producto de empresa'"></shared-dashboard-title>
+
+  <a [routerLink]="['/empresas/'+enterpriseId+'/productos']" mat-fab color="warn" class="btn-regresar-esquina" matTooltip="Volver">
+    <mat-icon>arrow_back</mat-icon>
+  </a>
+
+  <app-enterprise-product-form [helpsSettings]="helpsSettings" [enterpriseIdIn]="enterpriseId" [productId]="productId" [productIn]="product" (productOut)="submitProduct($event)"></app-enterprise-product-form>
+
+</div>

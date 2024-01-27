@@ -1,0 +1,14 @@
+<div *ngIf="showCreate">
+  <app-create-minuta (goPage)=goToPage()></app-create-minuta>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" *ngIf="scriptGL.getCanCreateRol('/minutas')">
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-minuta (goUpdate)="goToUpdate($event)"></app-page-minuta>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-minuta [idForm]="idForm" (goPage)=goToPage()></app-update-minuta>
+</div>

@@ -1,0 +1,27 @@
+{
+  "data": {},
+  "lang": {
+    "en": {
+      "lbl_1title": "Atracción de inversiones",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    },
+    "es": {
+      "lbl_1title": "Atracción de inversiones",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    },
+    "fr": {
+      "lbl_1title": "Atracción de inversiones",
+      "lbl_2subtitle": "Invierta en productos y servicios veracruzanos",
+      "lbl_3description": "Texto demostrativo"
+    }
+  },
+  "multimedia": {
+    "s1_background_title": {
+      "url": "",
+      "nombre": "Fondo para atracción de inversiones",
+      "pathfile": "portal/atraccionInversiones/imagenes/s1_background_title.png"
+    }
+  }
+}

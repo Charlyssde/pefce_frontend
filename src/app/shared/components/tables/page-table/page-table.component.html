@@ -1,0 +1,77 @@
+<a [routerLink]="newUrl" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro" *ngIf="create">
+    <mat-icon>add</mat-icon>
+</a>
+<a [routerLink]="backUrl" mat-fab color="warn" class="btn-regresar" matTooltip="Volver" (click)="onClickBack()" *ngIf="padreId">
+    <mat-icon>arrow_back</mat-icon>
+</a>
+
+<div class="mat-elevation-z8">
+    <div class="row">
+        <div class="col-12" align="end">
+            <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+        <mat-icon>help</mat-icon></button>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-12 col-lg-7">
+            <mat-form-field appearance="fill">
+                <mat-icon matPrefix>search</mat-icon>
+                <mat-label>Buscar</mat-label>
+                <input matInput [(ngModel)]="nombre" type="text" placeholder="Buscar" autocomplete="off" (ngModelChange)="handleFilter()">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3" align="end">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table>
+                <thead>
+                    <tr>
+                        <th *ngFor="let header of tableSettings.headers">
+                            {{ header.label }}
+                        </th>
+                        <th *ngIf="tableSettings.actions">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataset; let index1 = index;">
+                        <td align="{{header.align}}" *ngFor="let header of tableSettings.headers; let index2 = index;">
+                            <div [ngSwitch]="true">
+                                <ng-container *ngSwitchCase="!header.hasChild">
+                                    {{ data[header.key] }}
+                                </ng-container>
+                                <ng-container *ngSwitchCase="header.hasChild && data[header.key]===null">
+                                    -
+                                </ng-container>
+                                <ng-container *ngSwitchCase="header.hasChild && data[header.key]!==null">
+                                    {{ data[header.key][header.childKey] }}
+                                </ng-container>
+                            </div>
+
+                        </td>
+                        <td *ngIf="tableSettings.actions" align="center">
+                            <button mat-icon-button [matMenuTriggerFor]="options"><mat-icon>menu</mat-icon></button>
+                            <mat-menu #options="matMenu" xPosition="before">
+                                <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                                <mat-divider></mat-divider>
+                                <a [routerLink]="[updateUrl.replace('{perfilId}',data['id'])]" mat-menu-item color="primary" matTooltip="Editar registro" *ngIf="update">
+                                    <mat-icon>edit</mat-icon>Editar</a>
+                                <button mat-menu-item color="warn" matTooltip="Eliminar registro" *ngIf="deleteIn" (click)="deleteRegistrationEvent(helperDataset[index1])"><mat-icon>delete</mat-icon>Eliminar</button>
+                            </mat-menu>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize" [pageIndex]="pageIndex"
+                aria-label="Select page">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

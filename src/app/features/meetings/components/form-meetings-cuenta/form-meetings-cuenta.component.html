@@ -1,0 +1,96 @@
+<div>
+  <form [formGroup]="formulario">
+    <div class="row">
+      <div class="col-12" style="text-align:justify;">
+        * Los datos solicitados para este formulario se obtienen desde el panel de administración de la cuenta de <a
+          href="https://marketplace.zoom.us/" target="_BLANK">Zoom Meetings</a> y es necesario crear/administrar una
+        cuenta de Zoom de tipo <strong>Server-to-Server OAuth</strong>
+      </div>
+      <div class="col-12">
+        <h3>Datos generales de la cuenta de meetings</h3>
+        <hr>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Nombre de la cuenta</mat-label>
+          <input formControlName="name" matInput type="text" placeholder="Nombre de la cuenta" title="Nombre de la cuenta" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Área</mat-label>
+          <mat-select formControlName="areasId" placeholder="Seleccione uno" [compareWith]="lib.objectComparisonFunction">
+              <mat-option [value]="null">General</mat-option>
+              <mat-option *ngFor="let area of areasList;" [value]="area">{{area.nombre}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>User ID Zoom/Email de registro</mat-label>
+          <input formControlName="zoomUserId" matInput type="text" placeholder="User ID Zoom/Email de registro"
+            title="User ID Zoom/Email de registro" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Contraseña de acceso a Zoom</mat-label>
+          <input formControlName="zoomUserPwd" matInput type="text" placeholder="Contraseña de acceso a Zoom" title="Contraseña de acceso a Zoom"
+            required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Account ID de Zoom</mat-label>
+          <input formControlName="zoomAccountId" matInput type="text" placeholder="Account ID de Zoom" title="Account ID de Zoom" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>ClientID de Zoom</mat-label>
+          <input formControlName="zoomClientId" matInput type="text" placeholder="ClientID de Zoom" title="ClientID de Zoom" required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Client Seecret Key de Zoom</mat-label>
+          <input formControlName="zoomClientSecret" matInput type="text" placeholder="Client Seecret Key de Zoom" title="Client Seecret Key de Zoom"
+            required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Secret token Feature de Zoom</mat-label>
+          <input formControlName="zoomSecretTokenFeatures" matInput type="text" placeholder="Secret token Feature de Zoom" title="Secret token Feature de Zoom"
+            required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Secret Verification de Zoom</mat-label>
+          <input formControlName="zoomSecretVerificationFeatures" matInput type="text" placeholder="Secret Verification de Zoom" title="Secret Verification de Zoom"
+            required>
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <h3>Verificar datos de cuenta antes de guardar la información</h3>
+        <hr>
+        <button
+        [disabled]="disabledVerifyZoomAccountData()"
+        type="button"
+        mat-raised-button
+        color="warn"
+        (click)="verifyZoomAccountData()">Verificar datos</button>
+      </div>
+    </div>
+  </form>
+</div>

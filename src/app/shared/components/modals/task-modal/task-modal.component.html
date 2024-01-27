@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-12">
+    <span>{{ tarea.id ? 'Editar' : 'Crear' }} tarea</span>
+    <hr>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <mat-form-field appearance="fill">
+          <mat-label>Tarea:</mat-label>
+          <textarea matInput [(ngModel)]="tarea.tarea" rows="5" maxlength="250" placeholder="Tarea" required></textarea>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Entregable:</mat-label>
+          <input matInput type="text" [(ngModel)]="tarea.entregable" placeholder="Entregable" maxlength="100" required>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill">
+          <mat-label>Fecha de término:</mat-label>
+          <input [(ngModel)]="tarea.fechaTermino" matInput [matDatepicker]="picker"  required>
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+      <div class="col-12 col-md-6" *ngIf="tarea.id">
+        <mat-form-field appearance="fill">
+          <mat-label>Asignar tarea a:</mat-label>
+          <mat-select [(ngModel)]="tarea.usuarioId" placeholder="Seleccione un colaborador" required>
+            <mat-option disabled selected [value]="null">Seleccione uno</mat-option>
+            <mat-option *ngFor="let responsable of responsables;" [value]="responsable">{{responsable.nombre }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+    </div>
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button mat-raised-button color="primary" (click)="createTarea()" [disabled]="!validarFormularioTarea()">Guardar</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>

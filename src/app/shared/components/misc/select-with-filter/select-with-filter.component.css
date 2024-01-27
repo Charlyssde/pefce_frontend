@@ -1,0 +1,9 @@
+::ng-deep shared-select-with-filter,
+::ng-deep .mat-form-field.selectWithFilter{
+    width: 100%;
+}
+
+.dynamicFilterInput{
+    margin: 5px auto !important;
+    padding:5px !important;
+}

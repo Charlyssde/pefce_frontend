@@ -1,0 +1,56 @@
+.content{
+  height: 100% !important;
+}
+
+::ng-deep #calendar-container{
+  height: calc(100% - 200px) !important;
+  max-height: calc(100% - 200px) !important;
+  min-height: calc(100% - 200px) !important;
+}
+
+/* .tasks-container,
+.projects-container,
+.notifications-container,
+.dates-container, */
+.tasks-container-scroll,
+.projects-container-scroll,
+.notifications-container-scroll,
+.dates-container-scroll{
+  max-height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.notifications-container-scroll::-webkit-scrollbar{
+  display: none;
+}
+.tasks-container,
+.notifications-container,
+.dates-container{
+  margin-top:20px;
+}
+
+@media(max-width:993px){
+  .projects-container{
+    margin-top:20px;
+  }
+}
+
+.show-unreaded{
+  display: inline-flex !important;
+  float: right !important;
+  text-align: right !important;
+  padding-top: 10px !important;
+}
+
+
+
+.status-light{
+  min-width: 50px;
+  width: 50px;
+  min-height: 50px;
+  height: 50px;
+  border-radius: 50%;
+  padding: 9px 16px;
+  display: inline;
+  margin: 5px;
+}

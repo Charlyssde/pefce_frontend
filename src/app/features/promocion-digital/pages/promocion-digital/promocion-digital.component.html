@@ -1,0 +1,14 @@
+<div *ngIf="showCreate">
+  <app-create-promocion-digital (goPage)=goToPage()></app-create-promocion-digital>
+</div>
+
+<div *ngIf="showPage">
+  <a mat-fab color="primary" class="btn-registrar" (click)="goToCreate()" >
+    <mat-icon>add</mat-icon>
+  </a>
+  <app-page-promocion-digital (goUpdate)="goToUpdate($event)"></app-page-promocion-digital>
+</div>
+
+<div *ngIf="showUpdate">
+  <app-update-promocion-digital [idForm]="idForm" (goPage)=goToPage()></app-update-promocion-digital>
+</div>

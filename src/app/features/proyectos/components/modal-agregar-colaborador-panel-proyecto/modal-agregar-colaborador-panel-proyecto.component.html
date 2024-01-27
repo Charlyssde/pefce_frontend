@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-12">
+    <span>Agregar colaborador al panel</span>
+    <hr>
+  </div>
+  <div class="col-12">
+    <div class="row">
+      <div class="col-12">
+        <shared-select-with-filter 
+          [placeholder]="'Usuarios'"
+          [keyName]="'nombre'" [valueSetted]="proyectoColaborador?.usuarioId" [optionsList]="usersList"
+          (emitSelectedValue)="setSelectedUser($event)"></shared-select-with-filter>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <mat-form-field appearance="fill" *ngIf="(proyectoColaborador.rol != 'responsable' && proyectoColaborador.rol != 'interesado')">
+          <mat-label>Seleccione un rol</mat-label>
+          <mat-select [(ngModel)]="proyectoColaborador.rol" placeholder="Seleccione uno">
+            <mat-option [value]="null" disabled selected>Seleccione uno</mat-option>
+            <mat-option *ngFor="let rol of rolesList | keyvalue; let i = index;" [value]="rol.key">{{rol.value}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button mat-raised-button color="primary" (click)="createColaboradorProyecto()" [disabled]="proyectoColaborador.usuarioId === null && proyectoColaborador.rol === null">Guardar</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>

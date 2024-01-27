@@ -1,0 +1,121 @@
+#video {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  overflow: none !important;
+}
+#welcomeSection{
+  margin-top:-100vh !important;
+}
+
+.section-welcome{
+  height: 100vh !important;
+  text-align: center;
+  display: flex;
+}
+.content-section{
+  margin:auto;
+}
+.content-section img{
+  height: 10% !important;
+  max-height: 150px;
+  min-height: 100px;
+  cursor: pointer;
+}
+.section-welcome .content-section h1 {
+  color: #ffffff !important;
+  text-transform: uppercase !important;
+}
+.section-welcome .content-section .btn-play-video{
+  color: #ffffff !important;
+  font-size: 4.4rem !important;
+  cursor: pointer;
+}
+.section-welcome .content-section .btn-play-video:hover{
+  font-size: 4.5rem !important;
+}
+
+
+.contentPageContainer{
+  color:#57585a !important;
+  font-size: 1.2em !important;
+  line-height: 1.7em !important;
+  z-index: 2 !important;
+}
+.contentPageContainer mat-card-content{
+  color:#57585a !important;
+}
+.contentPageContainer .row{
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+.contentPageContainer h2{
+  text-transform: uppercase;
+  color:#57585a !important;
+}
+.contentPageContainer p>strong{
+  color: #af3f36 !important;
+}
+
+.contentPageContainer mat-card h3,
+.contentPageContainer mat-cart p{
+  text-align: center;
+}
+
+.contentPageContainer .cardsContainer{
+  padding-top: 50px;
+  padding-bottom: 50px;
+  z-index: 2;
+}
+.contentPageContainer .cardsContainer>div{
+  padding: 10px 5px !important;
+}
+.contentPageContainer .cardsContainer mat-card-content{
+  text-align: center !important;
+}
+
+.divisor{
+  margin-top: -400px !important;
+  height: 400px;
+}
+.divisor .row{
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+mat-carousel{
+  height: 100% !important;
+  color: #ffffff !important;
+}
+mat-carousel .carousel{
+  min-height: 400px !important;
+}
+
+
+.numberInfo mat-card,
+.numberInfo mat-card mat-card-content{
+  background-color: #af3f36 !important;
+  background: #af3f36 !important;
+  color: #ffffff !important;
+}
+.numberInfo mat-card{
+  margin: 5px auto !important;
+}
+.numberInfo mat-card mat-card-content{
+  padding: 30px 5px;
+}
+.numberInfo mat-card h3{
+  margin-top: 5px !important;
+}
+.numberInfo mat-card span{
+  font-size: 3em !important;
+  font-weight: bold !important;
+}
+
+

@@ -1,0 +1,40 @@
+<div style="padding-left: 3%; padding-right: 3%; padding-top: 5px; padding-bottom: 7px;">
+  <div class="row">
+    <div class="col-12" style="margin-top: 10px;">
+      <mat-card class="formHeader">
+        <mat-card-title align="center">Plataforma Electrónica para el Fomento al Comercio Exterior</mat-card-title>
+      </mat-card>
+      <br>
+      <mat-card>
+        <mat-card-content>
+          <div align="center">
+            <div align="center">
+              <mat-icon *ngIf="valid" class="icon-display-s">check_circle</mat-icon>
+              <mat-icon *ngIf="!valid" class="icon-display-d">report</mat-icon>
+            </div>            
+            <div *ngIf="valid">
+              <h1>La constancia consultada tiene validez oficial</h1>
+              <br>
+              <br>
+              <h2>Nombre de la capacitación: <span style="font-weight: 400;">{{data.capacitacion.nombre}}</span></h2>
+              <h2>Área: <span style="font-weight: 400;">{{printArea(data.capacitacion.subarea)}}</span></h2>
+              <h2>Fecha de inicio: <span style="font-weight: 400;">{{data.capacitacion.fechaInicio | date: 'longDate'}}</span></h2>
+              <h2>Fecha de finalización: <span style="font-weight: 400;">{{data.capacitacion.fechaFin | date: 'longDate'}}</span></h2>
+              <br>
+              <br>
+              <h2>Nombre del participante: <span style="font-weight: 400;">{{data.usuario.nombreCompleto}}</span></h2>
+              <h2>Fecha de conclusión del participante: <span style="font-weight: 400;">{{data.usuario.updatedAt | date: 'longDate'}}</span></h2>
+              <br>
+              <br>
+              <h3>Cadena de verificación:</h3>
+              <div>{{token}}</div>
+            </div>
+            <div *ngIf="!valid">
+              <h1>La constancia consultada no cuenta con un registro dentro de la plataforma</h1>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<mat-card>
+  <mat-card-content>
+    <form autocomplete="off">
+      <div class="row">
+        <div class="col-12">
+          <h3>Pipeline de Proyectos (Click en cada proyecto para ver detalle, arrastrar y soltar para cambiar estado)</h3>
+          <hr>
+        </div>
+      </div>
+      <!--<mat-grid-list cols="3" rowHeight="350px" (window:resize)="onResize($event)">
+        <mat-grid-tile *ngFor="let status of statuses">-->
+        <div cdkDropListGroup>
+          <div class="example-container" *ngFor="let status of statuses" >
+            <h2>{{status.nombre}}</h2>
+            <div
+              cdkDropList
+              #todoList="cdkDropList"
+              [attr.data-idstatus]="status.id"
+              [cdkDropListData]="status.proyectos"
+              class="example-list"
+              (cdkDropListDropped)="drop($event)">
+              <div class="example-box" *ngFor="let proyecto of status.proyectos" cdkDrag>
+                <mat-card (click)="click(proyecto)" style="width: 100%;">
+                  <mat-card-content>
+                    <p class="text-dyd">
+                      <b>Proyecto: {{proyecto.nombreProyecto}}</b><br>
+                      <b>Representante: {{ getUserByRole(proyecto, 2) ? getUserByRole(proyecto, 2).nombreCompleto : "-" }}</b><br>
+                      <b>Monto previsto: {{ proyecto.montoPrevisto | currency: 'MXN' }}</b><br>
+                      <b>Detalle: {{ proyecto.descripcion }}</b><br>
+                      <b>Periodo: {{ proyecto.fechaInicio | date : 'dd/MM/yyyy HH:mm' }} - {{ proyecto.fechaFin | date : 'dd/MM/yyyy HH:mm' }}</b><br>
+                      <b>Prioridad: {{ proyecto?.prioridad?.nombre }}</b><br>
+                      <b>Responsable: {{ getUserByRole(proyecto, 1) ? getUserByRole(proyecto, 1).nombreCompleto : "-" }}</b><br>
+                    </p>
+                  </mat-card-content>
+                </mat-card>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--</mat-grid-tile>
+      </mat-grid-list>-->
+    </form>
+  </mat-card-content>
+</mat-card>

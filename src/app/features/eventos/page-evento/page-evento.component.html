@@ -1,0 +1,80 @@
+<mat-card class="formHeader">
+  <mat-card-title>
+    Listado de eventos
+  </mat-card-title>
+</mat-card>
+
+<div>
+  <mat-card>
+    <mat-card-content>
+      <div>
+        <mat-form-field class="search_field">
+          <mat-label>Filtro</mat-label>
+          <mat-select [formControl]="selectSearch" name="selectSearch" [disabled]="dataSource === null">
+            <mat-option *ngFor="let item of displayerColumnsFilter" [value]="item">
+              {{item.etiqueta}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="filter_field">
+          <mat-label>Buscar</mat-label>
+          <input matInput [formControl]="valueSearch" name="valueSearch" (keyup)="applyFilter()" placeholder="Buscar" [disabled]="dataSource === null" autocomplete="off">
+        </mat-form-field>
+        <button mat-raised-button color="but_excel" (click)="pageExcel()">Exportar Excel</button>
+        <button mat-raised-button color="primary" (click)="crearReporte()">Reporte</button>
+      </div>
+      <br>
+      <div class="mat-elevation-z8">
+        <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort [hidden]="!dataSource && !isCharge">
+
+          <ng-container [matColumnDef]="i" *ngFor="let i of displayedColumns; let k = index;">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{titleColumns[k]}}</th>
+            <td mat-cell *matCellDef="let el; let l = index;" align="center">
+              <ng-container [ngTemplateOutlet]="(i === 'acciones') ? acciones : data"
+                    [ngTemplateOutletContext]="{el:el}"></ng-container>
+            </td>
+
+            <ng-template #acciones let-el="el">
+              <a mat-button [matMenuTriggerFor]="matMenu"><span class="material-icons">menu</span></a>
+              <mat-menu #matMenu="matMenu">
+                <mat-divider *ngIf="(scriptGL.getCanDeleteRol('/eventos'))"></mat-divider>
+                <button mat-menu-item (click)="editar(el)">Editar</button>
+                <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/eventos'))"></mat-divider>
+                <mat-divider></mat-divider>                
+                <button mat-menu-item (click)="enviarEncuestas(el)" >Enviar encuestas de satisfacción</button>
+                <button mat-menu-item (click)="verContactos(el)" >Ver contactos</button>
+              </mat-menu>
+            </ng-template>
+            <ng-template #data let-el='el'> 
+              {{                
+                (i === 'tipoId') ? (el[i] === null ? '-' : el[i].nombre) :
+                (i === 'privacidad') ? (el[i] === null ? '-' : ePrivacidadEvento[el[i]]) :
+                (i === 'modalidad') ? (el[i] === null ? '-' : eModalidadEvento[el[i]]) :
+                (i === 'sede') ? (el['modalidad'] === 'presencial' ?
+                  el['sede'] === null ? '-' : el['sede'] + " ("+el['domicilio']+")" :
+                  el["reunionesId"] === null ? '-' : 'NA') :
+                (i === 'responsableId') ? (el[i] === null ? '-' : el[i].nombre) :
+                (i === 'fechaInicio' || i === 'fechaFin') ? (el[i] === null ? '-' : (el[i] | date: 'd/M/y HH:mm')) :
+                (i === 'estatus') ? (el[i] === null ? '-' : getEstatus(el[i])) :
+                (el[i] === null ? '-' : el[i])
+              }}
+            </ng-template>
+          </ng-container>
+
+          <tr class="columns_row" mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <!-- <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No hay resultados para la búsqueda con "{{input.value}}"</td>
+          </tr> -->
+        </table>
+        <div>
+          <mat-progress-bar mode="indeterminate" *ngIf="dataSource === null && !isCharge"></mat-progress-bar>
+          <tr class="mat-row" *ngIf="dataSource === null && isCharge">
+            <td>No existen registros</td>
+          </tr>
+        </div>
+        <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

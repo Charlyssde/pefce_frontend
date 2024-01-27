@@ -1,0 +1,67 @@
+<button mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro" *ngIf="create" (click)="newRegistrationEvent()">
+    <mat-icon>add</mat-icon>
+</button>
+<a [routerLink]="backUrl" mat-fab color="warn" class="btn-regresar" matTooltip="Volver" (click)="onClickBack()" *ngIf="padreId">
+    <mat-icon>arrow_back</mat-icon>
+</a>
+
+<div class="mat-elevation-z8" *ngIf="tableSettings && pageDataset && dataset">
+    <div class="row">
+        <div class="col-12" align="end">
+            <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda <mat-icon>help</mat-icon></button>
+        </div>
+    </div>
+    <div class="row justify-content-between">
+        <div class="col-12 col-lg-7">
+            <mat-form-field appearance="fill">
+                <mat-icon matPrefix>search</mat-icon>
+                <mat-label>Buscar</mat-label>
+                <input matInput [(ngModel)]="nombre" type="text" placeholder="Buscar" autocomplete="off" (ngModelChange)="handleFilter()">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-lg-3" align="end">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th *ngFor="let header of tableSettings.headers">
+                            {{ header.label }}
+                        </th>
+                        <th *ngIf="tableSettings.actions">
+                            Acciones
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataset; let index1 = index;">
+                        <td *ngFor="let header of tableSettings.headers; let index2 = index;">
+                            {{ data[header.key] }}
+                        </td>
+                        <td *ngIf="tableSettings.actions" class="text-center">
+                            <button mat-mini-fab color="primary" matTooltip="Editar registro" *ngIf="update" (click)="editRegistrationEvent(helperDataset[index1])">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                            <button mat-mini-fab color="warn" matTooltip="Eliminar registro" *ngIf="deleteIn" (click)="deleteRegistrationEvent(helperDataset[index1])">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <a [routerLink]="hasChildren.url.replace('{padreId}',helperDataset[index1].id)" mat-mini-fab matTooltip="Ir a subcategoría del catálogo" *ngIf="hasChildren && hasChildren.status">
+                                <mat-icon>account_tree</mat-icon>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize" [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons" [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize" [pageIndex]="pageIndex"
+                aria-label="Select page">
+            </mat-paginator>
+
+        </div>
+    </div>
+</div>

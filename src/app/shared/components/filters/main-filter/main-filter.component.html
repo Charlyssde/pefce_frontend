@@ -1,0 +1,143 @@
+<div>
+  <ng-content></ng-content>
+
+  <div class="row">
+    <div class="col-12">
+      <small>* Clic en el ícono <mat-icon style="width:auto !important;font-size: 12px !important;">filter_alt</mat-icon> para mostrar/ocultar filtros especiales</small>
+      <mat-form-field appearance="fill">
+        <mat-label>Buscar</mat-label>
+        <input matInput type="text" [(ngModel)]="mainRequestFilter.filtro" (ngModelChange)="onChangeMainRequestFilter()"/>
+        <mat-icon matSuffix matTooltip="Mostrar/Ocultar filtros" style="cursor: pointer;" (click)="showFilters = !showFilters">filter_alt</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="showFilters">
+    <!-- Global filters -->
+    <div class="col-12 col-md-6 col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Filtrar por:</mat-label>
+        <mat-select [(ngModel)]="selectedProfileType" (ngModelChange)="onChangeProfileType()">
+          <mat-option [value]="'myData'">{{ myData }}</mat-option>
+          <mat-option *ngIf="profile.tipo === 'root' || profile.tipo === 'institución'" name="profileType" [value]="'institución'">Institución</mat-option>
+          <mat-option *ngIf="profile.tipo === 'root'" [value]="'empresa'">Empresa</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-6">
+      <mat-form-field appearance="fill">
+        <mat-label>Activos/Inactivos</mat-label>
+        <mat-select [(ngModel)]="mainRequestFilter.activo" (ngModelChange)="onChangeMainRequestFilter()">
+          <mat-option [value]="null">Sin filtro</mat-option>
+          <mat-option [value]="true">Activos</mat-option>
+          <mat-option [value]="false">Inactivos</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-6">
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha inicial</mat-label>
+            <input matInput [matDatepicker]="startDate" [(ngModel)]="mainRequestFilter.fechaInicio" (ngModelChange)="onChangeMainRequestFilter()">
+            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+            <mat-datepicker #startDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="fill">
+            <mat-label>Fecha final</mat-label>
+            <input matInput [matDatepicker]="endDate" [(ngModel)]="mainRequestFilter.fechaFin" (ngModelChange)="onChangeMainRequestFilter()">
+            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+            <mat-datepicker #endDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+
+    <!-- Project filters -->
+    <div class="col-12 col-md-6 col-lg-4" *ngIf=" filterModule === 'proyectos' ">
+      <mat-form-field appearance="fill">
+        <mat-label>Prioridad</mat-label>
+        <mat-select [(ngModel)]="mainRequestFilter.prioridad" (ngModelChange)="onChangeMainRequestFilter()"
+          placeholder="Sin filtro">
+          <mat-option [value]="null">Sin filtro</mat-option>
+          <mat-option *ngFor="let priority of prioritiesList | keyvalue"
+            [value]="priority.key">{{priority.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf=" filterModule === 'proyectos' ">
+      <mat-form-field appearance="fill">
+        <mat-label>Estatus</mat-label>
+        <mat-select [(ngModel)]="mainRequestFilter.estatus" (ngModelChange)="onChangeMainRequestFilter()"
+          placeholder="Sin filtro">
+          <mat-option [value]="null">Sin filtro</mat-option>
+          <mat-option *ngFor="let status of statusList | keyvalue" [value]="status.key">{{status.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-12 col-md-6 col-lg-4" *ngIf=" filterModule === 'proyectos' ">
+      <mat-form-field appearance="fill">
+        <mat-label>Con/Sin responsables</mat-label>
+        <mat-select [(ngModel)]="mainRequestFilter.conResponsable" (ngModelChange)="onChangeMainRequestFilter()">
+          <mat-option [value]="null">Sin filtro</mat-option>
+          <mat-option [value]="true">Con responsables</mat-option>
+          <mat-option [value]="false">Sin responsables</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Institutions filter -->
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'institución'">
+      <mat-form-field appearance="fill">
+        <mat-label>Áreas</mat-label>
+        <mat-select [(ngModel)]="mainRequestFilter.area" (ngModelChange)="setSelectedArea()">
+          <mat-option [value]="null">Todas las áreas</mat-option>
+          <mat-option *ngFor="let area of areasList | keyvalue" [value]="area.key">{{area.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'institución'">
+      <shared-select-with-filter [placeholder]="'Perfil'" [appearance]="'fill'" [optionsList]="profilesList"
+        [keyName]="'nombre'" [valueSetted]="profile" (emitSelectedValue)="setSelectedProfile($event)"></shared-select-with-filter>
+    </div>
+
+    <!-- Enterprise filters -->
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'empresa'">
+      <shared-select-with-filter [placeholder]="'Categoría'" [appearance]="'fill'" [optionsList]="categoriesList"
+        [keyName]="'nombre'" [valueSetted]="mainRequestFilter.categoria" (emitSelectedValue)="setSelectedCategory($event)"></shared-select-with-filter>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'empresa'">
+      <shared-select-with-filter [placeholder]="'Régimen fiscal'" [appearance]="'fill'" [optionsList]="taxRegimeList"
+        [keyName]="'nombre'" [valueSetted]="mainRequestFilter.regimenFiscal" (emitSelectedValue)="setSelectedTaxRegime($event)"></shared-select-with-filter>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6" *ngIf="selectedProfileType === 'empresa'">
+      <shared-select-with-filter [placeholder]="'Sectores'" [appearance]="'fill'" [optionsList]="sectorsList"
+        [keyName]="'nombre'" [valueSetted]="mainRequestFilter.sector" (emitSelectedValue)="setSelectedSector($event)"></shared-select-with-filter>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6" *ngIf="selectedProfileType === 'empresa'">
+      <shared-select-with-filter [placeholder]="'Subsectores'" [appearance]="'fill'" [optionsList]="subsectorsList"
+        [keyName]="'nombre'" [valueSetted]="mainRequestFilter.subsector" (emitSelectedValue)="setSelectedSubsector($event)"></shared-select-with-filter>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType === 'empresa'">
+      <shared-select-with-filter [placeholder]="'Empresa'" [appearance]="'fill'" [optionsList]="enterprisesList"
+        [keyName]="'empresa'" (emitSelectedValue)="setSelectedEnterprise($event)"></shared-select-with-filter>
+    </div>
+
+
+    <!-- Users filter -->
+    <div class="col-12 col-sm-6 col-md-4" *ngIf="selectedProfileType !== 'myData' && usersList.length>0">
+      <shared-select-with-filter [placeholder]="'Usuario'" [appearance]="'fill'" [optionsList]="usersList"
+        [keyName]="'nombre'" [valueSetted]="user" [valueSetted]="mainRequestFilter.usuario" (emitSelectedValue)="setSelectedUser($event)"></shared-select-with-filter>
+    </div>
+
+    <div class="col-12" align="end">
+      <button type="button" mat-raised-button color="accent" (click)="cleanFilters()">Limpiar filtros</button>
+    </div>
+  </div>
+</div>

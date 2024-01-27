@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12">
+    <span>Editar actividad/acción del panel</span>
+    <hr>
+    <small>* Se recomienda cargar archivos en cualquier servicio de nube y generar una liga para su acceso</small>
+  </div>
+  <div class="col-12" style="overflow-y: scroll;">
+    <quill-editor [styles]="editorStyles" [modules]="editorModules" placeholder="Actividad/Accion" [(ngModel)]="accion" required></quill-editor>
+    <hr>
+  </div>
+  <div class="col-12" style="text-align: right;">
+    <button mat-raised-button color="primary" (click)="updateProyectoHistorico()" [disabled]="accion===null">Guardar</button>
+    <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+  </div>
+</div>
