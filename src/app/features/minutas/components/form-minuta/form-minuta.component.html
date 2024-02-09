@@ -93,7 +93,7 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-        
+
         <mat-grid-tile>
           <mat-form-field appearance="fill">
             <mat-label>Proyecto vinculado</mat-label>
@@ -106,7 +106,7 @@
         </mat-grid-tile>
 
       </mat-grid-list>
-      
+
       <div class="row">
         <div class="col-12">
           <h3>Participantes</h3>
@@ -130,7 +130,7 @@
       </mat-grid-list>
       <div class="row">
         <div class="col-12">
-          <h4>Externos</h4>          
+          <h4>Externos</h4>
         </div>
       </div>
       <mat-grid-list cols="1" rowHeight="100px" (window:resize)="onResize($event)">
@@ -144,7 +144,7 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-      </mat-grid-list>      
+      </mat-grid-list>
       <div class="row">
         <div class="col-12">
           <h3>Puntos</h3>
@@ -172,14 +172,10 @@
 
               <div class="tareas-content">
                 <div *ngIf="(minutaTareas).length>0; else sinTareas">
-                  <ul style="padding:0px !important;">
-                    <li (click)="openOptionsTareasModal(pT)" style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" *ngFor="let pT of tareas; let i = index;">
-                      ({{ ((minutaTareas).length - i) }}) <span class="{{ pT.estatus ? 'endedTask': '' }}" >{{ pT.tarea }}</span>
-                      <br>
-                      <small>({{ pT.usuarioId !== null ? pT.usuarioId.nombreCompleto : 'No asignado' }})</small>
-                      <mat-divider></mat-divider>
-                    </li>
-                  </ul>
+                  <div *ngFor="let tarea of minutaTareas">
+                    <span>ID: {{ tarea.id }}</span>
+                    <span>Tarea: {{ tarea.tarea }}</span>
+                  </div>
                 </div>
                 <ng-template #sinTareas>
                   <div *ngIf="isUpdate else elseBlock" style="text-align: center;padding: 5px 0px;">
@@ -192,9 +188,7 @@
             </mat-card-content>
           </mat-card>
         </div>
-      </div>      
-
-      <span>* Campos obligatorios</span>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>

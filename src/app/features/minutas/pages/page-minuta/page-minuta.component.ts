@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { MatPaginator, MatSort, MatDialog, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatDialog, MatTableDataSource, MatSnackBar } from '@angular/material';
 import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
 import { EliminarModalComponent } from 'src/app/shared/components/modals/eliminar-modal/eliminar-modal.component';
 import { MinutasService } from 'src/app/features/minutas/service/minutas.service';
@@ -45,6 +45,7 @@ export class PageMinutaComponent implements OnInit {
     private proyectosService: ProyectosService,
     //private solicitudeService: SolicitudesService,
     private datePipe: DatePipe,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -106,7 +107,7 @@ export class PageMinutaComponent implements OnInit {
     });
   }
 
-  promover(minuta: MinutaModel){    
+  promover(minuta: MinutaModel){
     this.proyecto.project = new ProyectosModel();
     this.proyecto.project.nombre = minuta.asunto;
     this.proyecto.project.descripcion = minuta.objetivo;
@@ -122,12 +123,12 @@ export class PageMinutaComponent implements OnInit {
 
   obtenerResponsableEmpresa(minuta: MinutaModel){
     let usuarioId: number = 0;
-    minuta.minutaUsuarios.forEach(element => {    
+    minuta.minutaUsuarios.forEach(element => {
         element.perfiles.forEach(perfil => {
           if( perfil.tipo === "empresa" ){
             usuarioId = element.id;
           }
-        });      
+        });
     });
     return usuarioId;
   }
@@ -161,219 +162,240 @@ export class PageMinutaComponent implements OnInit {
     }
   }
 
-  async generarPdf(element,tipo){
-    var currentY = 10;
-    //var clase = await this.getClase(element.claseMinuta.nombre, element.idClase);
-    const doc = new jsPDF({
-      orientation: "v",
-      format: "letter"
-    });
+  // async generarPdf(element,tipo){
+  //   var currentY = 10;
+  //   //var clase = await this.getClase(element.claseMinuta.nombre, element.idClase);
+  //   const doc = new jsPDF({
+  //     orientation: "v",
+  //     format: "letter"
+  //   });
 
-    var pageHeight = doc.internal.pageSize.height;
+  //   var pageHeight = doc.internal.pageSize.height;
 
-    doc.setFontSize(16);
-    doc.text("Secretaría de Desarrollo Económico y Portuario", 107.54, currentY,{align: 'center'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.setFontSize(14);
-    doc.text("Minuta " + (element.folio != null ? element.folio : ''), 107.54, currentY,{align: 'center'});
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.setFontSize(12);
-    doc.text("Fecha: " + this.datePipe.transform(element.fecha,'fullDate'), 200, currentY,{align: 'right'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.text("Tipo de Minuta: " + (element.tipoMinuta.nombre != null ? element.tipoMinuta.nombre : ''), 200, currentY,{align: 'right'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    /*
-    doc.text(element.claseMinuta.nombre+": " + this.getNombreClase(element.claseMinuta.nombre,clase), 200, currentY,{align: 'right'});
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }*/
-    doc.text("Asunto: " + (element.asunto != null ? element.asunto : ''), 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.text("Objetivo: " + (element.objetivo != null ? element.objetivo : ''), 15, currentY,{align: 'left'});
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.setFontSize(14);
-    doc.text("Sede:", 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.setFontSize(12);
-    doc.text((element.sede != null ? element.sede : '') +" - "+ (element.ciudad != null ? element.ciudad : '') + " ("+ (element.estado != null ? element.estado.estado : '') +"," + (element.municipio != null ? element.municipio.municipio : '') +") Código postal: " + (element.codigoPostal != null ? element.codigoPostal : ''), 15, currentY,{align: 'left'});
-    //doc.text(element.sede +" - "+ element.ciudad + " ("+ element.estado.estado +"," + element.municipio.municipio +") Código postal: " + element.codigoPostal, 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
+  //   doc.setFontSize(16);
+  //   doc.text("Secretaría de Desarrollo Económico y Portuario", 107.54, currentY,{align: 'center'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.setFontSize(14);
+  //   doc.text("Minuta " + (element.folio != null ? element.folio : ''), 107.54, currentY,{align: 'center'});
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.setFontSize(12);
+  //   doc.text("Fecha: " + this.datePipe.transform(element.fecha,'fullDate'), 200, currentY,{align: 'right'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.text("Tipo de Minuta: " + (element.tipoMinuta.nombre != null ? element.tipoMinuta.nombre : ''), 200, currentY,{align: 'right'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   /*
+  //   doc.text(element.claseMinuta.nombre+": " + this.getNombreClase(element.claseMinuta.nombre,clase), 200, currentY,{align: 'right'});
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }*/
+  //   doc.text("Asunto: " + (element.asunto != null ? element.asunto : ''), 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.text("Objetivo: " + (element.objetivo != null ? element.objetivo : ''), 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.setFontSize(14);
+  //   doc.text("Sede:", 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.setFontSize(12);
+  //   doc.text((element.sede != null ? element.sede : '') +" - "+ (element.ciudad != null ? element.ciudad : '') + " ("+ (element.estado != null ? element.estado.estado : '') +"," + (element.municipio != null ? element.municipio.municipio : '') +") Código postal: " + (element.codigoPostal != null ? element.codigoPostal : ''), 15, currentY,{align: 'left'});
+  //   //doc.text(element.sede +" - "+ element.ciudad + " ("+ element.estado.estado +"," + element.municipio.municipio +") Código postal: " + element.codigoPostal, 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+  //   var rows = [];
+  //   element.minutaTemas.forEach(mt => {
+  //     rows.push([mt.temaMinuta.nombre]);
+  //   });
+  //   autoTable(doc, {
+  //     head: [['Temas tratados']],
+  //     body: rows,
+  //     startY: currentY
+  //   });
+  //   currentY = doc.lastAutoTable.finalY;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+  //   doc.setFontSize(14);
+  //   doc.text('Usuarios Participantes:', 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   var rows = [];
+  //   element.minutaUsuarios.forEach(mu => {
+  //     rows.push([mu.usuario.nombreCompleto,mu.usuario.puesto,mu.usuario.perfilUsuario.nombre]);
+  //   });
+  //   autoTable(doc, {
+  //     head: [['Usuario','Puesto','Tipo de Participante']],
+  //     body: rows,
+  //     startY: currentY
+  //   });
+  //   currentY = doc.lastAutoTable.finalY;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+  //   doc.setFontSize(14);
+  //   doc.text('Tareas:', 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   var rows = [];
+  //   element.tareas.forEach(mtr => {
+  //     rows.push([mtr.tarea,mtr.entregable,this.datePipe.transform(mtr.fechaTermino,'mediumDate'),mtr.usuarioId.nombreCompleto]);
+  //   });
+  //   autoTable(doc, {
+  //     head: [['Tarea','Entregable','Fecha de entrega','Responsable']],
+  //     body: rows,
+  //     startY: currentY
+  //   });
+  //   currentY = doc.lastAutoTable.finalY;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+  //   doc.setFontSize(14);
+  //   doc.text('Archivos:', 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   var rows = [];
+  //   element.minutaArchivos.forEach(ma => {
+  //     rows.push([ma.nombre, (ma.archivo == null) ? 'Archivo sin cargar': 'Archivo cargado', this.datePipe.transform(ma.updatedAt,'mediumDate'),ma.responsable.nombreCompleto]);
+  //   });
+  //   autoTable(doc, {
+  //     head: [['Archivo','Estado','Fecha de carga','Responsable']],
+  //     body: rows,
+  //     startY: currentY
+  //   });
+  //   currentY = doc.lastAutoTable.finalY;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+  //   doc.addPage();
+  //   currentY = 20;
+  //   doc.setFontSize(14);
+  //   doc.text('Puntos tratados:', 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+  //   doc.setFontSize(12);
+  //   doc.fromHTML(element.puntosTratados, 15, currentY,{align: 'left'});
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   currentY += 7;
+  //   if (currentY >= pageHeight ) {
+  //     doc.addPage();
+  //     currentY = 10;
+  //   }
+
+
+  //   if (tipo == 'singular') {
+  //     doc.save("minuta_"+element.folio+".pdf");
+  //   }else{
+  //     return doc.output('blob');
+  //   }
+  // }
+descargarZip(tipo) {
+    let idsSeleccionados: number[] = [];
+    if (tipo === 'singular') {
+      const idsSeleccionados = this.elementsZip.map(element => element.id);
+      this.service.listaminutas(idsSeleccionados).subscribe(
+          (data: Blob) => {
+              this.openPdf(data); // Abre un PDF que contiene todos los elementos
+              this.snackBar.open('Creado Correctamente.', 'Entendido', { duration: 3000 });
+          },
+          error => {
+              this.snackBar.open('Error al crear PDF.', 'Entendido', { duration: 3000 });
+          }
+      );
+
+    } else {
+        this.elementsZip.forEach(element => {
+            idsSeleccionados.push(element.id);
+        });
     }
 
-    var rows = [];
-    element.minutaTemas.forEach(mt => {
-      rows.push([mt.temaMinuta.nombre]);
-    });
-    autoTable(doc, {
-      head: [['Temas tratados']],
-      body: rows,
-      startY: currentY
-    });
-    currentY = doc.lastAutoTable.finalY;
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
+}
 
-    doc.setFontSize(14);
-    doc.text('Usuarios Participantes:', 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    var rows = [];
-    element.minutaUsuarios.forEach(mu => {
-      rows.push([mu.usuario.nombreCompleto,mu.usuario.puesto,mu.usuario.perfilUsuario.nombre]);
-    });
-    autoTable(doc, {
-      head: [['Usuario','Puesto','Tipo de Participante']],
-      body: rows,
-      startY: currentY
-    });
-    currentY = doc.lastAutoTable.finalY;
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-
-    doc.setFontSize(14);
-    doc.text('Tareas:', 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    var rows = [];
-    element.tareas.forEach(mtr => {
-      rows.push([mtr.tarea,mtr.entregable,this.datePipe.transform(mtr.fechaTermino,'mediumDate'),mtr.usuarioId.nombreCompleto]);
-    });
-    autoTable(doc, {
-      head: [['Tarea','Entregable','Fecha de entrega','Responsable']],
-      body: rows,
-      startY: currentY
-    });
-    currentY = doc.lastAutoTable.finalY;
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-
-    doc.setFontSize(14);
-    doc.text('Archivos:', 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    var rows = [];
-    element.minutaArchivos.forEach(ma => {
-      rows.push([ma.nombre, (ma.archivo == null) ? 'Archivo sin cargar': 'Archivo cargado', this.datePipe.transform(ma.updatedAt,'mediumDate'),ma.responsable.nombreCompleto]);
-    });
-    autoTable(doc, {
-      head: [['Archivo','Estado','Fecha de carga','Responsable']],
-      body: rows,
-      startY: currentY
-    });
-    currentY = doc.lastAutoTable.finalY;
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-
-    doc.addPage();
-    currentY = 20;
-    doc.setFontSize(14);
-    doc.text('Puntos tratados:', 15, currentY,{align: 'left'});
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-    doc.setFontSize(12);
-    doc.fromHTML(element.puntosTratados, 15, currentY,{align: 'left'});
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    currentY += 7;
-    if (currentY >= pageHeight ) {
-      doc.addPage();
-      currentY = 10;
-    }
-
-
-    if (tipo == 'singular') {
-      doc.save("minuta_"+element.folio+".pdf");
-    }else{
-      return doc.output('blob');
-    }
+  generarPdfbl(dato: any) {
+    console.log("id de la minuta", dato.id)
+    this.service.getminutaPdf(dato.id).subscribe(
+      (data: Blob) => {
+        this.openPdf(data);
+        this.snackBar.open('Creado Correctamente.', 'Entendido', {duration : 3000 });
+      },
+      error => {
+        this.snackBar.open('Error al crear PDF.', 'Entendido', { duration: 3000 });
+      }
+    );
   }
 
-  async descargarZip(tipo){
-    if (tipo == 'singular') {
-      this.elementsZip.forEach(element => {
-        this.generarPdf(element,tipo);
-      });
-    }else{
-      var zip = new JSZip();
-      this.elementsZip.forEach(element => {
-        try {
-          zip.file("minuta_"+element.folio.replaceAll("/","_")+ '.pdf', this.generarPdf(element,tipo));
-        } catch {
-        }
-      });
-      zip.generateAsync({type:'blob'}).then(function(content) {
-        saveAs(content, 'minutas.zip');
-      });
-    }
+  private openPdf(data: Blob) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
   }
 
   ejecutarAddDel($e,element){

@@ -12,7 +12,7 @@
       </mat-form-field>
       <br>
       <button mat-button color="primary" (click)="descargarZip('multiple')">Descargar zip</button>
-      <button mat-button color="primary" (click)="descargarZip('singular')">Descargar Masiva</button> 
+      <button mat-button color="primary" (click)="descargarZip('singular')">Descargar Masiva</button>
       <br>
       <div class="mat-elevation-z8">
         <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort *ngIf="dataSource && isCharge">
@@ -56,9 +56,10 @@
               <a mat-button [matMenuTriggerFor]="matMenu"><span class="material-icons">menu</span></a>
               <mat-menu #matMenu="matMenu">
                 <mat-divider *ngIf="(scriptGL.getCanDeleteRol('/minutas'))"></mat-divider>
-                <button mat-menu-item (click)="generarPdf(element,'singular')" *ngIf="scriptGL.getCanReportRol('/minutas')">Descargar PDF</button>
+                <!-- <button mat-menu-item (click)="generarPdf(element,'singular')" *ngIf="scriptGL.getCanReportRol('/minutas')">Descargar PDF</button> -->
+                <button mat-menu-item (click)="generarPdfbl(element)">Descargar PDF</button>
                 <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/minutas'))"></mat-divider>
-                <button mat-menu-item (click)="editar(element)" *ngIf="scriptGL.getCanUpdateRol('/minutas')">Editar</button>                
+                <button mat-menu-item (click)="editar(element)" *ngIf="scriptGL.getCanUpdateRol('/minutas')">Editar</button>
                 <mat-divider *ngIf="(scriptGL.getCanUpdateRol('/minutas'))"></mat-divider>
                 <button mat-menu-item (click)="eliminar(element)" *ngIf="scriptGL.getCanDeleteRol('/minutas')">Eliminar</button>
               </mat-menu>

@@ -3,6 +3,8 @@ import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
 import { MinutaModel } from 'src/app/core/models/minutas/minuta-model';
 import { FormMinutaComponent } from '../form-minuta/form-minuta.component';
 import { MinutasService } from 'src/app/features/minutas/service/minutas.service';
+import { TasksService } from 'src/app/features/tasks/services/tasks.service';
+import { MatSnackBar } from '@angular/material';
 
 const bcrypt = require('bcryptjs');
 
@@ -25,10 +27,19 @@ export class UpdateMinutaComponent implements OnInit, AfterViewInit {
   constructor(
     private service: MinutasService,
     public scriptGL: ScriptsGlobalService,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
+    private taskservice : TasksService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
+    this.taskservice.gettaskByminuta(this.idForm).subscribe(data => {
+      if (data) {
+        this.dataSave.minutaTareas = data;
+      }
+    }, error => {
+      this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+    });
   }
 
   ngAfterViewInit() {
@@ -57,7 +68,7 @@ export class UpdateMinutaComponent implements OnInit, AfterViewInit {
     if (this.form.validForm()) {
       this.dataSave = this.form.formulario.getRawValue();
       this.dataSave.createdAt = new Date();
-      this.dataSave.minutaTareas = [];
+     // this.dataSave.minutaTareas = [];
       this.dataSave.tareas = this.form.tareas;
       this.dataSave.minutaArchivos = this.form.archivos;
       this.dataSave.minutaTemas = [];
@@ -86,7 +97,7 @@ export class UpdateMinutaComponent implements OnInit, AfterViewInit {
       delete this.dataSave.participanteExternos;
       delete this.dataSave.idClase;
       delete this.dataSave.claseMinuta;
-      
+
       await this.service.update(this.dataSave).subscribe(data => {
         if (data) {
           this.scriptGL.printEditarSnackBar(data);
