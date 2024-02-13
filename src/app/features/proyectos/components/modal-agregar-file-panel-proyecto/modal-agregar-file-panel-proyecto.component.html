@@ -1,0 +1,17 @@
+<div style="max-height: 90vh; overflow-y: scroll;">
+  <div class="row">
+    <div class="col-12">
+      <span>Agregar archivo al panel</span>
+      <hr>
+    </div>
+    <div class="col-12">
+      <div>
+        <input type="file" (change)="onFileSelected($event)" accept="*/*" />
+      </div>
+    </div>
+    <div class="col-12" style="text-align: right;">
+      <button mat-raised-button color="primary" (click)="upload()" [disabled]="selectedFile===null">Guardar</button>
+      <button mat-raised-button color="warn" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>

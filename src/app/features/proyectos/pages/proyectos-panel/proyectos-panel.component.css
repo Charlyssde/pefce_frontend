@@ -46,6 +46,12 @@
     text-align: justify;
     padding-top: 10px !important;
   }
+  .history-content-body-file{
+    font-size: 0.85rem !important;
+    text-align: justify;
+    padding-top: 10px !important;
+
+  }
   .history-content-body img{
     max-width: 80% !important;
     width: 80% !important;

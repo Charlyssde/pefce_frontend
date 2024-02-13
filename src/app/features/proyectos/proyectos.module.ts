@@ -27,6 +27,8 @@ import { QuillModule } from 'ngx-quill';
 import { ModalCreateMeetingPanelProyectoComponent } from './components/modal-create-meeting-panel-proyecto/modal-create-meeting-panel-proyecto.component';
 import { FormMeetingsComponent } from '../meetings/components/form-meetings/form-meetings.component';
 import { MeetingsModule } from '../meetings/meetings.module';
+import { ModalAgregarImagePanelProyectoComponent } from './components/modal-agregar-image-panel-proyecto/modal-agregar-image-panel-proyecto.component';
+import { ModalAgregarFilePanelProyectoComponent } from './components/modal-agregar-file-panel-proyecto/modal-agregar-file-panel-proyecto.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,8 @@ import { MeetingsModule } from '../meetings/meetings.module';
     FormProyectosComponent,
     ModalAgregarPlantillatareasPanelProyectoComponent,
     ModalCreateMeetingPanelProyectoComponent,
+    ModalAgregarImagePanelProyectoComponent,
+    ModalAgregarFilePanelProyectoComponent,
   ],
   imports: [
     CommonModule,
@@ -67,6 +71,8 @@ import { MeetingsModule } from '../meetings/meetings.module';
     ModalAgregarPlantillatareasPanelProyectoComponent,
     ModalAgregarAccionPanelProyectoComponent,
     ModalCreateMeetingPanelProyectoComponent,
+    ModalAgregarImagePanelProyectoComponent,
+    ModalAgregarFilePanelProyectoComponent,
     FormMeetingsComponent
   ],
   schemas: [

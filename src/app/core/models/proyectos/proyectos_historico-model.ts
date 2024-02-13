@@ -9,4 +9,5 @@ export class ProyectosHistoricoModel{
   createdAt: Date = null;
   updatedAt: Date = null;
   meetings: MeetingsModel[] = [];
+  file : Boolean = false;
 }

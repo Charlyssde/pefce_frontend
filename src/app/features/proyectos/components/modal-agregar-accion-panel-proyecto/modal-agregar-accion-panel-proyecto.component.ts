@@ -24,8 +24,8 @@ export class ModalAgregarAccionPanelProyectoComponent implements OnInit {
       [{ 'header': 1 }, { 'header': 2 }],
       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
       [{ 'align': [] }],
-      [{ 'color': [] },],
-      ['link', 'image']
+      [{ 'color': [] },]
+      //['link', 'image']
     ]
   };
 

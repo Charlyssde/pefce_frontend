@@ -28,6 +28,11 @@ import { ZoomMeetingRecurrence } from 'src/app/core/models/meetings/zoom_meeting
 import { ZoomMeetingSettingsModel } from 'src/app/core/models/meetings/zoom_meeting_seetings-model';
 import { ModalCreateMeetingPanelProyectoComponent } from '../../components/modal-create-meeting-panel-proyecto/modal-create-meeting-panel-proyecto.component';
 import { CatalogoService } from 'src/app/features/catalogos/services/catalogo.service';
+import { ModalAgregarImagePanelProyectoComponent } from '../../components/modal-agregar-image-panel-proyecto/modal-agregar-image-panel-proyecto.component';
+import { ImagePreviewComponent } from 'src/app/shared/components/modals/image-preview/image-preview.component';
+import { AdministracionWebService } from 'src/app/features/administracion-pagina-contenido/services/administracion-web.service';
+import { PdfPreviewComponent } from 'src/app/shared/components/modals/pdf-preview/pdf-preview.component';
+import { ModalAgregarFilePanelProyectoComponent } from '../../components/modal-agregar-file-panel-proyecto/modal-agregar-file-panel-proyecto.component';
 
 @Component({
   selector: 'app-proyectos-panel',
@@ -36,7 +41,7 @@ import { CatalogoService } from 'src/app/features/catalogos/services/catalogo.se
 })
 export class ProyectosPanelComponent implements OnInit {
 
-  history: ProyectosHistoricoModel = new ProyectosHistoricoModel();  
+  history: ProyectosHistoricoModel = new ProyectosHistoricoModel();
   estatuses: any = null;
   session: any = null;
   idProyecto: number = null;
@@ -66,7 +71,8 @@ export class ProyectosPanelComponent implements OnInit {
     private coreAuth: CoreAuthService,
     private dialog: MatDialog,
     public utils: Utils,
-  ) {}
+    private fileService: AdministracionWebService
+  ) { }
 
   ngOnInit() {
     this.session = this.coreAuth.getUserSessionData();
@@ -85,19 +91,19 @@ export class ProyectosPanelComponent implements OnInit {
   async getPanelProyecto(idProyecto: number) {
     await this.proyectosService.findById(idProyecto).subscribe((response) => {
       this.proyecto = response;
-      console.log( this.proyecto );
+      console.log(this.proyecto);
     });
   }
 
-  async getCatalogoEstatus(){    
+  async getCatalogoEstatus() {
     this.catalogoService.getAllByTipoCatalogo('ESTATUS_PROYECTOS').subscribe(data => {
-      
+
       if (data.length > 0) {
         this.estatusList = data;
       }
-      
+
     });
-  }  
+  }
 
   sortHistory(history: ProyectosHistoricoModel[]) {
     return history.sort((a, b) => { return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(); });
@@ -107,7 +113,7 @@ export class ProyectosPanelComponent implements OnInit {
     let
       proyectoHistorico: ProyectosHistoricoModel = new ProyectosHistoricoModel(),
       dateNow = new Date();
-      
+
     proyectoHistorico.usuarioId = this.usuario;
     proyectoHistorico.accion = '<b>' + this.usuario.nombre + "</b> ha cambiado la probabilidad del proyecto <b>" + this.proyecto.nombre + "</b> a <b>" + this.proyecto.estatus + "</b>.";
     proyectoHistorico.tipoId = null;
@@ -169,6 +175,34 @@ export class ProyectosPanelComponent implements OnInit {
     });
   }
 
+  //Modales files
+  openNewImageModal() {
+    this.dialog.open(ModalAgregarImagePanelProyectoComponent, {
+      width: '80%'
+    }).afterClosed().subscribe((proyectoHistorico: ProyectosHistoricoModel) => {
+      if (proyectoHistorico) {
+        proyectoHistorico.usuarioId = this.usuario;
+        this.proyecto.historico.push(proyectoHistorico);
+        this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
+          this.proyecto = response;
+        });
+      }
+    });
+  }
+  openNewFileModal() {
+    this.dialog.open(ModalAgregarFilePanelProyectoComponent, {
+      width: '80%'
+    }).afterClosed().subscribe((proyectoHistorico: ProyectosHistoricoModel) => {
+      if (proyectoHistorico) {
+        proyectoHistorico.usuarioId = this.usuario;
+        this.proyecto.historico.push(proyectoHistorico);
+        this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
+          this.proyecto = response;
+        });
+      }
+    });
+  }
+
   // // Modales colaborador
   openNewColaboradorModal() {
     const dialogRef = this.dialog.open(ModalAgregarColaboradorPanelProyectoComponent, {
@@ -214,31 +248,31 @@ export class ProyectosPanelComponent implements OnInit {
   }
 
   // // Modales Tareas
-  openNewTareaModal(){
+  openNewTareaModal() {
     this.dialog.open(ModalAgregarTareaPanelProyectoComponent, {
       width: '80%',
-      data: {colaboratorsList: this.proyecto.colaboradores},
-      }).afterClosed().subscribe((task)=>{
-        if(task){
-          let taskNumber = this.proyecto.proyectoTareas.length + 1;
-          task.task.tarea = this.proyecto.nombre+" - Tarea "+taskNumber;
-          this.proyecto.proyectoTareas.push(task.task);
-          this.proyecto.historico.push(task.history);
-          this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
-            this.proyecto = response;
-          });
-        }
-      });
+      data: { colaboratorsList: this.proyecto.colaboradores },
+    }).afterClosed().subscribe((task) => {
+      if (task) {
+        let taskNumber = this.proyecto.proyectoTareas.length + 1;
+        task.task.tarea = this.proyecto.nombre + " - Tarea " + taskNumber;
+        this.proyecto.proyectoTareas.push(task.task);
+        this.proyecto.historico.push(task.history);
+        this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
+          this.proyecto = response;
+        });
+      }
+    });
   }
-  openOptionsTareasModal(task: TareasModel){
+  openOptionsTareasModal(task: TareasModel) {
     this.dialog.open(ModalOpcionesTareasPanelProyectosComponent, {
       width: '80%',
       data: {
         task: task,
         colaboratorsList: this.proyecto.colaboradores,
       },
-    }).afterClosed().subscribe((task)=>{
-      if(task){
+    }).afterClosed().subscribe((task) => {
+      if (task) {
         let taskIndex = (this.proyecto.proyectoTareas).findIndex(item => item.id === task.id);
         this.proyecto.proyectoTareas[taskIndex] = task;
         this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
@@ -249,7 +283,7 @@ export class ProyectosPanelComponent implements OnInit {
   }
 
   // // Modales Plantillas
-  openNewPlantillasModal(){
+  openNewPlantillasModal() {
     this.dialog.open(ModalAgregarPlantillatareasPanelProyectoComponent, {
       width: '80%',
       data: {
@@ -257,74 +291,103 @@ export class ProyectosPanelComponent implements OnInit {
         usuarioSesion: this.session.idUsuario,
         listaPlantillas: this.proyectoPlantillas
       },
-      }).afterClosed().subscribe((plantilla)=>{
-        let
+    }).afterClosed().subscribe((plantilla) => {
+      let
         date = new Date(),
         task: TareasModel = new TareasModel();
-        plantilla.forEach(tarea => {          
-          task = new TareasModel();
-          task.tarea = tarea.descripcion;
-          task.descripcion = "";
-          task.entregable = tarea.entregable;
-          task.fechaTermino = new Date( date.getFullYear(),date.getMonth(),date.getDate() + tarea.dias ,23,59,59,0);
-          task.fechaInicio = date;
-          task.estatus = false;
-          task.usuarioId = this.usuario;
-          task.createdAt = date;
-          task.updatedAt = date;
-      
-          this.history.accion = "Se ha asignado la tarea " + task.tarea + ", para entregar en fecha límite "+new Date(task.fechaTermino).toLocaleDateString('ES');
-          this.history.tipoId = null;
-          this.history.createdAt = date;
-          this.history.updatedAt = date;
-          this.history.usuarioId = task.usuarioId;          
-          this.proyecto.proyectoTareas.push(task);                   
-        });
-        console.log(this.proyecto); 
-        this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
-          this.proyecto = response;
-        });
+      plantilla.forEach(tarea => {
+        task = new TareasModel();
+        task.tarea = tarea.descripcion;
+        task.descripcion = "";
+        task.entregable = tarea.entregable;
+        task.fechaTermino = new Date(date.getFullYear(), date.getMonth(), date.getDate() + tarea.dias, 23, 59, 59, 0);
+        task.fechaInicio = date;
+        task.estatus = false;
+        task.usuarioId = this.usuario;
+        task.createdAt = date;
+        task.updatedAt = date;
+
+        this.history.accion = "Se ha asignado la tarea " + task.tarea + ", para entregar en fecha límite " + new Date(task.fechaTermino).toLocaleDateString('ES');
+        this.history.tipoId = "0";
+        this.history.createdAt = date;
+        this.history.updatedAt = date;
+        this.history.usuarioId = task.usuarioId;
+        this.proyecto.proyectoTareas.push(task);
       });
+      console.log(this.proyecto);
+      this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
+        this.proyecto = response;
+      });
+    });
   }
 
-  openNewMeetingModal(){
+  openNewMeetingModal() {
     this.dialog.open(ModalCreateMeetingPanelProyectoComponent, {
-      width:'80%',
+      width: '80%',
     }).afterClosed().subscribe((resp) => {
-      if(resp){
+      if (resp) {
         resp.start_time = new Date(resp.start_time);
-        let 
+        let
           date = new Date(),
           user = this.proyecto.colaboradores.filter(item => item.rol === 'responsable')[0].usuarioId,
           historico = new ProyectosHistoricoModel(),
           meetingResponse = JSON.parse(resp.apiResponse);
-          
-        historico.accion = '<b>Meeting agendado</b> <br> <a href="'+meetingResponse.join_url+'" target="_BLANK">'+meetingResponse.join_url+'</a>';
+
+        historico.accion = '<b>Meeting agendado</b> <br> <a href="' + meetingResponse.join_url + '" target="_BLANK">' + meetingResponse.join_url + '</a>';
         historico.usuarioId = user;
         historico.meetings = [resp];
         historico.tipoId = null;
         historico.createdAt = date;
         historico.updatedAt = date;
-        
+
         this.proyecto.historico.push(historico);
         this.proyectosService.updateByPanel(this.proyecto).subscribe((response) => {
           this.proyecto = response;
         });
 
-        this.proyecto.colaboradores.forEach(item =>{
+        this.proyecto.colaboradores.forEach(item => {
           const formData = new FormData();
-        
-          formData.append("correo", item.usuarioId.email );
-          formData.append("mensaje", "Se ha agendado una reunión virtual, para el proyecto: " + this.proyecto.nombre + ", para lo cual adjuntamos el link de acceso: " + meetingResponse.join_url + ", para mas información consulte su panel de seguimiento de proyectos" );
 
-          this.proyectosService.enviarCorreo( formData).subscribe((response) => {
-            console.log( response );
+          formData.append("correo", item.usuarioId.email);
+          formData.append("mensaje", "Se ha agendado una reunión virtual, para el proyecto: " + this.proyecto.nombre + ", para lo cual adjuntamos el link de acceso: " + meetingResponse.join_url + ", para mas información consulte su panel de seguimiento de proyectos");
+
+          this.proyectosService.enviarCorreo(formData).subscribe((response) => {
+            console.log(response);
           });
         });
-          
-        
+
+
       }
     });
+  }
+
+  handleClickOnFile(historico: ProyectosHistoricoModel) {
+    if (historico.file) {
+      if(this.isImage(historico.accion)){
+        const dialogRef = this.dialog.open(ImagePreviewComponent, {
+          width: '70%',
+          data: {
+            url: historico.accion,
+          },
+        });
+      }else{
+        this.dialog.open(PdfPreviewComponent, {
+          width: '70vw',
+          data: {
+            titulo: historico.accion,
+            pdf: historico.accion
+          }
+        });
+      }
+
+    }
+  }
+
+  isImage(name : String) : boolean {
+    return name.includes(".jpg") 
+      || name.includes(".jpeg")  
+      || name.includes(".png");
+
   }
 
 }

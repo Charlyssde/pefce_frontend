@@ -113,7 +113,7 @@ const routes: Routes = [
       {
         path: 'Mesas',
         canActivate: [AuthGuard],
-        data: { expectedRol: '/Mesas', titulo: 'Mesas de negocio', empresaid: '2' },
+        data: { expectedRol: '/Mesas', titulo: 'Mesas de negocio', empresaid: '0' },
         loadChildren: './features/proyectos/proyectos.module#ProyectosModule'
       },      
 

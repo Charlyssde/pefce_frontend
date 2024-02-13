@@ -16,7 +16,7 @@ export class PdfPreviewComponent implements OnInit {
     public dialogRef: MatDialogRef<PdfPreviewComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) { 
-    this.pdf = (data.pdf.includes('base64')) ? data.pdf : this.setURI(data.pdf);
+    this.pdf = ((data.pdf.includes('base64')) ? data.pdf : this.setURI(data.pdf));
 
     if( data.titulo ) {
       this.titulo = data.titulo;

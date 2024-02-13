@@ -64,8 +64,14 @@
                   <button *ngIf="['institución','root'].indexOf(session.perfil.tipo) > -1" mat-icon-button style="float:right;" (click)="openNewMeetingModal()">
                     <mat-icon>videocam</mat-icon>
                   </button>
+                  <button mat-icon-button style="float:right;" (click)="openNewFileModal()">
+                    <mat-icon>attachment</mat-icon>
+                  </button>
+                  <button mat-icon-button style="float:right;" (click)="openNewImageModal()">
+                    <mat-icon>image</mat-icon>
+                  </button>
                   <button mat-icon-button style="float:right;" (click)="openNewActionModal()">
-                    <mat-icon>add</mat-icon>
+                    <mat-icon>text_format</mat-icon>
                   </button>
                 </div>
               </mat-card-content>
@@ -96,7 +102,7 @@
                             </small>
 
                             <mat-menu #menu="matMenu" xPosition="before" yPosition="below">
-                              <button mat-menu-item *ngIf="historico.usuarioId.id === usuario.id" (click)="openEditActionModal(historico)">
+                              <button mat-menu-item *ngIf="historico.usuarioId.id === usuario.id && !historico.file" (click)="openEditActionModal(historico)">
                                 <mat-icon>edit</mat-icon>
                                 <span>Editar</span>
                               </button>
@@ -112,7 +118,10 @@
 
                           </div>
                           <div class="history-content">
-                            <div [class]="'history-content-body'" [innerHTML]="historico.accion"></div>
+                            <div *ngIf="historico.file" [class]="'history-content-body-file'" (click)="handleClickOnFile(historico)" >
+                              <span style="color: blue; font-style: italic; cursor: pointer;">{{historico.accion}}</span>
+                            </div>
+                            <div *ngIf="!historico.file" [class]="'history-content-body'" [innerHTML]="historico.accion" ></div>
                             <div *ngIf="historico.createdAt !== historico.updatedAt">
                               <small>
                                 (Editado {{ historico.updatedAt | date: 'dd/MM/yyyy HH:mm' }})
