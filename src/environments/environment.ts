@@ -4,6 +4,7 @@
 
 export const environment = {
   production: false,
+  socketUrl : 'http://localhost:8080/socket',
   // apiUrl: 'http://10.1.16.171:8080/FERIAVIRTUAL',
   apiUrl: 'http://localhost:8080',
   //apiUrl: 'http://centos7-103.soluto.mx:8082/FERIAVIRTUAL',

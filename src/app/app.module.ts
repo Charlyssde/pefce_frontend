@@ -61,6 +61,7 @@ import { PlantillasModule } from './features/plantillas/plantillas.module';
 import { AudienciaCapacitacionesModule } from './features/audiencia-capacitaciones/audiencia-capacitaciones.module';
 import { MinutasModule } from './features/minutas/minutas.module';
 import { SystemModule } from './features/system/system.module';
+import { WebSocketService } from './common/stomp.service';
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { SystemModule } from './features/system/system.module';
 
   ],
   providers: [
+    WebSocketService,    
     {
       provide: MatPaginatorIntl, useValue: MatPaginationES()
     },

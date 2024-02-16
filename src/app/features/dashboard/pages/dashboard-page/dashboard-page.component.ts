@@ -14,6 +14,7 @@ import { AgendaService } from 'src/app/features/agenda/services/agenda.service';
 import { AgendaModel } from 'src/app/core/models/agenda/agenda.model';
 import { ProyectosModel } from 'src/app/core/models/proyectos/proyectos-model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { WebSocketService } from 'src/app/common/stomp.service';
 
 
 @Component({
@@ -52,7 +53,8 @@ export class DashboardPageComponent implements OnInit {
     public dialog: MatDialog,
     private lib: ScriptsGlobalService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private webSocketService: WebSocketService
   ) { }
 
   ngOnInit() {
@@ -77,7 +79,19 @@ export class DashboardPageComponent implements OnInit {
       },500);
       */
     // }
+
+    /*this.webSocketService.connect();
+    this.webSocketService.getNotifications().subscribe((notification) => {
+      console.log("Noti->", notification)
+      this.notifications.push(notification);
+    });*/
+
   }
+
+  /*sendNotification(): void {
+    const notification = { message: 'Hello, this is a notification!' };
+    this.webSocketService.sendNotification(notification);
+  }*/
 
   async projectsRequest(){
     await this.dashboardService.getLastActiveProjects().subscribe((response) => {
