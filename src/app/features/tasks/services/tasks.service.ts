@@ -42,6 +42,11 @@ export class TasksService {
     return this.http.put( this.endpoint + "/" + taskId, task );
   }
 
+
+  gettaskByminuta(minId: number): Observable<any>{
+    return this.http.get(this.endpoint + "/minuta/" + minId);
+  }
+
   /*
   findById(taskId: number): Observable<any>{
     return this.http.get(this.endpoint+"/"+taskId);
@@ -58,17 +63,17 @@ export class TasksService {
   putTask(taskId: any, task: any): Observable<any>{
     return this.http.put(this.endpoint+"/"+taskId,task);
   }
-  
+
   saveAccessRequest(solicitudAccesoEmpresa : SolicitudAccesoEmpresaModel): Observable<any>{
     return this.http.patch(this.endpoint+"/"+solicitudAccesoEmpresa.taskId+"/access-request",solicitudAccesoEmpresa);
   }
 
-  
+
   // Contacts
   postTaskContact(taskId: number, userRequest: UserRequest): Observable<any>{
     return this.http.post(this.endpoint+"/"+taskId+"/contacts",userRequest);
   }
-  
+
   patchTaskContact(taskId: number, userRequest: UserRequest): Observable<any>{
     return this.http.patch(this.endpoint+"/"+taskId+"/contacts/"+userRequest.user.id,userRequest);
   }
