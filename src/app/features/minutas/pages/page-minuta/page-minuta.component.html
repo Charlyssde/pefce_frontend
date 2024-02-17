@@ -11,8 +11,8 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar" #input [disabled]="dataSource === null" autocomplete="off">
       </mat-form-field>
       <br>
-      <button mat-button color="primary" (click)="descargarZip('multiple')">Descargar zip</button>
-      <button mat-button color="primary" (click)="descargarZip('singular')">Descargar Masiva</button>
+      <button mat-button color="primary" (click)="descargarMasivoPdf('multiple')">Descargar zip</button>
+      <button mat-button color="primary" (click)="descargarMasivoPdf('singular')">Descargar Masiva</button>
       <br>
       <div class="mat-elevation-z8">
         <table class="sedecopTable" mat-table [dataSource]="dataSource" multiTemplateDataRows matSort *ngIf="dataSource && isCharge">

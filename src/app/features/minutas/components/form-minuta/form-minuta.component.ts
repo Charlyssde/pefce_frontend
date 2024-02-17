@@ -1,5 +1,5 @@
 import { ProyectosService } from 'src/app/features/proyectos/services/proyectos.service';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { AppComponent } from 'src/app/app.component';
@@ -31,6 +31,8 @@ import { ProyectosModel } from 'src/app/core/models/proyectos/proyectos-model';
 import { TaskModalComponent } from 'src/app/shared/components/modals/task-modal/task-modal.component';
 import { CoreAuthService } from 'src/app/core/services/core-auth.service';
 import { TasksService } from 'src/app/features/tasks/services/tasks.service';
+
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-form-minuta',
@@ -80,6 +82,13 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   tareas: Array<any> = [];
   archivos: Array<any> = [];
   minutaTareas: Array<any> = [];
+  minutaArchivo: Array<any> = [];
+  selectedFileName: string = "No se ha seleccionado ningún archivo";
+  @ViewChild('fileInput') fileInput: ElementRef | undefined;
+
+  formData = new FormData();
+
+  archivosPreview: any = null;
 
   @Input() formUpdate: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -95,6 +104,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   elementToUpload = null;
 
   usuario = new UsuarioModel();
+
 
   constructor(
     private fb: FormBuilder,
@@ -153,10 +163,14 @@ export class FormMinutaComponent implements OnInit, OnChanges {
       }
     });
 
+    this.obtenertareas();
+    this.obtenerArchivos();
 
+  }
+
+  obtenertareas(){
     this.formulario.controls['id'].valueChanges.subscribe(id => {
       if (id) {
-        console.log("ID" , id)
         this.taskservice.gettaskByminuta(id).subscribe(data => {
           if (data) {
             this.minutaTareas = data;
@@ -166,7 +180,20 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         });
       }
     });
+  }
 
+  obtenerArchivos(){
+    this.formulario.controls['id'].valueChanges.subscribe(id => {
+      if (id) {
+        this.minutasService.getarchivosByMinuta(id).subscribe(dataarchivo => {
+          if (dataarchivo) {
+            this.minutaArchivo = dataarchivo;
+          }
+        }, error => {
+          this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+        });
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -317,7 +344,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         }
       },
     }).afterClosed().subscribe(resp=>{
-     this.getTareas();
+      this.obtenertareas();
     });
   }
   openOptionsTareasModal(tarea: TasksModel){
@@ -328,9 +355,46 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         task: tarea,
       },
     }).afterClosed().subscribe(resp=>{
-      //this.getProyecto();
-      this.getTareas();
+      this.obtenertareas();
     });
   }
+
+  descargarpdf(nombre: string){
+    this.minutasService.getPdfUrl(nombre).subscribe(data => {
+      if (data) {
+       this.openPdf(data);
+      }
+    }, error => {
+      this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+    });
+  }
+
+  private openPdf(data: Blob) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+
+
+
+
+  subirarchivo(file : any) {
+    console.log("Llgue")
+
+      let idUserString = localStorage.getItem('session');
+      let idUser: number | null = idUserString ? parseInt(idUserString, 10) : null;
+
+      this.formulario.controls['id'].valueChanges.subscribe(id => {
+        this.minutasService.crearMinutaArchivo(file, id, idUser).subscribe(data => {
+          if (data) {
+            this.snackBar.open('Subido Correctamente.', 'Entendido', { duration: 3000 });
+          }
+        }, error => {
+          this.snackBar.open('Error.', 'Entendido', { duration: 3000 });
+        });
+      });
+
+  }
+
 
 }

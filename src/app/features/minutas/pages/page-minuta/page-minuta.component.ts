@@ -27,7 +27,7 @@ export class PageMinutaComponent implements OnInit {
   dataSource = null;
   isCharge = false;
 
-  elementsZip = [];
+  elementsmasivo = [];
 
   proyecto: ProjectRequest = new ProjectRequest();
 
@@ -357,10 +357,10 @@ export class PageMinutaComponent implements OnInit {
   //     return doc.output('blob');
   //   }
   // }
-descargarZip(tipo) {
+descargarMasivoPdf(tipo) {
     let idsSeleccionados: number[] = [];
     if (tipo === 'singular') {
-      const idsSeleccionados = this.elementsZip.map(element => element.id);
+      const idsSeleccionados = this.elementsmasivo.map(element => element.id);
       this.service.listaminutas(idsSeleccionados).subscribe(
           (data: Blob) => {
               this.openPdf(data); // Abre un PDF que contiene todos los elementos
@@ -372,11 +372,25 @@ descargarZip(tipo) {
       );
 
     } else {
-        this.elementsZip.forEach(element => {
-            idsSeleccionados.push(element.id);
-        });
+      const idsSeleccionados = this.elementsmasivo.map(element => element.id);
+      this.service.listaminutaszip(idsSeleccionados).subscribe(
+          (data: Blob) => {
+              this.openZip(data); // Cambiar a la función que maneja el archivo ZIP
+              this.snackBar.open('Creado Correctamente.', 'Entendido', { duration: 3000 });
+          },
+          error => {
+              this.snackBar.open('Error al crear ZIP.', 'Entendido', { duration: 3000 });
+          }
+      );
+
     }
 
+}
+
+openZip(data: Blob) {
+  const blob = new Blob([data], { type: 'application/zip' });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url);
 }
 
   generarPdfbl(dato: any) {
@@ -407,12 +421,12 @@ descargarZip(tipo) {
   }
 
   eliminarElementZip(element){
-    this.elementsZip.forEach( (item, index) => {
-      if(item === element) this.elementsZip.splice(index,1);
+    this.elementsmasivo.forEach( (item, index) => {
+      if(item === element) this.elementsmasivo.splice(index,1);
     });
   }
 
   agregarElementZip(element){
-    this.elementsZip.push(element);
+    this.elementsmasivo.push(element);
   }
 }
