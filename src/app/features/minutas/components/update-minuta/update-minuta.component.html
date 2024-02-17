@@ -10,7 +10,8 @@
     <mat-divider></mat-divider>
     <mat-card-actions align="end">
       <button mat-raised-button color="warn" (click)="goToPage()">Regresar</button>
-      <button mat-raised-button color="primary" *ngIf="canUpdate && scriptGL.getCanUpdateRol('/minutas')" (click)="save()">Actualizar</button>
+      <button mat-raised-button color="primary" *ngIf="canUpdate && scriptGL.getCanUpdateRol('/minutas')"
+        (click)="save()">Actualizar</button>
     </mat-card-actions>
   </mat-card>
 </div>

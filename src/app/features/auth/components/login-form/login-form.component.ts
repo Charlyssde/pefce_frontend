@@ -77,6 +77,7 @@ export class LoginFormComponent implements OnInit {
             });
             localStorage.setItem('token', response.token);
             this.sessionData.idUsuario = dataUser.id;
+            localStorage.setItem('idusuario',  dataUser.id);
             this.sessionData.nombre = dataUser.nombre;
             this.sessionData.idSesion = dataUser.logsSesion.id;
             this.sessionData.emailUsuario = loginData.email;
@@ -87,7 +88,7 @@ export class LoginFormComponent implements OnInit {
               }else{
                 this.router.navigate(["/dashboard"]);
               }
-              
+
             },500);
           }
         }

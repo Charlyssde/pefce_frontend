@@ -1,3 +1,4 @@
+
 <mat-card>
   <mat-card-content>
     <form [formGroup]="formulario" autocomplete="off">
@@ -93,7 +94,7 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-        
+
         <mat-grid-tile>
           <mat-form-field appearance="fill">
             <mat-label>Proyecto vinculado</mat-label>
@@ -106,7 +107,7 @@
         </mat-grid-tile>
 
       </mat-grid-list>
-      
+
       <div class="row">
         <div class="col-12">
           <h3>Participantes</h3>
@@ -130,7 +131,7 @@
       </mat-grid-list>
       <div class="row">
         <div class="col-12">
-          <h4>Externos</h4>          
+          <h4>Externos</h4>
         </div>
       </div>
       <mat-grid-list cols="1" rowHeight="100px" (window:resize)="onResize($event)">
@@ -144,7 +145,7 @@
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
-      </mat-grid-list>      
+      </mat-grid-list>
       <div class="row">
         <div class="col-12">
           <h3>Puntos</h3>
@@ -169,17 +170,30 @@
                 </div>
               </div>
               <mat-divider></mat-divider>
-
               <div class="tareas-content">
-                <div *ngIf="(minutaTareas).length>0; else sinTareas">
-                  <ul style="padding:0px !important;">
-                    <li (click)="openOptionsTareasModal(pT)" style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" *ngFor="let pT of tareas; let i = index;">
-                      ({{ ((minutaTareas).length - i) }}) <span class="{{ pT.estatus ? 'endedTask': '' }}" >{{ pT.tarea }}</span>
-                      <br>
-                      <small>({{ pT.usuarioId !== null ? pT.usuarioId.nombreCompleto : 'No asignado' }})</small>
-                      <mat-divider></mat-divider>
-                    </li>
-                  </ul>
+                <div *ngIf="(minutaTareas).length > 0; else sinTareas">
+                  <table>
+                    <tr>
+                      <th>Número</th>
+                      <th>Tarea</th>
+                      <th>Estado</th>
+                      <th>Indicador</th>
+                      <th>Fecha Inicio</th>
+                      <th>Fecha Termino</th>
+                      <th>Usuario</th>
+                    </tr>
+                    <tr *ngFor="let tarea of minutaTareas">
+                      <td>{{ tarea.id }}</td>
+                      <td>{{ tarea.tarea }}</td>
+                      <td>{{ tarea.estado ? 'Terminada' : 'Activa' }}</td>
+                      <td>
+                        <div [ngClass]="{'circle-red': !tarea.estado, 'circle-green': tarea.estado}"></div>
+                      </td>
+                      <td>{{ tarea.fechaInicio | date: 'dd-MM-yyyy' }}</td>
+                      <td>{{ tarea.fechaTermino | date: 'dd-MM-yyyy' }}</td>
+                      <td>{{ tarea.usuarioId.nombre }}</td>
+                    </tr>
+                  </table>
                 </div>
                 <ng-template #sinTareas>
                   <div *ngIf="isUpdate else elseBlock" style="text-align: center;padding: 5px 0px;">
@@ -188,13 +202,74 @@
                   <ng-template #elseBlock>Por favor guarde la minuta antes de asignar tareas</ng-template>
                 </ng-template>
               </div>
+            </mat-card-content>
+          </mat-card>
 
+          <mat-card>
+            <mat-card-content>
+              <div class="tareas-header">
+                <div style="display: inline-block;width:100%;">
+                  <span style="float:left;margin:10px auto;">Archivos</span>
+                  <div class="row" *ngIf="isUpdate">
+                    <div class="col-12 col-md-12" align="end">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider></mat-divider>
+              <div class="archivos">
+                <div *ngIf="(minutaArchivo).length > 0; else sinArchivos">
+                  <table>
+                    <tr>
+                      <th>Número</th>
+                      <th>Nombre archivo</th>
+                      <th>Responsable</th>
+                      <th>Descargar</th>
+                    </tr>
+                    <tr *ngFor="let archivo of minutaArchivo">
+                      <td>{{ archivo.id }}</td>
+                      <td>{{ archivo.archivo }}</td>
+                      <td>{{ archivo.responsable.nombre}}</td>
+                      <td>
+                        <button mat-raised-button (click)="descargarpdf(archivo.nombre)">Descargar</button>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <ng-template #sinArchivos>
+                  <div *ngIf="isUpdate else elseBlock" style="text-align: center;padding: 5px 0px;">
+                    No hay archvos guardados
+                  </div>
+                  <ng-template #elseBlock>Por favor guarde la minuta antes de asignar un archivo</ng-template>
+                </ng-template>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>
-      </div>      
-
-      <span>* Campos obligatorios</span>
+      </div>
     </form>
   </mat-card-content>
 </mat-card>
