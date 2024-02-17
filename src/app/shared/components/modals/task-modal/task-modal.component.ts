@@ -17,29 +17,28 @@ export class TaskModalComponent implements OnInit {
   tarea: TasksModel = new TasksModel();
   responsables = null;
   redireccionar = '/tareas';
-  
+
   constructor(
     public dialogRef: MatDialogRef<TaskModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,    
-    public lib: ScriptsGlobalService,    
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    public lib: ScriptsGlobalService,
     private usersService: UsersService,
     private tasksService: TasksService,
     private minutasService: MinutasService,
     private alerts: Alerts
   ) {
-    console.log( data );
     if( data.task ){
-      this.tarea = data.task; 
-      this.getUsuariosSedecop(); 
-    }    
+      this.tarea = data.task;
+      this.getUsuariosSedecop();
+    }
 
     if( data.minuta){
       this.redireccionar = null;
     }
   }
 
-  ngOnInit() {           
-    
+  ngOnInit() {
+
   }
 
   validarFormularioTarea(){
@@ -51,20 +50,20 @@ export class TaskModalComponent implements OnInit {
   }
 
   createTarea(){
-    if( this.tarea.id ){   
+    if( this.tarea.id ){
       this.tasksService.putTask( this.tarea.id, this.tarea ).subscribe((response)=>{
         if(response){
-          this.alerts.printSnackbar(15,null,null,'¡Registro exitoso!',5,true, this.redireccionar ,null);  
+          this.alerts.printSnackbar(15,null,null,'¡Registro exitoso!',5,true, this.redireccionar ,null);
           this.closeModal();
-        }        
+        }
       },(error)=>{
         this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
       });
     }else{
       let
-        date = new Date(),      
+        date = new Date(),
         endDate = new Date(this.tarea.fechaTermino);
-      
+
       this.tarea.fechaTermino = new Date(endDate.getFullYear(),endDate.getMonth(),endDate.getDate(),23,59,59,0);
       this.tarea.fechaInicio = date;
       this.tarea.estatus = false;
@@ -74,11 +73,10 @@ export class TaskModalComponent implements OnInit {
 
       this.tasksService.postTask( this.tarea ).subscribe((response)=>{
         if(response){
-          console.log( this.data.task.usuarioId );
           if( this.data.minuta ){
             this.minutasService.createTareaByMinuta(this.data.minuta.id, response, this.data.task.usuarioId.id ).subscribe((response)=>{});
-          }          
-          this.alerts.printSnackbar(15,null,null,'¡Registro exitoso!',5,true, this.redireccionar ,null);  
+          }
+          this.alerts.printSnackbar(15,null,null,'¡Registro exitoso!',5,true, this.redireccionar ,null);
           this.closeModal();
         }
       },(error)=>{
@@ -88,17 +86,18 @@ export class TaskModalComponent implements OnInit {
   }
 
   closeModal(): void {
-    this.dialogRef.close();    
+    this.dialogRef.close();
+    this.ngOnInit
   }
 
   async getUsuariosSedecop() {
     await this.usersService.findAllUsersWhereProfileIsInstitution().subscribe(resp => {
       if (resp.length > 0) {
         this.responsables =  resp;
-      } 
+      }
     });
   }
-  
+
 
 }
 

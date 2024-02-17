@@ -1,13 +1,13 @@
 import { ProyectosService } from 'src/app/features/proyectos/services/proyectos.service';
-import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { AppComponent } from 'src/app/app.component';
 import { CatalogoService } from 'src/app/features/catalogos/services/catalogo.service';
 import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
 //import { MinutaArchivoModalComponent } from 'src/app/shared/components/models/minuta-archivo-modal/minuta-archivo-modal.component';
 import { CatalogoModel } from 'src/app/core/models/catalogos/catalogo-model';
-/* 
+/*
 import { EstadosModel } from 'src/app/core/models/catalogos/';
 import { MunicipiosModel } from 'src/app/core/models/municipios-model';
  */
@@ -30,6 +30,9 @@ import { MinutasService } from 'src/app/features/minutas/service/minutas.service
 import { ProyectosModel } from 'src/app/core/models/proyectos/proyectos-model';
 import { TaskModalComponent } from 'src/app/shared/components/modals/task-modal/task-modal.component';
 import { CoreAuthService } from 'src/app/core/services/core-auth.service';
+import { TasksService } from 'src/app/features/tasks/services/tasks.service';
+
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-form-minuta',
@@ -67,11 +70,11 @@ export class FormMinutaComponent implements OnInit, OnChanges {
 
   participantesSedecop: Array<any> = new Array<any>();
   participantesExternos: Array<any> = new Array<any>();
-  
+
   proyectos: any;
   proyectoPrev: ProyectosModel = null;
   proyectosVigentes: Array<ProyectosModel> = new Array<ProyectosModel>();
-  
+
   participante: any = {};
   participantesPrevSedecop: Array<any> = new Array<any>();
   participantesPrevExternos: Array<any> = new Array<any>();
@@ -79,6 +82,13 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   tareas: Array<any> = [];
   archivos: Array<any> = [];
   minutaTareas: Array<any> = [];
+  minutaArchivo: Array<any> = [];
+  selectedFileName: string = "No se ha seleccionado ningún archivo";
+  @ViewChild('fileInput') fileInput: ElementRef | undefined;
+
+  formData = new FormData();
+
+  archivosPreview: any = null;
 
   @Input() formUpdate: any;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -95,6 +105,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
 
   usuario = new UsuarioModel();
 
+
   constructor(
     private fb: FormBuilder,
     public scriptGL: ScriptsGlobalService,
@@ -109,7 +120,9 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     public dialog: MatDialog,
     public appC: AppComponent,
     private awService: AdministracionWebService,
-    private coreAuth: CoreAuthService
+    private coreAuth: CoreAuthService,
+    private taskservice : TasksService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit() {
@@ -149,12 +162,44 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         }
       }
     });
+
+    this.obtenertareas();
+    this.obtenerArchivos();
+
+  }
+
+  obtenertareas(){
+    this.formulario.controls['id'].valueChanges.subscribe(id => {
+      if (id) {
+        this.taskservice.gettaskByminuta(id).subscribe(data => {
+          if (data) {
+            this.minutaTareas = data;
+          }
+        }, error => {
+          this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+        });
+      }
+    });
+  }
+
+  obtenerArchivos(){
+    this.formulario.controls['id'].valueChanges.subscribe(id => {
+      if (id) {
+        this.minutasService.getarchivosByMinuta(id).subscribe(dataarchivo => {
+          if (dataarchivo) {
+            this.minutaArchivo = dataarchivo;
+          }
+        }, error => {
+          this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+        });
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.formUpdate.currentValue) {
       this.formUpdate.participanteSedecop = [];
-      this.formUpdate.participanteExternos = [];            
+      this.formUpdate.participanteExternos = [];
       let ultimoID = 0;
       this.formUpdate.minutaUsuarios.forEach(element => {
         let esInstitucion: boolean = false;
@@ -170,7 +215,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
           }else{
             this.participantesExternos.push(element);
           }
-        }         
+        }
         //this.idsUsuarios[element.id] = element.id;
 
         if( esInstitucion ){
@@ -182,14 +227,15 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         }
       });
 
-      this.tareas = this.formUpdate.minutaTareas;
-      this.archivos = this.formUpdate.minutaArchivos;
+      //this.tareas = this.minutaTareas;
+      //this.archivos = this.formUpdate.minutaArchivos;
       this.formUpdate.temas = [];
-      this.formUpdate.minutaTemas.forEach(element => {      
+      this.formUpdate.minutaTemas.forEach(element => {
         this.idsTemas[element.id] = element.id;
         this.temasPrev.push(element);
         this.formUpdate.temas.push(element);
       });
+
       this.formulario.patchValue(this.formUpdate);
       this.dataSource = new MatTableDataSource(this.archivos);
       this.dataSource.paginator = this.paginator;
@@ -218,7 +264,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   }
 
   async getCatalogos() {
-    
+
     await this.CatalogoService.getCatalogos('estados').subscribe(data => {
       this.estados = data;
       //this.estados.sort((a, b) => (a.estado > b.estado) ? 1 : -1);
@@ -236,12 +282,12 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     await this.CatalogoService.getAllByTipoCatalogo('TEMA_MINUTA').subscribe(data => {
       this.temas = data;
     });
-    
+
     //await this.usuariosService.pageByPerfilUsuario(1).subscribe(data => {
-    
+
     await this.usuariosService.pageByPerfilUsuario(0).subscribe(data => {
       let ultimoID: number = 0;
-      data.forEach(element => {                
+      data.forEach(element => {
         let esInstitucion: boolean = false;
         if( ultimoID != element.id ){
           ultimoID = element.id;
@@ -255,7 +301,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
           }else{
             this.participantesExternos.push(element);
           }
-        }        
+        }
       });
 
     });
@@ -298,7 +344,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         }
       },
     }).afterClosed().subscribe(resp=>{
-      this.getTareas();
+      this.obtenertareas();
     });
   }
   openOptionsTareasModal(tarea: TasksModel){
@@ -309,9 +355,46 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         task: tarea,
       },
     }).afterClosed().subscribe(resp=>{
-      //this.getProyecto();
-      this.getTareas();
+      this.obtenertareas();
     });
   }
+
+  descargarpdf(nombre: string){
+    this.minutasService.getPdfUrl(nombre).subscribe(data => {
+      if (data) {
+       this.openPdf(data);
+      }
+    }, error => {
+      this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+    });
+  }
+
+  private openPdf(data: Blob) {
+    const blob = new Blob([data], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
+  }
+
+
+
+
+  subirarchivo(file : any) {
+    console.log("Llgue")
+
+      let idUserString = localStorage.getItem('session');
+      let idUser: number | null = idUserString ? parseInt(idUserString, 10) : null;
+
+      this.formulario.controls['id'].valueChanges.subscribe(id => {
+        this.minutasService.crearMinutaArchivo(file, id, idUser).subscribe(data => {
+          if (data) {
+            this.snackBar.open('Subido Correctamente.', 'Entendido', { duration: 3000 });
+          }
+        }, error => {
+          this.snackBar.open('Error.', 'Entendido', { duration: 3000 });
+        });
+      });
+
+  }
+
 
 }
