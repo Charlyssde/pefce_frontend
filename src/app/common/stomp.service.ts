@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import * as Stomp from 'stompjs';
-import * as SockJS from "sockjs-client/dist/sockjs"
+import SockJS from "sockjs-client/dist/sockjs"
 import { Observable, Subject } from 'rxjs';
+import { NotificacionModel } from '../core/models/notificaciones/notificacion-model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +18,13 @@ export class WebSocketService  {
     const socket = new SockJS(environment.socketUrl);
     this.stompClient = Stomp.over(socket);
     this.stompClient.connect({}, (res) => {
+      console.log("Connected")
       this.stompClient.subscribe('/topic/notification', (message: any) => {
         if (message.body) {
-          this.subject.next(JSON.parse(message.body));
+          let notif = JSON.parse(message.body)
+          if(localStorage.getItem('id') == notif.destinatario.id.toString()){
+            this.subject.next(message);
+          }
         }
       });
     }, (error) => {
@@ -28,7 +33,7 @@ export class WebSocketService  {
     });
   }
 
-  sendNotification(notification: any): void {
+  sendNotification(notification: NotificacionModel): void {
     this.stompClient.send('/notify', {}, JSON.stringify(notification));
   }
 

@@ -15,6 +15,8 @@ import { AgendaModel } from 'src/app/core/models/agenda/agenda.model';
 import { ProyectosModel } from 'src/app/core/models/proyectos/proyectos-model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WebSocketService } from 'src/app/common/stomp.service';
+import { UsuarioModel } from 'src/app/core/models/usuarios/usuario.model';
+import { CanalModel } from 'src/app/core/models/canal/canal-model';
 
 
 @Component({
@@ -80,18 +82,44 @@ export class DashboardPageComponent implements OnInit {
       */
     // }
 
-    /*this.webSocketService.connect();
+    this.webSocketService.connect();
     this.webSocketService.getNotifications().subscribe((notification) => {
-      console.log("Noti->", notification)
-      this.notifications.push(notification);
-    });*/
+      console.log("Notificacion->", notification)
+      this.alerts.printSnackbar(15, null, null, "Ha llegado una nueva notificación", 10, false, null, null);
+      //this.notifications.push(notification);
+    });
 
   }
 
-  /*sendNotification(): void {
-    const notification = { message: 'Hello, this is a notification!' };
+  sendNotification(): void {
+    let dest : UsuarioModel = {
+      id : parseInt(localStorage.getItem('id')),
+      nombre : localStorage.getItem('name'),
+      createdAt : null,
+      domicilios : null,
+      email : '',
+      estatus : true,
+      password : '',
+      perfiles : null,
+      recibirPublicidad : false,
+      sexo : '',
+      telefono : '',
+      updatedAt : null
+    }
+
+    const notification : NotificacionModel = {
+      id : 0,
+      destinatario : dest, 
+      canal : new CanalModel,
+      texto: 'String',
+      tipo: 1,
+      vista: false,
+      leida: null,
+      createdAt: null,
+      updatedAt: null  
+    };
     this.webSocketService.sendNotification(notification);
-  }*/
+  }
 
   async projectsRequest(){
     await this.dashboardService.getLastActiveProjects().subscribe((response) => {

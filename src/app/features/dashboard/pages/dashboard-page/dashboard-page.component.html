@@ -1,5 +1,5 @@
 <div *ngIf="!isEnterprise || viewDashboard">
-    <shared-dashboard-title [title]="'Dashboard'"></shared-dashboard-title>
+    <shared-dashboard-title (click)="sendNotification()" [title]="'Dashboard'"></shared-dashboard-title>
     <div class="row">
         <!-- Agenda y tareas -->
         <div class="col-12 col-lg-8 col-xl-7">

@@ -76,6 +76,9 @@ export class LoginFormComponent implements OnInit {
               }
             });
             localStorage.setItem('token', response.token);
+            localStorage.setItem('id', dataUser.id);
+            localStorage.setItem('name', dataUser.nombre);
+            localStorage.setItem('email', loginData.email);
             this.sessionData.idUsuario = dataUser.id;
             this.sessionData.nombre = dataUser.nombre;
             this.sessionData.idSesion = dataUser.logsSesion.id;
