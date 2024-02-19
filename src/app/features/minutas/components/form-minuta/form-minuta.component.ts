@@ -1,6 +1,6 @@
 import { ProyectosService } from 'src/app/features/proyectos/services/proyectos.service';
-import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { MatDialog, MatPaginator, MatSnackBar, MatSort, MatTableDataSource } from '@angular/material';
 import { AppComponent } from 'src/app/app.component';
 import { CatalogoService } from 'src/app/features/catalogos/services/catalogo.service';
@@ -43,6 +43,11 @@ export class FormMinutaComponent implements OnInit, OnChanges {
 
   breakpoint: number;
   formulario: FormGroup;
+  idUser: number;
+  idMinuta: number;
+
+  myForm: FormGroup;
+  formData = new FormData();
 
   displayedColumns: string[] = ['nombre', 'responsable', 'fechaC', 'fechaU', 'archivo', 'acciones'];
   dataSource = null;
@@ -84,9 +89,6 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   minutaTareas: Array<any> = [];
   minutaArchivo: Array<any> = [];
   selectedFileName: string = "No se ha seleccionado ningún archivo";
-  @ViewChild('fileInput') fileInput: ElementRef | undefined;
-
-  formData = new FormData();
 
   archivosPreview: any = null;
 
@@ -121,9 +123,14 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     public appC: AppComponent,
     private awService: AdministracionWebService,
     private coreAuth: CoreAuthService,
-    private taskservice : TasksService,
+    private taskservice: TasksService,
     private snackBar: MatSnackBar
-  ) { }
+  ) {
+    this.myForm = this.fb.group({
+      file: new FormControl(''),
+    });
+  }
+
 
   ngOnInit() {
     this.breakpoint = this.scriptGL.getOnResize();
@@ -133,7 +140,7 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     this.isCharge = true;
     this.formulario = this.fb.group({
       id: [],
-      folio: [{value: '', disabled: true}],
+      folio: [{ value: '', disabled: true }],
       asunto: ['', Validators.required],
       objetivo: ['', Validators.required],
       codigoPostal: [''],
@@ -163,8 +170,22 @@ export class FormMinutaComponent implements OnInit, OnChanges {
       }
     });
 
+    this.formulario.controls['id'].valueChanges.subscribe(id => {
+      if (id) {
+        this.idMinuta = id
+        console.log("idmi", this.idMinuta)
+      }else{
+        this.snackBar.open('Error al obtner el id del usuario.', 'Entendido', { duration: 3000 });
+      }
+
+    });
+
     this.obtenertareas();
     this.obtenerArchivos();
+
+
+    let idUserString = localStorage.getItem('idusuario');
+    this.idUser = idUserString ? parseInt(idUserString, 10) : null;
 
   }
 
@@ -203,25 +224,25 @@ export class FormMinutaComponent implements OnInit, OnChanges {
       let ultimoID = 0;
       this.formUpdate.minutaUsuarios.forEach(element => {
         let esInstitucion: boolean = false;
-        if( ultimoID != element.id ){
+        if (ultimoID != element.id) {
           ultimoID = element.id;
           element.perfiles.forEach(perfil => {
-            if( perfil.tipo == "institución" ){
+            if (perfil.tipo == "institución") {
               esInstitucion = true;
             }
           });
-          if ( esInstitucion ){
+          if (esInstitucion) {
             this.participantesSedecop.push(element);
-          }else{
+          } else {
             this.participantesExternos.push(element);
           }
         }
         //this.idsUsuarios[element.id] = element.id;
 
-        if( esInstitucion ){
+        if (esInstitucion) {
           this.participantesPrevSedecop.push(element);
           this.formUpdate.participanteSedecop.push(element);
-        }else{
+        } else {
           this.participantesPrevExternos.push(element);
           this.formUpdate.participanteExternos.push(element);
         }
@@ -289,16 +310,16 @@ export class FormMinutaComponent implements OnInit, OnChanges {
       let ultimoID: number = 0;
       data.forEach(element => {
         let esInstitucion: boolean = false;
-        if( ultimoID != element.id ){
+        if (ultimoID != element.id) {
           ultimoID = element.id;
           element.perfiles.forEach(perfil => {
-            if( perfil.tipo == "institución" ){
+            if (perfil.tipo == "institución") {
               esInstitucion = true;
             }
           });
-          if ( esInstitucion ){
+          if (esInstitucion) {
             this.participantesSedecop.push(element);
-          }else{
+          } else {
             this.participantesExternos.push(element);
           }
         }
@@ -316,25 +337,25 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   }
 
   async getProjectos() {
-    await this.proyectosService.getPages(null,0).subscribe(data => {
+    await this.proyectosService.getPages(null, 0).subscribe(data => {
       this.proyectosVigentes = data.dataset;
       this.proyectosVigentes.sort((a, b) => (a.nombre > b.nombre) ? 1 : -1);
     });
   }
 
-  async getUsuario(id: number){
+  async getUsuario(id: number) {
     await this.usuariosService.findById(id).subscribe(usuario => {
       this.usuario = usuario;
     });
   }
 
-  async getTareas(){
+  async getTareas() {
     this.minutasService.findById(this.formUpdate.id).subscribe(data => {
       this.tareas = data.tareas;
     });
   }
 
-  openNewTareaModal(){
+  openNewTareaModal() {
     const dialogRef = this.dialog.open(TaskModalComponent, {
       width: '80%',
       data: {
@@ -343,29 +364,29 @@ export class FormMinutaComponent implements OnInit, OnChanges {
           usuarioId: this.usuario
         }
       },
-    }).afterClosed().subscribe(resp=>{
+    }).afterClosed().subscribe(resp => {
       this.obtenertareas();
     });
   }
-  openOptionsTareasModal(tarea: TasksModel){
+  openOptionsTareasModal(tarea: TasksModel) {
     const dialogRef = this.dialog.open(ModalOpcionesTareasMinutaComponent, {
       width: '80%',
       data: {
         minuta: this.formUpdate,
         task: tarea,
       },
-    }).afterClosed().subscribe(resp=>{
+    }).afterClosed().subscribe(resp => {
       this.obtenertareas();
     });
   }
 
-  descargarpdf(nombre: string){
+  descargarpdf(nombre: string) {
     this.minutasService.getPdfUrl(nombre).subscribe(data => {
       if (data) {
-       this.openPdf(data);
+        this.openPdf(data);
       }
     }, error => {
-      this.snackBar.open('Error.', 'Entendido', {duration : 3000 });
+      this.snackBar.open('Error.', 'Entendido', { duration: 3000 });
     });
   }
 
@@ -376,24 +397,23 @@ export class FormMinutaComponent implements OnInit, OnChanges {
   }
 
 
+  obtenerImage(event: any) {
+    this.formData = event.target.files[0];
+
+  }
 
 
-  subirarchivo(file : any) {
-    console.log("Llgue")
-
-      let idUserString = localStorage.getItem('session');
-      let idUser: number | null = idUserString ? parseInt(idUserString, 10) : null;
-
-      this.formulario.controls['id'].valueChanges.subscribe(id => {
-        this.minutasService.crearMinutaArchivo(file, id, idUser).subscribe(data => {
-          if (data) {
+  post(myForm: any) {
+        if (this.myForm.invalid) {
+          this.snackBar.open('Error.', 'Eliga un archivo', { duration: 3000 });
+          return;
+        }
+        this.minutasService.crearMinutaArchivo(this.formData, this.idMinuta, this.idUser).subscribe(data => {
             this.snackBar.open('Subido Correctamente.', 'Entendido', { duration: 3000 });
-          }
-        }, error => {
-          this.snackBar.open('Error.', 'Entendido', { duration: 3000 });
-        });
-      });
 
+        }, error => {
+          this.snackBar.open('Error al subir el pdf.', 'Entendido', { duration: 3000 });
+        });
   }
 
 

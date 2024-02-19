@@ -204,7 +204,6 @@
               </div>
             </mat-card-content>
           </mat-card>
-
           <mat-card>
             <mat-card-content>
               <div class="tareas-header">
@@ -212,29 +211,29 @@
                   <span style="float:left;margin:10px auto;">Archivos</span>
                   <div class="row" *ngIf="isUpdate">
                     <div class="col-12 col-md-12" align="end">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                      <form [formGroup]="myForm" (ngSubmit)="post(myForm.value)">
+                        <div mat-dialog-content>
+                          <div class="row"></div>
+                          <div class="row">
+                            <div class="col m-3 center">
+                              <input
+                                type="file"
+                                style="width: 100%"
+                                class="dropify"
+                                accept="pdf"
+                                formControlName="file" (change)="obtenerImage($event)"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div mat-dialog-actions>
+                          <div class="col-md-12">
+                            <button type="submit" mat-raised-button color="primary">
+                               Guardar
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
                   </div>
                 </div>
@@ -253,7 +252,7 @@
                       <td>{{ archivo.id }}</td>
                       <td>{{ archivo.archivo }}</td>
                       <td>{{ archivo.responsable.nombre}}</td>
-                      <td>
+                      <td class="text-align" style="text-align: center;">
                         <button mat-raised-button (click)="descargarpdf(archivo.nombre)">Descargar</button>
                       </td>
                     </tr>
