@@ -94,15 +94,30 @@ getPdfUrl(nombre: string): Observable<any> {
   });
 }
 
+// crearMinutaArchivo(file: any, idMinuta: number, idUsuario: number): Observable<any> {
+//   const formData: FormData = new FormData();
+//   formData.append('file', file);
+//   formData.append('idminuta', idMinuta.toString());
+//   formData.append('idusuario', idUsuario.toString());
+
+//   const headers = new HttpHeaders();
+
+//   return this.http.post(`${this.baseurl3}`, formData, { headers: headers });
+// }
+
 crearMinutaArchivo(file: any, idMinuta: number, idUsuario: number): Observable<any> {
   const formData: FormData = new FormData();
   formData.append('file', file);
   formData.append('idminuta', idMinuta.toString());
   formData.append('idusuario', idUsuario.toString());
 
-  const headers = new HttpHeaders();
+  return this.http.post(`${this.baseurl3}`, formData);
+}
 
-  return this.http.post(`${this.baseurl3}`, formData, { headers: headers });
+
+crearMinutaArchivo2(form:any): Observable<any>{
+  let direccion = `${this.baseurl3}`;
+  return this.http.post<any>(direccion, form);
 }
 
 
