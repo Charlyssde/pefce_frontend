@@ -31,5 +31,6 @@ export class EmpresaModel{
     imagenEmpresarial: ImagenComercialEmpresaModel[];
     productos: ProductoModel[];
     solicitudesAcceso: any[];
-    autodiagnostico: AutodiagnosticoModel;    
+    autodiagnostico: AutodiagnosticoModel;
+    autorizado: boolean = null;
 }
