@@ -20,7 +20,7 @@ import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
   styleUrls: ['./enterprises-page.component.css']
 })
 export class EnterprisesPageComponent implements OnInit {
-  
+
   pageRequestParams: any = {};
   pageDataset: PageModel;
   helpsSettings: any = {
@@ -41,7 +41,7 @@ export class EnterprisesPageComponent implements OnInit {
   };
 
   dataset: any;
-
+  bandera: boolean;
   showSpecialFilters: boolean = false;
 
   nombre: string = null;
@@ -67,7 +67,7 @@ export class EnterprisesPageComponent implements OnInit {
   disabled = false;
 
   isEnterprise: Boolean = false;
-
+  tipo: string = '';
   constructor(
     private bottomSheet: MatBottomSheet,
     private enterpriseService: EnterprisesService,
@@ -112,7 +112,7 @@ export class EnterprisesPageComponent implements OnInit {
     this.pageRequestParams.estatus = this.estatus;
     this.pageRequestParams.page = 0;
     this.pageRequestParams.size = this.pageSize;
-    
+
     this.subsectorList = [];
     if(this.sector !== null){
       this.subsector = null;
@@ -155,17 +155,34 @@ export class EnterprisesPageComponent implements OnInit {
   }
 
   async pages() {
-    await this.enterpriseService.getPages(this.pageRequestParams).subscribe((response) => {
-      if (response) {
-        this.pageDataset = response;
-        this.length = this.pageDataset.totalItems
-        this.pageIndex = this.pageDataset.currentPage;
 
-        this.dataset = this.pageDataset.dataset;
+    if (this.isEnterprise) {
+      await this.enterpriseService.getPages(this.pageRequestParams).subscribe((response) => {
+        if (response) {
+          this.pageDataset = response;
+          this.length = this.pageDataset.totalItems
+          this.pageIndex = this.pageDataset.currentPage;
+
+          this.dataset = this.pageDataset.dataset;
+        }
+      }, (error) => {
+        this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+      });
+    }else{
+     this.enterpriseService.getAll().subscribe((response) => {
+      if (response) {
+
+        this.dataset = response;
+        this.dataset.forEach((element) => {
+         console.log("bandera" , element.autorizado)
+        });
       }
     }, (error) => {
       this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
     });
+
+    }
+
   }
 
   checkIfRootUser(profiles: any): Boolean{
@@ -198,6 +215,49 @@ export class EnterprisesPageComponent implements OnInit {
     })
   }
 
+  onClickAutorizar(enterprise: any) {
+    let data = {};
+    data['id'] = enterprise.id;
+    data['title'] = "Autorizar empresa " + enterprise.empresa;
+    data['content'] = "¿Realmente desea autorizar a la empresa <b>" + enterprise.empresa ;
+    data['alerts'] = "Al autorizar a esta empresa, podra cambiar su status a disponible y aparecera en el pabellón de empresas";
+    data['autorizar'] = true;
+    this.dialog.open(DeleteModalComponent, {
+      width: '70vw',
+      data: data
+    }).afterClosed().subscribe((result) => {
+      if(result !== undefined && result !== ""){
+        this.enterpriseService.putEnterpriseautorizado(enterprise.id , enterprise).subscribe((response) => {
+          this.alerts.printSnackbar(15, null, null, "Empresa Autorizada", 5, false, null, null);
+          this.pages();
+        }, (error) => {
+          this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+        });
+      }
+    })
+  }
+
+  onClickDesAutorizar(enterprise: any) {
+    let data = {};
+    data['id'] = enterprise.id;
+    data['title'] = "DesAutorizar empresa " + enterprise.empresa;
+    data['content'] = "¿Realmente desea desautorizar a la empresa <b>" + enterprise.empresa ;
+    data['alerts'] = "Al desautorizar a esta empresa, no estará disponible en el pabellón de empresas";
+    data['autorizar'] = true;
+    this.dialog.open(DeleteModalComponent, {
+      width: '70vw',
+      data: data
+    }).afterClosed().subscribe((result) => {
+      if(result !== undefined && result !== ""){
+        this.enterpriseService.putEnterprisedesautorizado(enterprise.id , enterprise).subscribe((response) => {
+          this.alerts.printSnackbar(15, null, null, "Empresa Autorizada", 5, false, null, null);
+          this.pages();
+        }, (error) => {
+          this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+        });
+      }
+    })
+  }
   onClickShowDetails(enterprise: any){
     this.dialog.open(EnterpriseDetailsComponent,{
       width:'80vw',
@@ -216,7 +276,7 @@ export class EnterprisesPageComponent implements OnInit {
       this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
     });
   }
-  
+
   async onClickAccessRequest(enterprise, index:number) {
     this.dialog.open(EnterpriseAccessRequestComponent,{
       width:'70vw',
@@ -247,50 +307,50 @@ export class EnterprisesPageComponent implements OnInit {
       if (response) {
         let datos: Array<any> = [],
             colores: string[] = ["#498B94", "#F8C622", "#747474", "#EC972D" ];
-              
+
         datos.push( new Array() );
-  
+
         response["sexo"].forEach( (element, index) => {
-          datos[0].push( element[1] )        
+          datos[0].push( element[1] )
         });
-  
+
         datos.push( new Array() );
         datos[1].push( new Array() );
         datos[1].push( new Array() );
-  
+
         response["municipio"].forEach( (element, index) => {
-          datos[1][0].push( element[0])        
-          datos[1][1].push( element[1])        
+          datos[1][0].push( element[0])
+          datos[1][1].push( element[1])
         });
-        
+
         datos.push( new Array() );
         datos[2].push( new Array() );
         datos[2].push( new Array() );
-  
+
         response["sector"].forEach( (element, index) => {
-          datos[2][0].push( element[0] )        
-          datos[2][1].push( element[1] )        
+          datos[2][0].push( element[0] )
+          datos[2][1].push( element[1] )
         });
-  
+
         const dialogRef = this.dialog.open(ReportesModalComponent, {
           width: '80%',
           data: {
             datos: datos,
             titulo: "Reporte de solicitudes recibidas"
           }
-          }); 
-          
+          });
+
       }
     }, (error) => {
       this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
     });
-  
-  }  
+
+  }
 
   openNewAutodiagnosticoModal(enterpriseId: any){
     const dialogRef = this.dialog.open(AutodiagnosticoComponent, {
       width: '80%',
       data: {enterpriseId: enterpriseId}
-      }); 
-  }  
+      });
+  }
 }

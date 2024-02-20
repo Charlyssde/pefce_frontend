@@ -119,6 +119,8 @@
                   <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
                   <mat-divider></mat-divider>
                   <a *ngIf="data.estatus && !isEnterprise" [routerLink]="['/empresas/'+data.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro"><mat-icon>edit</mat-icon>Editar</a>
+                  <button *ngIf="data.estatus && !isEnterprise && !data.autorizado" mat-menu-item matTooltip="Autorizar/Desautorizar registro" (click)="onClickAutorizar(data)"><mat-icon>check_circle</mat-icon>Autorizar</button>
+                  <button *ngIf="data.estatus && !isEnterprise && data.autorizado" mat-menu-item matTooltip="Autorizar/Desautorizar registro" (click)="onClickDesAutorizar(data)"><mat-icon>check_circle</mat-icon>DesAutorizar</button>
                   <button *ngIf="data.estatus && !isEnterprise" mat-menu-item matTooltip="Eliminar registro" (click)="onClickDelete(data)"><mat-icon>delete</mat-icon>Eliminar</button>
                   <button  *ngIf="(data.estatus || data.solicitudesAcceso.length>0)  && !isEnterprise" mat-menu-item matTooltip="Cambiar estatus del registro"
                     (click)="switchRegistrationStatus(data.id,!data.estatus,index1)"><mat-icon>change_circle</mat-icon>{{data.estatus ? 'Inactivar' : 'Activar' }}</button>
@@ -132,7 +134,7 @@
                   <a *ngIf="data.estatus && !isEnterprise" [routerLink]="['/promocionDigital']" mat-menu-item color="primary" matTooltip="Generar campañas de promoción"><mat-icon>mail</mat-icon>Ir a campañas de promoción por correo electrónico</a>
                   <a *ngIf="data.estatus && !isEnterprise" mat-menu-item color="primary" matTooltip="Visualizar autodiagnostico" (click)="openNewAutodiagnosticoModal(data.id)">Autodiagnostico</a>
                 </mat-menu>
-              </td>              
+              </td>
               <td style="min-width: 200px;">{{ data.empresa }}</td>
               <td>{{ data.rfc }}</td>
               <td>{{ data.categoria.nombre }}</td>
@@ -161,7 +163,6 @@
                 </small>
               </td>
               <td>{{ data.estatus ? 'Activo' : 'Inactivo' }}</td>
-
             </tr>
           </tbody>
         </table>

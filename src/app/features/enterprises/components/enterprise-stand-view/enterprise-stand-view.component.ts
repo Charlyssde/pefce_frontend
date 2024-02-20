@@ -18,9 +18,9 @@ export class EnterpriseStandViewComponent implements OnInit, OnChanges {
   @Input() enterpriseIn: EmpresaModel;
   @Input() helpsSettings: any;
   @Input() isAdminIn: boolean;
-  
+
   availableEnterpriseStand: boolean = false;
-  
+
   constructor(
     private bottomSheet: MatBottomSheet,
     private dialog: MatDialog,
@@ -53,6 +53,7 @@ export class EnterpriseStandViewComponent implements OnInit, OnChanges {
   }
 
   onChangeAvailableEnterpriseStand(){
+    console.log("data" , this.enterpriseIn)
     this.enterpriseIn.pabellonAprobado = this.availableEnterpriseStand;
     this.enterprisesService.putEnterprise(this.enterpriseIn.id,this.enterpriseIn).subscribe((response) => {
       this.alerts.printSnackbar(15,null,null,"Estatus  del stand de empresa actualizado con valor:"+(this.availableEnterpriseStand ? 'APROBADO': 'NO APROBADO'),5,false,null,null);

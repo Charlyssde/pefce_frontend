@@ -19,7 +19,7 @@ export class ExplorerEnterprisesStandComponent implements OnInit {
       { 'detail': 'Disponible (<span class="material-symbols-outlined">check_box</span>)', 'description': 'Checkbox que cambia el estatus de disponibilidad de un stand empresarial para exploradores y ferias virtuales' }
     ]
   };
-  
+
   enterprise: EmpresaModel;
   enterpriseId: number;
 

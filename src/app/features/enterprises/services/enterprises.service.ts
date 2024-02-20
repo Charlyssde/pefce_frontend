@@ -63,6 +63,18 @@ export class EnterprisesService {
     return this.http.put(this.endpoint + "/" + enterpriseId, enterprise);
   }
 
+  putEnterpriseautorizado(enterpriseId: any, enterprise: any): Observable<any> {
+    return this.http.put(this.endpoint + "/autorizado/" + enterpriseId, enterprise);
+  }
+
+  putEnterprisedesautorizado(enterpriseId: any, enterprise: any): Observable<any> {
+    return this.http.put(this.endpoint + "/desautorizado/" + enterpriseId, enterprise);
+  }
+
+  getAll(): Observable<any> {
+    return this.http.get<any>(this.endpoint + "/findAll");
+  }
+
   deleteEnterprise(enterpriseId: any): Observable<any> {
     return this.http.delete(this.endpoint + "/" + enterpriseId);
   }
@@ -155,7 +167,7 @@ export class EnterprisesService {
 
   reportesolicitudes():Observable <any>{
     return this.http.get(this.endpoint + "/reportesolicitudes");
-  }  
+  }
 
 
 }

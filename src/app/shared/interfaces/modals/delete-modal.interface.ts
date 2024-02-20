@@ -3,4 +3,5 @@ export interface DeleteModalInterface{
     title: string;
     content:string;
     alerts: string;
+    autorizar : boolean
 }
