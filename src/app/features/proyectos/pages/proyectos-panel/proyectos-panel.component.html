@@ -181,8 +181,8 @@
                     *ngFor="let colaborador of proyecto.colaboradores; let i = index;"
                     matToggle="Clic para ver más opciones" 
                     style="cursor:pointer;text-align: justify; text-decoration: none; list-style: none;" >
-                    <div style="padding:5px 0px !important;">
-                      <p style="margin:0; padding:0;" title="{{colaborador.usuarioId?.email}} - {{colaborador.usuarioId?.telefono}}">{{ colaborador.usuarioId?.nombre }}</p>
+                    <div style="padding:5px 0px !important;" matTooltip="{{colaborador.usuarioId?.email}} - {{colaborador.usuarioId?.telefono}}">
+                      <p style="margin:0; padding:0;">{{ colaborador.usuarioId?.nombre }}</p>
                       <br>
                       <small>({{ rolesList[colaborador.rol] }})</small>
                     </div> 
