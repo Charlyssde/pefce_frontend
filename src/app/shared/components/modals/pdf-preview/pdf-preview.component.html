@@ -1,5 +1,6 @@
 <h3 mat-dialog-title>{{ this.titulo != null ? this.titulo : "Vista previa"}}</h3>
 <div mat-dialog-content class="pdf-container">
+  <span *ngIf="titulo && !titulo.includes('.pdf')">El tipo de formato no se puede visualizar, por favor descárguelo para más detalles</span>
   <pdf-viewer [src]="pdf" [original-size]="false" style="width: 90% !important; height: auto;"></pdf-viewer>
 </div>
 <div mat-dialog-actions align="end">
