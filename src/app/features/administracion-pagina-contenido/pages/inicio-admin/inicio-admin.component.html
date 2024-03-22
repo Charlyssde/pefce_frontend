@@ -1,142 +1,230 @@
 <div>
-    <shared-dashboard-title [title]="'Administracion de portal - Inicio'"></shared-dashboard-title>
+  <shared-dashboard-title [title]="'Administracion de portal - Inicio'"></shared-dashboard-title>
 
-    <br>
+  <br>
 
-    <mat-card>
-        <mat-card-content>
-            <mat-tab-group>
-                <!-- Idiomas -->
-                <!-- <mat-tab label="Etiquetas">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Etiquetas para idiomas</h2>
-                        </div>
-                        <mat-accordion>
-                            <mat-expansion-panel *ngFor="let l of languages;">
-                                <mat-expansion-panel-header>{{l.idioma}}</mat-expansion-panel-header>
-                                <mat-panel-description>
-                                    <div class="row" style="padding:0px;margin:0px;">
-                                        <div class="col-12 col-md-6 col-xl-4" *ngFor="let j of labelsTemplate | keyvalue">
-                                            <mat-form-field appearance="fill">
-                                                <mat-label>{{j.value}}</mat-label>
-                                                <input type="text" [(ngModel)]="labels[l.tag][j.key]" matInput placeholder="{{j.value}}">
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-12" align="end" style="padding-bottom:15px;">
-                                            <hr>
-                                            <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
-                                            <button type="button" mat-raised-button color="primary" (click)="saveData('Idioma')">Guardar idioma
-                        {{l.idioma}}</button>
-                                        </div>
-                                    </div>
-                                </mat-panel-description>
-                            </mat-expansion-panel>
-                        </mat-accordion>
-                        <br>
-                    </div>
-                </mat-tab> -->
+  <mat-card>
+    <mat-card-content>
+      <mat-tab-group>
+        <!-- Idiomas -->
+        <mat-tab label="Etiquetas">
+          <div class="row">
+            <div class="col-12">
+              <h2>Etiquetas para idiomas</h2>
+            </div>
+            <mat-accordion class="mb-2">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>{{ dictionaryLanguage["es"] }}</mat-expansion-panel-header>
+                <mat-panel-description>
+                  <div class="row" *ngIf="spanishContent">
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido plataforma</mat-label>
+                      <textarea type="text" [(ngModel)]="spanishContent['translationObject']['inicio.desc']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido invierte veracruz</mat-label>
+                      <textarea type="text" [(ngModel)]="spanishContent['translationObject']['inicio.content1']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido oferta exportable</mat-label>
+                      <textarea type="text" [(ngModel)]="spanishContent['translationObject']['inicio.content2']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido proyectos estratégicos</mat-label>
+                      <textarea type="text" [(ngModel)]="spanishContent['translationObject']['inicio.content3']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido comercialización</mat-label>
+                      <textarea type="text" [(ngModel)]="spanishContent['translationObject']['inicio.target_content']" matInput></textarea>
+                    </mat-form-field>
+                  </div>
+                </mat-panel-description>
+                <mat-action-row align="end">
+                  <button type="button" mat-raised-button color="primary" (click)="saveContent('es')">Guardar
+                    etiquetas
+                  </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>{{ dictionaryLanguage["en"] }}</mat-expansion-panel-header>
+                <mat-panel-description>
+                  <div class="row" *ngIf="englishContent">
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido plataforma</mat-label>
+                      <textarea type="text" [(ngModel)]="englishContent['translationObject']['inicio.desc']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido invierte veracruz</mat-label>
+                      <textarea type="text" [(ngModel)]="englishContent['translationObject']['inicio.content1']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido oferta exportable</mat-label>
+                      <textarea type="text" [(ngModel)]="englishContent['translationObject']['inicio.content2']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido proyectos estratégicos</mat-label>
+                      <textarea type="text" [(ngModel)]="englishContent['translationObject']['inicio.content3']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido comercialización</mat-label>
+                      <textarea type="text" [(ngModel)]="englishContent['translationObject']['inicio.target_content']" matInput></textarea>
+                    </mat-form-field>
+                  </div>
+                </mat-panel-description>
+                <mat-action-row align="end">
+                  <button type="button" mat-raised-button color="primary" (click)="saveContent('en')">Guardar
+                    etiquetas
+                  </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>{{ dictionaryLanguage["fr"] }}</mat-expansion-panel-header>
+                <mat-panel-description>
+                  <div class="row" *ngIf="frenchContent">
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido plataforma</mat-label>
+                      <textarea type="text" [(ngModel)]="frenchContent['translationObject']['inicio.desc']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido invierte veracruz</mat-label>
+                      <textarea type="text" [(ngModel)]="frenchContent['translationObject']['inicio.content1']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido oferta exportable</mat-label>
+                      <textarea type="text" [(ngModel)]="frenchContent['translationObject']['inicio.content2']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido proyectos estratégicos</mat-label>
+                      <textarea type="text" [(ngModel)]="frenchContent['translationObject']['inicio.content3']" matInput></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="col-md-12">
+                      <mat-label>Contenido comercialización</mat-label>
+                      <textarea type="text" [(ngModel)]="frenchContent['translationObject']['inicio.target_content']" matInput></textarea>
+                    </mat-form-field>
+                  </div>
+                </mat-panel-description>
+                <mat-action-row align="end">
+                  <button type="button" mat-raised-button color="primary" (click)="saveContent('fr')">Guardar
+                    etiquetas
+                  </button>
+                </mat-action-row>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+        </mat-tab>
 
 
-                <!-- Multimedia -->
-                <mat-tab label="Imágenes">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Imágenes</h2>
-                            <hr>
-                        </div>
-                        <div class="col-12">
-                            <div class="mat-elevation-z8">
-                                <table class="tblPaginaContenido">
-                                    <thead>
-                                        <tr>
-                                            <th>Archivo</th>
-                                            <th>Nombre</th>
-                                            <th>Link</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let i of multimedia | keyvalue">
-                                            <td align="center">
-                                                <input hidden type="file" (change)="changeFile(i.key)" #imagen id="imagen_{{i.key}}">
-                                                <img class="imgPreview" *ngIf="multimedia[i.key].pathfile!==null && ((multimedia[i.key].pathfile).includes('data:image') || (multimedia[i.key].pathfile).includes('http'))" [src]="multimedia[i.key].pathfile" alt="{{multimedia[i.key].nombre}}">
-                                                <div>
-                                                    <button *ngIf="oldPathfile[i.key]===null" type="button" mat-icon-button color="primary" (click)="imagen.click()"><span class="material-icons">change_circle</span></button>
-                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button (click)="uploadFile(i.key)"><span class="material-icons">cloud_upload</span></button>
-                                                    <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button color="accent" (click)="cancelChangeFile(i.key)"><span class="material-icons">cancel</span></button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <mat-form-field appearance="fill">
-                                                    <mat-label>Nombre</mat-label>
-                                                    <input type="text" [(ngModel)]="multimedia[i.key].nombre" matInput placeholder="Nombre">
-                                                </mat-form-field>
-                                            </td>
-                                            <td align="center">
-                                                <mat-form-field appearance="fill">
-                                                    <mat-label>URL</mat-label>
-                                                    <input type="text" [(ngModel)]="multimedia[i.key].url" matInput placeholder="URL">
-                                                </mat-form-field>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-action-row align="end">
-                        <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
-                        <button type="button" mat-raised-button color="primary" (click)="saveData('Multimedia')">Guardar multimedia</button>
-                    </mat-action-row>
-                </mat-tab>
+        <!-- Multimedia -->
+        <mat-tab label="Imágenes">
+          <div class="row">
+            <div class="col-12">
+              <h2>Imágenes</h2>
+              <hr>
+            </div>
+            <div class="col-12">
+              <div class="mat-elevation-z8">
+                <table class="tblPaginaContenido">
+                  <thead>
+                  <tr>
+                    <th>Archivo</th>
+                    <th>Nombre</th>
+                    <th>Link</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let i of multimedia | keyvalue">
+                    <td align="center">
+                      <input hidden type="file" (change)="changeFile(i.key)" #imagen id="imagen_{{i.key}}">
+                      <img class="imgPreview"
+                           *ngIf="multimedia[i.key].pathfile!==null && ((multimedia[i.key].pathfile).includes('data:image') || (multimedia[i.key].pathfile).includes('http'))"
+                           [src]="multimedia[i.key].pathfile" alt="{{multimedia[i.key].nombre}}">
+                      <div>
+                        <button *ngIf="oldPathfile[i.key]===null" type="button" mat-icon-button color="primary"
+                                (click)="imagen.click()"><span class="material-icons">change_circle</span></button>
+                        <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button
+                                (click)="uploadFile(i.key)"><span class="material-icons">cloud_upload</span></button>
+                        <button *ngIf="oldPathfile[i.key]!==null" type="button" mat-icon-button color="accent"
+                                (click)="cancelChangeFile(i.key)"><span class="material-icons">cancel</span></button>
+                      </div>
+                    </td>
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input type="text" [(ngModel)]="multimedia[i.key].nombre" matInput placeholder="Nombre">
+                      </mat-form-field>
+                    </td>
+                    <td align="center">
+                      <mat-form-field appearance="fill">
+                        <mat-label>URL</mat-label>
+                        <input type="text" [(ngModel)]="multimedia[i.key].url" matInput placeholder="URL">
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <mat-action-row align="end">
+            <a [routerLink]="['/home']" mat-raised-button color="warn">Cancelar</a>
+            <button type="button" mat-raised-button color="primary" (click)="saveData('Multimedia')">Guardar
+              multimedia
+            </button>
+          </mat-action-row>
+        </mat-tab>
 
-                <mat-tab label="Videos">
-                    <div class="row">
-                        <div class="col-12">
-                            <h2>Videos</h2>
-                            <hr>
-                        </div>
-                        <div class="col-12">
-                            <div class="mat-elevation-z8">
-                                <table class="tblPaginaContenido">
-                                    <thead>
-                                        <tr>
-                                            <th>Video</th>
-                                            <th>Nombre</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let i of videos | keyvalue">
-                                            <td align="center">
-                                                <input hidden type="file" (change)="changeVideo(i.key)" #video id="video_{{i.key}}">
-                                                <video *ngIf="videos[i.key].pathfile !== null && ((videos[i.key].pathfile).includes('data:video') || (videos[i.key].pathfile).includes('http'))" [src]="videos[i.key].pathfile" id="video_{{i.key}}" class="videoPreview" controls></video>
-                                                <div>
-                                                    <button *ngIf="oldVideofile[i.key]===null" type="button" mat-icon-button color="primary" (click)="video.click()"><span class="material-icons">change_circle</span></button>
-                                                    <button *ngIf="oldVideofile[i.key]!==null" type="button" mat-icon-button (click)="uploadVideo(i.key)"><span class="material-icons">cloud_upload</span></button>
-                                                    <button *ngIf="oldVideofile[i.key]!==null" type="button" mat-icon-button color="accent" (click)="cancelChangeVideo(i.key)"><span class="material-icons">cancel</span></button>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <mat-form-field appearance="fill">
-                                                    <mat-label>Nombre</mat-label>
-                                                    <input type="text" [(ngModel)]="videos[i.key].nombre" matInput placeholder="Nombre">
-                                                </mat-form-field>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <mat-divider></mat-divider>
-                    <mat-action-row align="end">
-                        <button type="button" mat-raised-button color="primary" (click)="saveData('Videos')">Guardar videos</button>
-                    </mat-action-row>
-                </mat-tab>
+        <mat-tab label="Videos">
+          <div class="row">
+            <div class="col-12">
+              <h2>Videos</h2>
+              <hr>
+            </div>
+            <div class="col-12">
+              <div class="mat-elevation-z8">
+                <table class="tblPaginaContenido">
+                  <thead>
+                  <tr>
+                    <th>Video</th>
+                    <th>Nombre</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let i of videos | keyvalue">
+                    <td align="center">
+                      <input hidden type="file" (change)="changeVideo(i.key)" #video id="video_{{i.key}}">
+                      <video
+                        *ngIf="videos[i.key].pathfile !== null && ((videos[i.key].pathfile).includes('data:video') || (videos[i.key].pathfile).includes('http'))"
+                        [src]="videos[i.key].pathfile" id="video_{{i.key}}" class="videoPreview" controls></video>
+                      <div>
+                        <button *ngIf="oldVideofile[i.key]===null" type="button" mat-icon-button color="primary"
+                                (click)="video.click()"><span class="material-icons">change_circle</span></button>
+                        <button *ngIf="oldVideofile[i.key]!==null" type="button" mat-icon-button
+                                (click)="uploadVideo(i.key)"><span class="material-icons">cloud_upload</span></button>
+                        <button *ngIf="oldVideofile[i.key]!==null" type="button" mat-icon-button color="accent"
+                                (click)="cancelChangeVideo(i.key)"><span class="material-icons">cancel</span></button>
+                      </div>
+                    </td>
+                    <td>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input type="text" [(ngModel)]="videos[i.key].nombre" matInput placeholder="Nombre">
+                      </mat-form-field>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <mat-action-row align="end">
+            <button type="button" mat-raised-button color="primary" (click)="saveData('Videos')">Guardar videos</button>
+          </mat-action-row>
+        </mat-tab>
 
-            </mat-tab-group>
-        </mat-card-content>
-    </mat-card>
+      </mat-tab-group>
+    </mat-card-content>
+  </mat-card>
 
 </div>
