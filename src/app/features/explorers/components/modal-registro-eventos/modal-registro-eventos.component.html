@@ -1,0 +1,38 @@
+<section class="col-12 flex col p-4">
+  <section class="p-6">
+    <form [formGroup]="form">
+      <div class="row mb-1">
+        <div class="col-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Hombres</mat-label>
+                <input matInput formControlName="males" type="number" placeholder="Número de hombres" autocomplete="off" autofocus required>
+            </mat-form-field>
+        </div>
+        <div class="col-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Mujeres</mat-label>
+                <input matInput formControlName="females" type="number" placeholder="Número de mujeres" autocomplete="off" required>
+            </mat-form-field>
+        </div>
+        
+        <mat-form-field appearance="fill">
+          <mat-label>Municipio</mat-label>
+          <mat-select name="municipio" formControlName="municipio">
+            <mat-option *ngFor="let municipio of municipios" [value]="municipio">
+              {{municipio.municipio}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="row mb-1">
+      <div class="col-6 col-md-6">
+        <button class="btn-block"  [mat-dialog-close]  mat-button color="warn">Cancelar</button>
+      </div>
+      <div class="col-6 col-md-6">
+          <button class="btn-block" (click)="onSubmitForm()"  mat-button color="primary">Confirmar registro</button>
+      </div>
+      
+  </div>
+    </form>
+  </section>
+</section>

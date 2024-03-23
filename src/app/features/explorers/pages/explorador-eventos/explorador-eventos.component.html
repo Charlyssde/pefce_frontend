@@ -1,125 +1,139 @@
 <div>
   <mat-card class="formHeader">
-    <mat-card-header>
-      <mat-card-title>Explorador de eventos</mat-card-title>
+    <mat-card-header >
+      <mat-card-title>Explorador de eventos </mat-card-title>
     </mat-card-header>
   </mat-card>
-  <br>
-  <div class="row" *ngIf="listaEventos !== null">
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-container" *ngFor="let i of listaEventos">
-      <mat-card>
-        <mat-card-content>
-          <div class="card-cover">
-            <img
-              [src]="i.pathfileCover !== null ? i.pathfileCover : './assets/img/eventos-ferias/pefce-logotipo.png'"
-              alt="Portada">
+
+
+  <section>
+    <mat-tab-group>
+      <mat-tab label="Mis eventos"> 
+        <div class="row" *ngIf="listaUsuarioEventos !== null">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-container" *ngFor="let i of listaUsuarioEventos">
+            <mat-card>
+              <mat-card-content>
+                <div class="card-cover">
+                  <img
+                    loading="lazy"
+                    [src]="i.pathfileCover !== null ? i.pathfileCover : './assets/img/eventos-ferias/pefce-logotipo.png'"
+                    alt="Portada">
+                </div>
+                <div class="card-content">
+                  <div>
+                    <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPrivadoIngresar(i)"
+                      style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
+                    <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPublicoIngresar(i)"
+                      style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
+                    <hr *ngIf="perfilUsuario === 'EMPRESA'">
+                  </div>
+                  <div class="card-title">
+                    {{i.nombreEvento}}
+                  </div>
+                  <p>{{i.descripcion}}</p>
+                  <small>Inicio: {{ i.fechaInicio | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+                  <small>Fin: {{ i.fechaFin | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+                  <small>Tipo de evento: {{ i.tipoId.nombre }}</small> <br>
+                  <small>Privacidad del evento: {{ lib.ePrivacidadEvento[i.privacidad] }}</small> <br>
+                  <small>Modalidad del evento: {{ lib.eModalidadEvento[i.modalidad] }}</small> <br>
+                  <div *ngIf="i.modalidad === 'presencial'">
+                    <small>
+                      <p>
+                        Sede: <br>
+                        <strong>{{i.sede}}</strong><br>
+                        Domicilio: {{ i.domicilio }}, {{i.municipio}}, {{ i.estado }}
+                      </p>
+                    </small>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <!-- Ver video 
+                  <button *ngIf="i.pathfileVideo !== null" (click)="verVideo(i.nombreEvento,i.pathfileVideo)" mat-raised-button
+                    color="warn">Video</button>
+                  -->
+                  <a [routerLink]="['/eventos-ferias/explorador/eventos/'+i.id+'/stands']"
+                    *ngIf="verBotonPublicoVirtualIngresar(i)" mat-raised-button color="primary">
+                    Ingresar
+                  </a>         
+                
+                  <!--
+                  <a *ngIf="verBotonExplorar(i)" [routerLink]="['/eventos-ferias/explorador/eventos/'+i.id+'/stands']"
+                    mat-raised-button>
+                    Explorar
+                  </a>
+                  -->
+                </div>
+              </mat-card-content>
+            </mat-card>
           </div>
-          <div class="card-content">
-            <div>
-              <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPrivadoIngresar(i)"
-                style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
-              <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPublicoIngresar(i)"
-                style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
-              <hr *ngIf="perfilUsuario === 'EMPRESA'">
-            </div>
-            <div class="card-title">
-              {{i.nombreEvento}}
-            </div>
-            <p>{{i.descripcion}}</p>
-            <small>Inicio: {{ i.fechaInicio | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
-            <small>Fin: {{ i.fechaFin | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
-            <small>Tipo de evento: {{ i.tipoId.nombre }}</small> <br>
-            <small>Privacidad del evento: {{ lib.ePrivacidadEvento[i.privacidad] }}</small> <br>
-            <small>Modalidad del evento: {{ lib.eModalidadEvento[i.modalidad] }}</small> <br>
-            <div *ngIf="i.modalidad === 'presencial'">
-              <small>
-                <p align="justify">
-                  Sede: <br>
-                  <strong>{{i.sede}}</strong><br>
-                  Domicilio: {{ i.domicilio }}, {{i.municipio}}, {{ i.estado }}
-                </p>
-              </small>
-            </div>
-          </div>
-          <div class="card-footer">
-            <!-- Ver video 
-            <button *ngIf="i.pathfileVideo !== null" (click)="verVideo(i.nombreEvento,i.pathfileVideo)" mat-raised-button
-              color="warn">Video</button>
-            -->
-            <!-- Es privado - virtual -->
-            <button (click)="registroEvento(usuarioEmpresa,i)" *ngIf="verBotonRegistro(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="primary">
-              Registro
-            </button>
-            <!--
-            <a [routerLink]="['/eventos-ferias/explorador/eventos/'+i.id+'/stands']"
-              *ngIf="verBotonPrivadoVirtualIngresar(i)" mat-raised-button color="primary">
-              Ingresar
-            </a>
-            <-- Es privado - presencial ->
-            <button (click)="registroEvento(usuarioEmpresa,i)" *ngIf="verBotonPrivadoPresencialRegistrar(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="primary">
-              Participar
-            </button>
-
-            <!- Es público - virtual ->
-            <button (click)="registroEvento(usuarioEmpresa,i)" *ngIf="verBotonPublicoVirtualRegistro(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="primary">
-              Registro
-            </button>
-            <a [routerLink]="['/eventos-ferias/explorador/eventos/'+i.id+'/stands']"
-              *ngIf="verBotonPublicoVirtualIngresar(i)" mat-raised-button color="primary">
-              Ingresar
-            </a>
-
-            <!- Es público - presencial ->
-            <button (click)="registroEvento(usuarioEmpresa,i)" *ngIf="verBotonPublicoPresencialRegistrar(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="primary">
-              Participar
-            </button>
-            -->
-            <!-- Es público - presencial -->
-            <button (click)="cancelarEvento(usuarioEmpresa,i)" *ngIf="verBotonCancelar(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="secondary">
-              Cancelar
-            </button>            
-
-            <button (click)="descargarEncuesta()" *ngIf="verBotonCancelar(i)"
-              [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="secondary">
-              Encuesta de Satisfacción
-            </button>            
-          
-            <!--
-            <a *ngIf="verBotonExplorar(i)" [routerLink]="['/eventos-ferias/explorador/eventos/'+i.id+'/stands']"
-              mat-raised-button>
-              Explorar
-            </a>
-            -->
-          </div>
-        </mat-card-content>
-      </mat-card>
-    </div>
-  </div>
-
-
-  <!--
-  <div class="reception-options">
-    <a [routerLink]="['/eventos-ferias/exploradores']" mat-flat-button class="btn-footer-icon"><span
-        class="material-icons">home</span>Ir a Exploradores</a>
-    <button mat-flat-button class="btn-footer-icon"><span class="material-icons">filter_alt</span>Filtrar</button>
-  </div>
-  -->
-
-  <div *ngIf="listaEventos !== null && listaEventos.length === 0" class="explorador-vacio">
-    <mat-card>
-      <mat-card-content>
-        <div class="explorador-vacio-content">
-          Este explorador no tiene eventos registrados, por favor presione el botón volver para ir a la ventana anterior.
         </div>
-        <mat-divider></mat-divider>
-        <div class="explorador-vacio-actions">
-          <a [routerLink]="['/eventos-ferias/explorador']" mat-raised-button color="warn">Volver</a>
+        <div *ngIf="listaUsuarioEventos == null || listaUsuarioEventos.length == 0">
+          <mat-card>
+            <mat-card-content>
+              <div class="explorador-vacio-content">
+                Este explorador no tiene eventos registrados, por favor vaya a Todos los Eventos para registrarse en algún evento.
+              </div>
+            </mat-card-content>
+          </mat-card>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </div>
+      </mat-tab>
+      <mat-tab label="Todos los eventos"> 
+        <div class="row" *ngIf="listaEventos !== null">
+          <div class="col-12 col-sm-6 col-md-4 col-lg-3 card-container" *ngFor="let i of listaEventos">
+            <mat-card>
+              <mat-card-content>
+                <div class="card-cover">
+                  <img
+                    loading="lazy"
+                    [src]="i.pathfileCover !== null ? i.pathfileCover : './assets/img/eventos-ferias/pefce-logotipo.png'"
+                    alt="Portada">
+                </div>
+                <div class="card-content">
+                  <div>
+                    <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPrivadoIngresar(i)"
+                      style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
+                    <strong *ngIf="perfilUsuario === 'EMPRESA' && verLabelPublicoIngresar(i)"
+                      style="cursor:pointer;margin-top:12px;">Estatus: {{obtenerMensajeEstatus(i)}}</strong>
+                    <hr *ngIf="perfilUsuario === 'EMPRESA'">
+                  </div>
+                  <div class="card-title">
+                    {{i.nombreEvento}}
+                  </div>
+                  <p>{{i.descripcion}}</p>
+                  <small>Inicio: {{ i.fechaInicio | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+                  <small>Fin: {{ i.fechaFin | date : 'dd/MM/yyyy HH:mm' }}</small> <br>
+                  <small>Tipo de evento: {{ i.tipoId.nombre }}</small> <br>
+                  <small>Privacidad del evento: {{ lib.ePrivacidadEvento[i.privacidad] }}</small> <br>
+                  <small>Modalidad del evento: {{ lib.eModalidadEvento[i.modalidad] }}</small> <br>
+                  <div *ngIf="i.modalidad === 'presencial'">
+                    <small>
+                      <p align="justify">
+                        Sede: <br>
+                        <strong>{{i.sede}}</strong><br>
+                        Domicilio: {{ i.domicilio }}, {{i.municipio}}, {{ i.estado }}
+                      </p>
+                    </small>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button (click)="registroEvento(usuarioEmpresa,i)"
+                    [disabled]="perfilUsuario !== 'Empresa'" mat-raised-button color="primary">
+                    Registro
+                  </button>          
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div *ngIf="listaEventos !== null && listaEventos.length === 0">
+          <mat-card>
+            <mat-card-content>
+              <div class="explorador-vacio-content">
+                No existen eventos pendientes de iniciar. Si ya se registró en algún evento, puede verlo en la pestañana "Mis Eventos"
+              </div>
+            </mat-card-content>
+          </mat-card>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </section>

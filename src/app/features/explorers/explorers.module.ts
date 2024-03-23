@@ -24,6 +24,7 @@ import { VerInfoEventoComponent } from './pages/explorador-eventos/detalles-even
 import { VerVideoEventoComponent } from './pages/explorador-eventos/detalles-evento/ver-video-evento/ver-video-evento.component';
 import { RegistroEventoComponent } from './pages/explorador-eventos/detalles-evento/registro-evento/registro-evento.component';
 import { ModalSolicitarMesaComponent } from './components/modal-solicitar-mesa/modal-solicitar-mesa.component';
+import { ModalRegistroEventosComponent } from './components/modal-registro-eventos/modal-registro-eventos.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { ModalSolicitarMesaComponent } from './components/modal-solicitar-mesa/m
     VerInfoEventoComponent,
     VerVideoEventoComponent,
     RegistroEventoComponent,
-    ModalSolicitarMesaComponent
+    ModalSolicitarMesaComponent,
+    ModalRegistroEventosComponent
   ],
   imports: [
     CommonModule,
@@ -56,6 +58,7 @@ import { ModalSolicitarMesaComponent } from './components/modal-solicitar-mesa/m
     PdfPreviewComponent,
     AutodiagnosticoComponent,
     ModalSolicitarMesaComponent,
+    ModalRegistroEventosComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
