@@ -33,6 +33,7 @@ import { CoreAuthService } from 'src/app/core/services/core-auth.service';
 import { TasksService } from 'src/app/features/tasks/services/tasks.service';
 
 import { Subject } from 'rxjs';
+import { SharedServiceService } from 'src/app/shared/Shared/shared-service.service';
 
 @Component({
   selector: 'app-form-minuta',
@@ -124,7 +125,8 @@ export class FormMinutaComponent implements OnInit, OnChanges {
     private awService: AdministracionWebService,
     private coreAuth: CoreAuthService,
     private taskservice: TasksService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private sharedService: SharedServiceService
   ) {
     this.myForm = this.fb.group({
       file: new FormControl(''),
@@ -365,7 +367,10 @@ export class FormMinutaComponent implements OnInit, OnChanges {
         }
       },
     }).afterClosed().subscribe(resp => {
-      this.obtenertareas();
+      this.sharedService.goToPage$.subscribe(() => {
+        // Lógica a ejecutar cuando se emite el evento goToPage
+        // Esto sería equivalente a llamar directamente a goToPage en UpdateMinutaComponent
+      });
     });
   }
   openOptionsTareasModal(tarea: TasksModel) {

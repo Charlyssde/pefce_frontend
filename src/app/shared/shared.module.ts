@@ -36,6 +36,7 @@ import { VideoModalComponent } from './components/modals/video-modal/video-modal
 //import { ConfirmarModalComponent } from './components/modals/confirmar-modal/confirmar-modal.component';
 //import { VerContactoEmpresaModalComponent } from './components/modals/ver-contacto-empresa-modal/ver-contacto-empresa-modal.component';
 import { MinutaTareaModalComponent } from './components/modals/minuta-tarea-modal/minuta-tarea-modal.component';
+import { SharedServiceService } from './Shared/shared-service.service';
 // import { ValidarConstanciaComponent } from './features/audiencia-capacitaciones/validar-constancia/validar-constancia.component';
 // import { ModalAgregarTareaMinutaComponent } from './features/minutas/Modals/modal-agregar-tarea-minuta/modal-agregar-tarea-minuta.component';
 // import { ModalOpcionesTareasMinutaComponent } from './features/minutas/Modals/modal-opciones-tareas-minuta/modal-opciones-tareas-minuta.component';
@@ -114,6 +115,7 @@ import { MinutaTareaModalComponent } from './components/modals/minuta-tarea-moda
   ],
   schemas:[
     CUSTOM_ELEMENTS_SCHEMA
-  ]
+  ],
+  providers: [SharedServiceService]
 })
 export class SharedModule { }

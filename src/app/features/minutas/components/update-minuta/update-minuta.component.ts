@@ -5,6 +5,7 @@ import { FormMinutaComponent } from '../form-minuta/form-minuta.component';
 import { MinutasService } from 'src/app/features/minutas/service/minutas.service';
 import { TasksService } from 'src/app/features/tasks/services/tasks.service';
 import { MatSnackBar } from '@angular/material';
+import { SharedServiceService } from 'src/app/shared/Shared/shared-service.service';
 
 const bcrypt = require('bcryptjs');
 
@@ -29,7 +30,8 @@ export class UpdateMinutaComponent implements OnInit, AfterViewInit {
     public scriptGL: ScriptsGlobalService,
     private cdRef: ChangeDetectorRef,
     private taskservice : TasksService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private sharedService: SharedServiceService
   ) { }
 
   ngOnInit() {
@@ -62,6 +64,7 @@ export class UpdateMinutaComponent implements OnInit, AfterViewInit {
   goToPage() {
     this.idForm = 0;
     this.goPage.emit(true);
+    this.sharedService.emitGoToPage();
   }
 
   async save() {

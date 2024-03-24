@@ -215,7 +215,7 @@
                         <div mat-dialog-content>
                           <div class="row"></div>
                           <div class="row">
-                            <div class="col m-3 center">
+                            <div>
                               <input
                                 type="file"
                                 style="width: 100%"
@@ -224,15 +224,12 @@
                                 formControlName="file" (change)="obtenerImage($event)"
                               />
                             </div>
-                          </div>
-                        </div>
-                        <div mat-dialog-actions>
-                          <div class="col-md-12">
                             <button type="submit" mat-raised-button color="primary">
-                               Guardar
-                            </button>
+                              Guardar
+                           </button>
                           </div>
                         </div>
+
                       </form>
                     </div>
                   </div>
