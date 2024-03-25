@@ -9,7 +9,7 @@
           <div class="col-12">
             <mat-form-field appearance="fill">
               <mat-label>Titulo</mat-label>
-              <input formControlName="titulo" matInput type="text" placeholder="Título de la encuesta" required />
+              <input formControlName="nombre" matInput type="text" placeholder="Título de la encuesta" required />
             </mat-form-field>
           </div>
           <div class="col-12">
@@ -19,64 +19,15 @@
                 placeholder="Escriba una breve descripción de la encuesta" required />
             </mat-form-field>
           </div>
-          <div class="col-12 col-md-6">
-            <h3><mat-icon>{{ archivosPreview !== null ? 'done' : 'close' }}</mat-icon> Formato de la encuesta de satisfacción</h3>
-            <div class="row">
-              <div class="col-12 col-md-6">
-                <small>* Solo se permite la carga de archivos en formato PDF</small>
-              </div>
-              <div class="col-12 col-md-6" align="end">
-                <input hidden (change)="onArchivoUploaded($event.target, archivosPreview)" accept=".pdf,application/pdf"
-                  #archivoInput type="file" id="archivo">
-                <button type="button" mat-button matTooltip="Cargar archivo"
-                  (click)="archivoInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
-              </div>
-            </div>
-            <hr>
-            <div class="row multimedia-container">
-              <div class="col-12 multimedia-content">
-                <div *ngIf="archivosPreview !== null" class="pdf-container">
-                  <mat-list role="list">
-                    <mat-list-item role="listitem">
-                      <div class="row" style="width:100%;">
-                        <div class="col-1">
-
-                          <mat-icon (click)="onClickPreviewArchivo(archivosPreview.uri)" style="cursor:pointer;"
-                            matTooltip="Clic para vista previa">description</mat-icon>
-
-                        </div>
-                        <div class="col-9">
-                          <div style="text-align:justify;">
-                            <span>Formato de encuesta de satisfacción cargado</span>
-                            <div *ngIf="archivosPreview.uri.includes('base64')">
-                              <small (click)="onClickPreviewArchivo(archivosPreview.uri)" style="cursor:pointer;">({{
-                                archivosPreview.fileData.name }})</small>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-2" align="end">
-                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Acciones"
-                            title="Acciones">
-                            <mat-icon>more_vert</mat-icon>
-                          </button>
-                          <mat-menu #menu="matMenu">
-                            <button mat-menu-item
-                              (click)="onClickPreviewArchivo(archivosPreview.uri)"><mat-icon>visibility</mat-icon>
-                              Vista previa</button>
-                            <button mat-menu-item (click)="onClickRemoveArchivo()">
-                              <mat-icon>delete</mat-icon> {{ archivosPreview.uri.includes('base64') ? 'Quitar' :
-                              'Eliminar' }}
-                            </button>
-                          </mat-menu>
-                        </div>
-                      </div>
-                    </mat-list-item>
-                  </mat-list>
-                </div>
-                <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;"
-                  *ngIf="archivosPreview === null">description</mat-icon>
-              </div>
-            </div>
+          <div class="col-12 ">
+            <mat-form-field appearance="fill">
+              <mat-label>Empresas</mat-label>
+              <mat-select name="empresas" formControlName="empresas"  multiple [compareWith]="scriptGL.objectComparisonFunction"  required>
+                <mat-option *ngFor="let empresas of listempresa" [value]="empresas">
+                  {{empresas.empresa}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
       </form>

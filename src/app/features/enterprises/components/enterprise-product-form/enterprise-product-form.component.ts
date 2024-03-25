@@ -56,7 +56,7 @@ export class EnterpriseProductFormComponent implements OnInit {
 
   technicalDocumentPreview: any = null;
   imagesPreview: any[] = [];
-  videosPreview: any[] = []; 
+  videosPreview: any[] = [];
 
   acceptedVideosFilesIndex: number[] = [];
   acceptedImageFilesIndex: number[] = [];
@@ -435,7 +435,7 @@ export class EnterpriseProductFormComponent implements OnInit {
     data['title'] = "Eliminar archivo de producto";
     data['content'] = "¿Realmente desea eliminar el archivo de producto de los registros de la plataforma?";
     data['alerts'] = null;
-    
+
     this.dialog.open(DeleteModalComponent,{
       width: '70vw',
       data: data

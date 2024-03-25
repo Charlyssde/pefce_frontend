@@ -11,7 +11,8 @@ export class AdministracionEncuestasService {
 
   baseUrl: string = environment.apiUrl;
   endpoint: string = environment.apiUrl+"/encuestas"
-
+  endpointdos: string = environment.apiUrl+"/encuesta/"
+  endpointtres: string = environment.apiUrl+"/pregunta/"
   constructor(
     private http: HttpClient
   ) { }
@@ -45,7 +46,7 @@ export class AdministracionEncuestasService {
 
   getFormResources(administracionEncuestasId: number): Observable<any>{
     return this.http.get<any>(this.endpoint+"/"+administracionEncuestasId+"/formResources");
-  }  
+  }
 
   // Product file
   patchEncuestaFile(encuestaId: number, fileId: number, formData: FormData): Observable <any>{
@@ -60,12 +61,36 @@ export class AdministracionEncuestasService {
     return this.http.get(this.endpoint +"/" + encuestaId);
   }
 
-  /*  
+  getAllEncuestas(): Observable<any>{
+    return this.http.get(this.endpointdos);
+  }
+
+  postEncuestabl(encuesta: any): Observable<any>{
+    return this.http.post(this.endpointdos, encuesta);
+  }
+
+  getAllpreguntas(id: any): Observable<any>{
+    return this.http.get(this.endpointtres + id);
+  }
+
+  getone(id: any): Observable<any>{
+    return this.http.get<any>(this.endpointdos+id);
+  }
+
+  putencuesta(id: any, encuesta: any): Observable<any>{
+    return this.http.put( this.endpointdos +  id, encuesta);
+  }
+
+  postpregunta(pregunta: any): Observable<any>{
+    return this.http.post(this.endpointtres, pregunta);
+  }
+
+  /*
   putAdministracionEncuestas(administracionEncuestasId: any, administracionEncuestas: any): Observable<any>{
     return this.http.put( this.endpoint + "/" + administracionEncuestasId, administracionEncuestas );
   }
 
-  
+
 
 
   showAdministracionEncuestasRegistration(): Observable <any>{
@@ -77,17 +102,17 @@ export class AdministracionEncuestasService {
   putAdministracionEncuestas(administracionEncuestasId: any, administracionEncuestas: any): Observable<any>{
     return this.http.put(this.endpoint+"/"+administracionEncuestasId,administracionEncuestas);
   }
-  
+
   saveAccessRequest(solicitudAccesoEmpresa : SolicitudAccesoEmpresaModel): Observable<any>{
     return this.http.patch(this.endpoint+"/"+solicitudAccesoEmpresa.administracionEncuestasId+"/access-request",solicitudAccesoEmpresa);
   }
 
-  
+
   // Contacts
   postAdministracionEncuestasContact(administracionEncuestasId: number, userRequest: UserRequest): Observable<any>{
     return this.http.post(this.endpoint+"/"+administracionEncuestasId+"/contacts",userRequest);
   }
-  
+
   patchAdministracionEncuestasContact(administracionEncuestasId: number, userRequest: UserRequest): Observable<any>{
     return this.http.patch(this.endpoint+"/"+administracionEncuestasId+"/contacts/"+userRequest.user.id,userRequest);
   }

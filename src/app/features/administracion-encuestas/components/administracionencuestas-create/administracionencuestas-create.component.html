@@ -4,4 +4,44 @@
 
   <app-administracionencuestas-form [helpsSettings]="helpsSettings" [encuestaId]="encuestaId" [encuestaIn]="encuesta" (encuestaOut)="submitEncuesta($event)"></app-administracionencuestas-form>
 
+   <div class="row">
+          <div class="col-12">
+            <mat-card>
+              <mat-card-content>
+                <div class="tareas-header">
+                  <div style="display: inline-block;width:100%;">
+                    <span style="float:left;margin:10px auto;">Preguntas</span>
+                    <button *ngIf="isUpdate" mat-icon-button style="float:right;" (click)="openNew()">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <mat-divider></mat-divider>
+                <div class="tareas-content">
+                  <div *ngIf="(listpreguntas).length > 0; else sinTareas">
+                    <table>
+                      <tr>
+                        <th>Id pregunta</th>
+                        <th>Pregunta</th>
+                        <th>Fecha Creación</th>
+                      </tr>
+                      <tr *ngFor="let pregunta of listpreguntas">
+                        <td>{{ pregunta.id }}</td>
+                        <td>{{ pregunta.pregunta }}</td>
+                        <td>{{ pregunta.fechaCreacion | date: 'dd-MM-yyyy' }}</td>
+
+                      </tr>
+                    </table>
+                  </div>
+                  <ng-template #sinTareas>
+                    <div *ngIf="isUpdate else elseBlock" style="text-align: center;padding: 5px 0px;">
+                      No hay preguntas registradas
+                    </div>
+                    <ng-template #elseBlock>Por favor guarde la encuesta antes de asignar preguntas</ng-template>
+                  </ng-template>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
 </div>
