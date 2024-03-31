@@ -1,0 +1,18 @@
+<div class="mat-elevation-z8">
+    <div class="col-10">
+      <h2>Encuesta</h2>
+    </div>
+    <div class="col-10">
+      <div *ngFor="let pregunta of preguntas" class="flex-row">
+        <label>{{ pregunta.pregunta }}</label>
+        <div style="display: flex">
+          <div *ngFor="let opcion of opciones" style="margin-right: 10px; margin-bottom: 10px">
+            <input type="radio" name="respuesta{{ pregunta.id }}" [value]="opcion.id" [(ngModel)]="respuestas[pregunta.id]" />
+            <label>{{ opcion.texto }}</label>
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button color="primary" (click)="guardarRespuestas()">Guardar Respuestas</button>
+    </div>
+</div>
+

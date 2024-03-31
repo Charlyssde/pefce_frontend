@@ -18,7 +18,7 @@
                 <mat-icon>calendar_month</mat-icon> Agenda
               </span>
                <mat-icon matTooltip="Ir a la agenda" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
-            </a>            
+            </a>
             <a [routerLink]="['/audienciaCapacitaciones']" type="button" mat-button color="warn"
               style="text-align:justify;">
               <span matTooltip="Explorador de capacitaciones">
@@ -33,7 +33,7 @@
               </span>
                <mat-icon matTooltip="Ir al explorador de eventos" style="float:right;">navigate_next</mat-icon>
             </button>
-            
+
           -->
             <a [routerLink]="['/exploradores/eventos']" type="button" mat-button color="warn"
               style="text-align:justify;">
@@ -64,6 +64,13 @@
               </span>
                <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
             </a>
+            <a [routerLink]="['/admEncuestas/responder']" type="button" mat-button color="warn"
+              style="text-align:justify;">
+              <span matTooltip="Encuentas">
+                <mat-icon>store</mat-icon> Encuestas de satisfacción
+              </span>
+               <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
+            </a>
             <hr>
             <a [routerLink]="['/empresas']" type="button" mat-button color="warn"
               style="text-align:justify;">
@@ -71,7 +78,7 @@
                 <mat-icon>store</mat-icon> Mi empresa
               </span>
                <mat-icon matTooltip="Ir al explorador de empresas" style="float:right; padding: 3px auto;">navigate_next</mat-icon>
-            </a>          
+            </a>
             <button type="button" mat-button color="warn" style="text-align:justify; padding: 3px auto;" (click)="openNewAutodiagnosticoModal(null)">
               <span matTooltip="Autodiagnóstico del exportador">
                 <mat-icon>update</mat-icon>Autodiagnóstico del exportador
