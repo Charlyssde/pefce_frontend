@@ -43,17 +43,21 @@ export class AdministracionEncuestasCreateComponent implements OnInit {
       this.findEncuesta();
     }
 
-  if (this.encuestaId >= 0) {
-    this.administracionEncuestaService.getAllpreguntas(this.encuestaId).subscribe((response) => {
-      if(response){
-       this.listpreguntas = response;
-       this.isUpdate = true;
-      }
-    }, (error) => {
-      this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
-    });
+    this.allpreguntas();
+
   }
 
+  allpreguntas(){
+    if (this.encuestaId >= 0) {
+      this.administracionEncuestaService.getAllpreguntas(this.encuestaId).subscribe((response) => {
+        if(response){
+         this.listpreguntas = response;
+         this.isUpdate = true;
+        }
+      }, (error) => {
+        this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
+      });
+    }
   }
 
   async findEncuesta(){
@@ -86,6 +90,8 @@ export class AdministracionEncuestasCreateComponent implements OnInit {
       data: {
         encuestasdata: this.encuestadata,
       },
+    }).afterClosed().subscribe(resp => {
+      this.allpreguntas();
     });
   }
 

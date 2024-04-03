@@ -59,13 +59,13 @@ export class PreguntaModalComponent implements OnInit {
 
   closeDialog(): void {
     this.dialogRef.close();
-    this.router.navigate(['/admEncuestas']);
+    //this.router.navigate(['/admEncuestas']);
   }
 
   onSubmitForm() {
     if (this.formPregunta.valid) {
         this.administracionEncuestaService.postpregunta(this.formPregunta.value).subscribe((response) => {
-          this.alerts.printSnackbar(15,null,null,"Pregunta guardada!",2,true,('/admEncuestas'),null);
+          this.alerts.printSnackbar(15,null,null,"Pregunta guardada!",2,false,null,null);
          this.closeDialog();
         }, (error) => {
           this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
