@@ -7,6 +7,7 @@ import { HelpBottomSheetComponent } from 'src/app/shared/components/bottom-sheet
 import { DeleteModalComponent } from 'src/app/shared/components/modals/delete-modal/delete-modal.component';
 import { AdministracionEncuestasService } from '../../services/administracionencuestas.service';
 import { UsuarioModel } from 'src/app/core/models/usuarios/usuario.model';
+import { PreguntaModalComponent } from 'src/app/shared/components/modals/pregunta-modal/pregunta-modal.component';
 
 
 @Component({
@@ -63,7 +64,14 @@ export class AdministracionEncuestasPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.pages();
+    //this.pages();
+    this.administracionEncuestasService.getAllEncuestas().subscribe((response) => {
+      if(response){
+        this.dataset = response;
+      }
+    }, (error) => {
+      this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
+    });
   }
 
   // Modales Tareas
@@ -74,7 +82,7 @@ export class AdministracionEncuestasPageComponent implements OnInit {
       data: {administracionEncuestas: administracionEncuestas}
       }).afterClosed().subscribe((result) => {
         this.pages();
-      }); 
+      });
   }
   */
 
@@ -115,21 +123,24 @@ export class AdministracionEncuestasPageComponent implements OnInit {
         this.length = this.pageDataset.totalItems
         this.pageIndex = this.pageDataset.currentPage;
         this.pageDataset.dataset.forEach(element => {
-          let 
+          let
             fechaActual = new Date(),
             fechaInicio = new Date(element.fechaInicio),
-            fechaTermino = new Date(element.fechaTermino),                                
+            fechaTermino = new Date(element.fechaTermino),
             diasTranscurridos = Math.floor( (Date.UTC(fechaActual.getFullYear(), fechaActual.getMonth(), fechaActual.getDate()) - Date.UTC(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate() ) ) / (1000 * 60 * 60 * 24) ),
             diasTotal =         Math.floor( (Date.UTC(fechaTermino.getFullYear(), fechaTermino.getMonth(), fechaTermino.getDate()) - Date.UTC(fechaInicio.getFullYear(), fechaInicio.getMonth(), fechaInicio.getDate() ) ) / (1000 * 60 * 60 * 24) ),
             dias = ((diasTotal - diasTranscurridos) / diasTotal);
           element.semaforo =  dias >= 0.66 ? "green-color" : dias >= 0.33 ? "yellow-color" : "red-color";
         });
-        this.dataset = this.pageDataset.dataset;        
+        this.dataset = this.pageDataset.dataset;
       }
     }, (error) => {
       this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
     });
   }
+
+
+
 
   onClickDelete(administracionEncuestas: any) {
     let data = {};
@@ -150,6 +161,15 @@ export class AdministracionEncuestasPageComponent implements OnInit {
         });
       }
     })
+  }
+
+  onClickedit(administracionEncuestas: any) {
+    const dialogRef = this.dialog.open(PreguntaModalComponent, {
+      width: '80%',
+      data: {
+        //encuestasdata: this.encuesta,
+      },
+    });
   }
 
   checkIfRootUser(profiles: any): Boolean{

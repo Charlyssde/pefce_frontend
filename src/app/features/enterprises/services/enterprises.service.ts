@@ -170,4 +170,9 @@ export class EnterprisesService {
   }
 
 
+  findallempresas(): Observable<any> {
+    return this.http.get(this.endpoint + "/all-empresas");
+  }
+
+
 }

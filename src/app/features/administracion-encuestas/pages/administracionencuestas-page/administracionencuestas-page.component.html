@@ -1,5 +1,5 @@
 <div>
-  
+
   <shared-dashboard-title [title]="'Encuestas de satisfacción'"></shared-dashboard-title>
   <a [routerLink]="['/admEncuestas/nuevo']" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro">
     <mat-icon>add</mat-icon>
@@ -29,8 +29,8 @@
           <thead>
             <tr>
               <th>Titulo</th>
-              <th>Descripción</th>              
-              <th>Fecha de actualización</th>              
+              <th>Descripción</th>
+              <th>Fecha de actualización</th>
               <th>Acciones</th>
             </tr>
           </thead>
@@ -41,9 +41,9 @@
               </td>
             </tr>
             <tr *ngFor="let data of dataset; let index1 = index;">
-              <td>{{ data.titulo }}</td>
+              <td>{{ data.nombre }}</td>
               <td>{{ data.descripcion }}</td>
-              <td>{{ data.updated_at | date: "dd/MM/y" }}</td>
+              <td>{{ data.fechaCreacion | date: "dd/MM/y" }}</td>
               <td style="text-align:center !important;">
                 <button mat-icon-button [matMenuTriggerFor]="options"
                   matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
@@ -51,7 +51,8 @@
                   <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
                   <mat-divider></mat-divider>
                   <a [routerLink]="['/admEncuestas/'+data.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro"><mat-icon>edit</mat-icon>Editar</a>
-                  <button mat-menu-item matTooltip="Eliminar registro" (click)="onClickDelete(data)"><mat-icon>delete</mat-icon>Eliminar</button>                  
+                  <!-- <button mat-menu-item matTooltip="Editar registro" (click)="onClickedit(data)"><mat-icon>add</mat-icon>Editar</button> -->
+                  <button mat-menu-item matTooltip="Eliminar registro" (click)="onClickDelete(data)"><mat-icon>delete</mat-icon>Eliminar</button>
                 </mat-menu>
               </td>
             </tr>

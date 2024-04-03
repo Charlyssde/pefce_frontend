@@ -1,0 +1,28 @@
+<div>
+  <shared-dashboard-title [title]="'Mis encuestas'"></shared-dashboard-title>
+</div>
+<div class="mat-elevation-z8">
+  <div class="row col-12 table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+       <tr *ngIf="encuenstas && encuenstas.length === 0">
+          <td>No hay encuestas</td>
+       </tr>
+        <tr *ngFor="let data of encuenstas; let index1 = index;">
+            <td>{{data.encuesta.nombre}}</td>
+            <td>{{data.encuesta.descripcion}}</td>
+            <td>
+              <button mat-raised-button color="primary" (click)="verEncuesta(data.encuesta.id)">Ver</button>
+            </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

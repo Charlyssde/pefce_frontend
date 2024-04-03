@@ -8,6 +8,8 @@ export const environment = {
   // apiUrl: 'http://10.1.16.171:8080/FERIAVIRTUAL',
   apiUrl: 'http://localhost:8080',
   //apiUrl: 'http://centos7-103.soluto.mx:8082/FERIAVIRTUAL',
+  //socketUrl : 'http://tuestadoindustrial.veracruz.gob.mx:80/socket',
+  //apiUrl: 'http://tuestadoindustrial.veracruz.gob.mx:80/',
   uriZoom: window.location.origin + '/zoomCallback',
   mapBoxToken: 'pk.eyJ1IjoiYW13YXNoIiwiYSI6ImNrdGtzazhyMTFveW0yd3FqejRkYmhiOWcifQ.x9EGAIGGBMjqx1tZdh55ZQ',
   mailGunApiKey: 'd6c422499c177afc88a55691f22d3ca5-8ed21946-14b4e739',
