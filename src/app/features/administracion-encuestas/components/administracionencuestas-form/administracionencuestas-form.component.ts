@@ -34,8 +34,11 @@ export class AdministracionencuestasFormComponent implements OnInit {
   archivoDocument: FileModel;
   archivosPreview: any = null;
   listempresa : any;
+  listEvents : any;
   idUser: number;
   listpreguntas: any;
+  listId: any;
+  listUsuarioEmpresa: any;
 
   request: AdministracionEncuestasModel = new AdministracionEncuestasModel();
   @ViewChild('archivoInput') archivoInput: ElementRef;
@@ -58,7 +61,7 @@ export class AdministracionencuestasFormComponent implements OnInit {
       descripcion: [null, [Validators.required]],
       fechaCreacion: [null, []],
       creadoPor: [null, []],
-      empresas: [[], Validators.required],
+      empresas: [null, []],
     });
 
   }
@@ -85,7 +88,7 @@ export class AdministracionencuestasFormComponent implements OnInit {
       descripcion: [null, [Validators.required]],
       fechaCreacion: [null, []],
       creadoPor: [null, []],
-      empresas:[[], Validators.required],
+      empresas:[null, []],
     });
 
     let idUserString = localStorage.getItem('idusuario');
@@ -97,9 +100,10 @@ export class AdministracionencuestasFormComponent implements OnInit {
        }
     })
 
-    this.enterprisesService.findallempresas().subscribe((response) => {
+   
+    this.enterprisesService.findEvents().subscribe((response) => {
       if(response){
-       this.listempresa = response;
+       this.listEvents = response;
       }
     }, (error) => {
       this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
@@ -127,11 +131,32 @@ export class AdministracionencuestasFormComponent implements OnInit {
           this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
         });
       }else{
-        this.administracionEncuestaService.postEncuestabl(this.formEncuesta.value).subscribe((response) => {
-          this.alerts.printSnackbar(15,null,null,"¡Encuesta guardada!",5,true,('/admEncuestas'),null);
-        }, (error) => {
-          this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
-        });
+        let idList = this.listEvents.map(event => event.id);
+
+this.enterprisesService.getUsuarioEmpresaPorEvento(idList).subscribe(
+  (response) => {
+    if (response) {
+      this.listUsuarioEmpresa = response;
+      this.listempresa = this.listUsuarioEmpresa.map(empresa => empresa.empresa);
+      this.formEncuesta.get('empresas').setValue(this.listempresa);
+
+      console.log("Estas son las empresas que se le asignaran las encuentas: ", this.formEncuesta.get('empresas').value);
+
+      this.administracionEncuestaService.postEncuestabl(this.formEncuesta.value).subscribe(
+        (response) => {
+          this.alerts.printSnackbar(15, null, null, "¡Encuesta guardada!", 5, true, '/admEncuestas', null);
+        },
+        (error) => {
+          this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+        }
+      );
+    }
+  },
+  (error) => {
+    this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+  }
+);
+
       }
     }
     else {

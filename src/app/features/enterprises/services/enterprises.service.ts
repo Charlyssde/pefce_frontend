@@ -15,6 +15,9 @@ export class EnterprisesService {
 
   baseUrl: string = environment.apiUrl;
   endpoint: string = environment.apiUrl + "/enterprises"
+  private baseUrlEvents = environment.apiUrl + '/eventos';
+
+   endpointEvento: string = environment.apiUrl + "/userEnterprise"
 
   constructor(
     private http: HttpClient
@@ -174,5 +177,18 @@ export class EnterprisesService {
     return this.http.get(this.endpoint + "/all-empresas");
   }
 
+  // EVENTO
+  findEvents(): Observable<any> {
+    return this.http.get(`${this.baseUrlEvents}/page`);
+  }
+
+  getUsuarioEmpresaPorEvento(eventoIds: any[]): Observable<any> {
+    let params = new HttpParams();
+    eventoIds.forEach(id => {
+      params = params.append('eventoIds', id.toString());
+    });
+  
+    return this.http.get(`${this.endpointEvento}/evento`, { params });
+  }
 
 }
