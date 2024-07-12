@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CoreAuthService } from '../../services/core-auth.service';
 import { Alerts } from '../../utils/alerts';
+import { log } from 'util';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -22,6 +23,8 @@ export class DashboardLayoutComponent implements OnInit {
 
   ngOnInit() {
     this.userSession = this.coreAuthService.getUserSessionData();
+    console.log(this.userSession);
+    
     this.menuOptions = this.userSession.roles;
     this.menuOptions.sort((a, b) => (a.nombreEtiqueta > b.nombreEtiqueta) ? 1 : -1);
     let quitarModulos = ['/contactos','/ferias','/seguimiento','/solicitudes-page','/solicitudesAGC','/solicitudGva','/logsChat','/rolesUsuario'];//mediante urlModulo se quita u oculta modulos

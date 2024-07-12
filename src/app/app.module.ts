@@ -62,6 +62,7 @@ import { AudienciaCapacitacionesModule } from './features/audiencia-capacitacion
 import { MinutasModule } from './features/minutas/minutas.module';
 import { SystemModule } from './features/system/system.module';
 import { WebSocketService } from './common/stomp.service';
+import { DspModule } from './features/dsp/dsp.module';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { WebSocketService } from './common/stomp.service';
     AudienciaCapacitacionesModule,
     MinutasModule,
     SystemModule,
+    DspModule
   ],
   entryComponents: [
     LoaderComponent,
