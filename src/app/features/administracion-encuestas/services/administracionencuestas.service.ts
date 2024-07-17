@@ -13,6 +13,7 @@ export class AdministracionEncuestasService {
   endpoint: string = environment.apiUrl + '/encuestas';
   endpointdos: string = environment.apiUrl + '/encuesta/';
   endpointtres: string = environment.apiUrl + '/pregunta/';
+  endpointCatro: string = environment.apiUrl + '/encuesta/evento/';
 
   constructor(
     private http: HttpClient
@@ -77,6 +78,9 @@ export class AdministracionEncuestasService {
 
   getone(id: any): Observable<any> {
     return this.http.get<any>(this.endpointdos + id);
+  }
+  getoneDTO(id: any): Observable<any> {
+    return this.http.get<any>(this.endpointCatro + id);
   }
 
   putencuesta(id: any, encuesta: any): Observable<any> {

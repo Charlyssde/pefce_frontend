@@ -1,4 +1,4 @@
-import { Input, OnChanges, SimpleChanges, ViewChild, ElementRef  } from '@angular/core';
+import { Input, OnChanges, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,7 +6,7 @@ import { MatBottomSheet, MatDialog } from '@angular/material';
 import { AdministracionEncuestasModel } from 'src/app/core/models/administracionencuestas/administracionencuestas-model';
 import { Alerts } from 'src/app/core/utils/alerts';
 import { Utils } from 'src/app/core/utils/utils';
-import { AdministracionEncuestasService} from '../../services/administracionencuestas.service';
+import { AdministracionEncuestasService } from '../../services/administracionencuestas.service';
 import { v4 as uuidv4 } from 'uuid';
 import { FileModel } from 'src/app/core/models/files/file.model';
 
@@ -26,16 +26,20 @@ export class AdministracionencuestasFormComponent implements OnInit {
   @Input() encuestaIn: EncuestaModel;
   @Input() encuestaId;
   @Input() encuesta;
-  @Output() encuestaOut =  new EventEmitter<any>();
+  @Output() encuestaOut = new EventEmitter<any>();
   @Input() encuestaIdIn: number;
 
   formEncuesta: FormGroup;
+  formEncuestaEditar: FormGroup;
   isUpdate = false;
   archivoDocument: FileModel;
   archivosPreview: any = null;
-  listempresa : any;
+  listempresa: any;
+  listEvents: any;
   idUser: number;
   listpreguntas: any;
+  listId: any;
+  listEmpresaEvento: any;
 
   request: AdministracionEncuestasModel = new AdministracionEncuestasModel();
   @ViewChild('archivoInput') archivoInput: ElementRef;
@@ -44,7 +48,7 @@ export class AdministracionencuestasFormComponent implements OnInit {
     private formBuilder: FormBuilder,
     private administracionEncuestaService: AdministracionEncuestasService,
     private bottomSheet: MatBottomSheet,
-    private activatedRoute:ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
     private alerts: Alerts,
     public utils: Utils,
@@ -58,13 +62,15 @@ export class AdministracionencuestasFormComponent implements OnInit {
       descripcion: [null, [Validators.required]],
       fechaCreacion: [null, []],
       creadoPor: [null, []],
-      empresas: [[], Validators.required],
+      empresas: [null, []],
+      eventos: [null, [Validators.required]],
     });
+    
 
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if ( changes.encuestaIn.currentValue ) {
+    if (changes.encuestaIn.currentValue) {
       if (this.encuestaIn.id != null) {
         this.formEncuesta.patchValue(this.encuestaIn);
         this.prepareFiles();
@@ -85,29 +91,31 @@ export class AdministracionencuestasFormComponent implements OnInit {
       descripcion: [null, [Validators.required]],
       fechaCreacion: [null, []],
       creadoPor: [null, []],
-      empresas:[[], Validators.required],
+      empresas:[null, []],
+      eventos: [null, [Validators.required]],
     });
 
     let idUserString = localStorage.getItem('idusuario');
     this.idUser = idUserString ? parseInt(idUserString, 10) : null;
     this.usersService.findById(this.idUser).subscribe((response) => {
-      if(response){
+      if (response) {
 
         this.formEncuesta.get('creadoPor').setValue(response)
-       }
+      }
     })
 
-    this.enterprisesService.findallempresas().subscribe((response) => {
-      if(response){
-       this.listempresa = response;
+
+    this.enterprisesService.findEvents().subscribe((response) => {
+      if (response) {
+        this.listEvents = response;
       }
     }, (error) => {
-      this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
+      this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
     });
 
   }
 
-   findEncuesta(){
+  findEncuesta() {
 
     this.administracionEncuestaService.getone(this.encuestaId).subscribe((response) => {
       if (response) {
@@ -121,17 +129,37 @@ export class AdministracionencuestasFormComponent implements OnInit {
   onSubmitForm() {
     if (this.formEncuesta.valid) {
       if (this.formEncuesta.get('id').value !== null) {
+        this.formEncuesta.get('eventos').setValue(this.listEvents);
         this.administracionEncuestaService.putencuesta(this.formEncuesta.get('id').value, this.formEncuesta.value).subscribe((response) => {
-          this.alerts.printSnackbar(15,null,null,"¡Encuesta Actualizada!",5,true,('/admEncuestas'),null);
+          this.alerts.printSnackbar(15, null, null, "¡Encuesta Actualizada!", 5, true, ('/admEncuestas'), null);
         }, (error) => {
-          this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
+          this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
         });
-      }else{
-        this.administracionEncuestaService.postEncuestabl(this.formEncuesta.value).subscribe((response) => {
-          this.alerts.printSnackbar(15,null,null,"¡Encuesta guardada!",5,true,('/admEncuestas'),null);
-        }, (error) => {
-          this.alerts.printSnackbar(15,null,null,error.error,5,false,null,null);
-        });
+      } else {
+        let idList = this.listEvents.map(event => event.id);
+        this.enterprisesService.getEmpresaPorEvento(idList).subscribe(
+          (response) => {
+            if (response) {
+              this.listEmpresaEvento = response;
+
+              this.formEncuesta.get('empresas').setValue(this.listEmpresaEvento);
+              console.log(this.formEncuesta.value);
+              
+              this.administracionEncuestaService.postEncuestabl(this.formEncuesta.value).subscribe(
+                (response) => {
+                  this.alerts.printSnackbar(15, null, null, "¡Encuesta guardada!", 5, true, '/admEncuestas', null);
+                },
+                (error) => {
+                  this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+                }
+              );
+            }
+          },
+          (error) => {
+            this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+          }
+        );
+
       }
     }
     else {
@@ -192,30 +220,30 @@ export class AdministracionencuestasFormComponent implements OnInit {
   }
 
   onClickRemoveArchivo() {
-    if(this.archivoDocument[0].id !== null){
+    if (this.archivoDocument[0].id !== null) {
       this.deleteFile(this.archivoDocument[0].id);
     }
-    this.archivoDocument=null;
-    this.archivosPreview=null;
-    this.archivoInput.nativeElement.value=null;
+    this.archivoDocument = null;
+    this.archivosPreview = null;
+    this.archivoInput.nativeElement.value = null;
   }
-/*
-  updateFile(fileModel: FileModel, file: File) {
-    let formData: FormData = new FormData();
-    formData.append("fileProduct", JSON.stringify(fileModel));
-    formData.append("file", file);
-
-    this.administracionEncuestaService.patchEncuestaFile(this.encuestaIdIn, fileModel.id, formData).subscribe((response) => {
-      if (response) {
-        this.encuestaIn = response;
-        this.prepareFiles();
-        this.alerts.printSnackbar(15, null, null, "¡Archivo actualizado!", 5, false, null, null);
-      }
-    }, (error) => {
-      this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
-    });
-  }
-  */
+  /*
+    updateFile(fileModel: FileModel, file: File) {
+      let formData: FormData = new FormData();
+      formData.append("fileProduct", JSON.stringify(fileModel));
+      formData.append("file", file);
+  
+      this.administracionEncuestaService.patchEncuestaFile(this.encuestaIdIn, fileModel.id, formData).subscribe((response) => {
+        if (response) {
+          this.encuestaIn = response;
+          this.prepareFiles();
+          this.alerts.printSnackbar(15, null, null, "¡Archivo actualizado!", 5, false, null, null);
+        }
+      }, (error) => {
+        this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+      });
+    }
+    */
 
   openNewTareaModal() {
     // const dialogRef = this.dialog.open(TaskModalComponent, {
@@ -231,20 +259,20 @@ export class AdministracionencuestasFormComponent implements OnInit {
     // });
   }
 
-  deleteFile(fileId: number){
+  deleteFile(fileId: number) {
     let data = {};
     data['id'] = fileId;
     data['title'] = "Eliminar archivo de la encuesta";
     data['content'] = "¿Realmente desea eliminar el archivo de la encuesta de los registros de la plataforma?";
     data['alerts'] = null;
 
-    this.dialog.open(DeleteModalComponent,{
+    this.dialog.open(DeleteModalComponent, {
       width: '70vw',
       data: data
     }).afterClosed().subscribe((result) => {
-      if(result !== undefined || result !== ""){
+      if (result !== undefined || result !== "") {
         this.administracionEncuestaService.deleteEncuestaFile(this.encuestaIdIn, fileId).subscribe((response) => {
-          if(response){
+          if (response) {
             this.encuestaIn = response;
             this.prepareFiles();
             this.alerts.printSnackbar(15, null, null, "¡Archivo eliminado!", 5, false, null, null);

@@ -24,7 +24,7 @@ export class AdministracionEncuestasCreateComponent implements OnInit {
     ]
   };
 
-  encuesta: EncuestaModel = new EncuestaModel();
+  encuesta: any;
   @Input() encuestadata: any;
   encuestaId: number = 0;
   listpreguntas: Array<any> = [];
