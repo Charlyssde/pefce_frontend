@@ -42,22 +42,22 @@ const routes: Routes = [
         loadChildren: './features/dashboard/dashboard.module#DashboardModule',
         data: { expectedRol: '/dashboard' },
       },
-     
+
       // #endregion Dashboard - Pagina de inicio
-      
+
       //Administrador de encuestas de satisfacción
       {
         path: 'admEncuestas',
-        canActivate: [AuthGuard],        
+        canActivate: [AuthGuard],
         loadChildren: 'src/app/features/administracion-encuestas/administracion-encuestas.module#AdministracionEncuestasModule',
         data: { expectedRol: '/empresas' },
       },
       //#region Eventos
-      { 
-        path: 'eventos', 
+      {
+        path: 'eventos',
         canActivate: [AuthGuard],
         loadChildren: './features/eventos/eventos.module#EventosModule',
-        data: { expectedRol: '/eventos' } 
+        data: { expectedRol: '/eventos' }
       },
       // Administración de capacitaciones
       {
@@ -72,7 +72,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: './features/audiencia-capacitaciones/audiencia-capacitaciones.module#AudienciaCapacitacionesModule',
         data: { expectedRol: '/audienciaCapacitaciones' },
-      },                  
+      },
       //#region Administración de paginas de contenido
       {
         path: 'administracion-portal',
@@ -109,19 +109,19 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         data: { expectedRol: '/DSP', titulo: 'Seguimiento de trámites administrativos', empresaid: '1' },
         loadChildren: './features/proyectos/proyectos.module#ProyectosModule'
-      },      
+      },
       {
         path: 'Mesas',
         canActivate: [AuthGuard],
         data: { expectedRol: '/Mesas', titulo: 'Mesas de negocio', empresaid: '0' },
         loadChildren: './features/proyectos/proyectos.module#ProyectosModule'
-      },      
+      },
 
-      { 
-        path: 'pipeline', 
+      {
+        path: 'pipeline',
         canActivate: [AuthGuard],
-        redirectTo: '/proyectos/pipeline', 
-        pathMatch: 'full' 
+        redirectTo: '/proyectos/pipeline',
+        pathMatch: 'full'
       },
 
       //#region Meetings
@@ -167,25 +167,25 @@ const routes: Routes = [
         loadChildren: './features/explorers/explorers.module#ExplorersModule',
         data: { expectedRol: '/exploradores' },
       },
-      { 
-        path: 'plantillas', 
-        canActivate: [AuthGuard], 
+      {
+        path: 'plantillas',
+        canActivate: [AuthGuard],
         loadChildren: './features/plantillas/plantillas.module#PlantillasModule',
-        data: { expectedRol: '/tareas' } 
-      },      
-      { 
-        path: 'promocionDigital', 
-        canActivate: [AuthGuard], 
+        data: { expectedRol: '/tareas' }
+      },
+      {
+        path: 'promocionDigital',
+        canActivate: [AuthGuard],
         loadChildren: './features/promocion-digital/promocion-digital.module#PromocionDigitalModule',
-        data: { expectedRol: '/promocionDigital' } 
-      },            
+        data: { expectedRol: '/promocionDigital' }
+      },
       //#endregion Empresas
       //#region Agenda
-      { 
-        path: 'agenda', 
-        canActivate: [AuthGuard], 
+      {
+        path: 'agenda',
+        canActivate: [AuthGuard],
         loadChildren: './features/agenda/agenda.module#AgendaModule',
-        data: { expectedRol: '/agenda' } 
+        data: { expectedRol: '/agenda' }
       },
       //#endregion Agenda
       //#region Logs
@@ -195,7 +195,7 @@ const routes: Routes = [
         loadChildren: './features/logs/logs.module#LogsModule',
         data: { expectedRol: '/logs' },
       },
-      //#endregion Logs      
+      //#endregion Logs
       {
         path: 'minutas',
         canActivate: [AuthGuard],
@@ -218,8 +218,8 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    // RouterModule.forRoot(routes, {useHash: true}),
-    RouterModule.forRoot(routes, { useHash: false }),
+    RouterModule.forRoot(routes, {useHash: true}),
+    // RouterModule.forRoot(routes, { useHash: false }),
   ],
   exports: [
     RouterModule,
