@@ -10,6 +10,7 @@ import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
 //import { UsuariosService } from 'src/app/features/usuarios/services/usuarios.service';
 import { UsersService } from 'src/app/features/users/services/users.service';
 import { TiposSolicitud } from 'src/app/core/constants/tipos-solicitud';
+import {ProfileModel} from '../../../../core/models/profiles/profiles.model';
 
 @Component({
   selector: 'app-solicitudes-form',
@@ -17,6 +18,9 @@ import { TiposSolicitud } from 'src/app/core/constants/tipos-solicitud';
   styleUrls: ['./solicitudes-form.component.css']
 })
 export class SolicitudesFormComponent implements OnInit {
+
+
+  profiles: ProfileModel[] = [];
 
   formulario: any;
 
@@ -29,13 +33,11 @@ export class SolicitudesFormComponent implements OnInit {
   empresasFiltro: DirectorioEmpresarialModel[] = [];
   empresaSeleccionada = null;
   contactosSelect: any[] = null;
-  
+
   areasSelect: any[] = null;
   */
   responsables: UsuarioModel[] = []
   responsablesFiltro: UsuarioModel[] = [];
-
-  //eventos: EventoModel[] = [];
 
   tiposSolicitud: any = new TiposSolicitud().dataSet;
   /*
@@ -67,7 +69,7 @@ export class SolicitudesFormComponent implements OnInit {
       id: [null],
       folio: [null],
       tipoSolicitudId: [{value:null,disabled:(this.idSolicitud>0)},Validators.required],
-      usuarioEncargadoId:[{value:null,disabled:(this.idSolicitud>0)},Validators.required],
+      usuarioEncargadoId:[null],
       usuarioSolicitanteId:[null],
       descripcion:[null,Validators.required],
       estatus:[null],
@@ -75,8 +77,12 @@ export class SolicitudesFormComponent implements OnInit {
       createdAt:[null],
       updatedAt:[null],
       areasId:[null],
+      perfilId:[{value:null,disabled:(this.idSolicitud>0)},Validators.required],
     });
     this.getFormRequestData(this.idSolicitud);
+    this.solicitudesService.getProfiles().subscribe((data) => {
+      this.profiles = data;
+    });
   }
 
   async getFormRequestData(idSolicitud: number){
@@ -89,7 +95,7 @@ export class SolicitudesFormComponent implements OnInit {
         this.folio = solicitud.folio;
         this.formulario.setValue(solicitud);
       }
-      
+
       this.appC.cargando = false;
     },(error)=>{
       this.appC.cargando = false;
@@ -123,6 +129,6 @@ export class SolicitudesFormComponent implements OnInit {
       this.responsables = data;
       this.responsablesFiltro = data;
 
-    });    
-  }  
+    });
+  }
 }

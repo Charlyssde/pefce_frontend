@@ -9,6 +9,7 @@ import { PageModel } from 'src/app/core/utils/responses/page.model';
   providedIn: 'root'
 })
 export class SolicitudesService {
+  private baseUrl = environment.apiUrl;
   private endpoint = environment.apiUrl+'/solicitudes';
 
   constructor(
@@ -43,4 +44,7 @@ export class SolicitudesService {
     return this.http.get(this.endpoint+"/reportesolicitudes");
   }
 
+  getProfiles():Observable<any>{
+    return this.http.get(this.baseUrl+'/profiles/institucional');
+  }
 }

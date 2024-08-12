@@ -7,6 +7,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SolicitudesModel } from 'src/app/core/models/solicitudes/solicitudes-model';
 import { SolicitudesService } from '../../services/solicitudes.service';
 import { UsuarioModel } from 'src/app/core/models/usuarios/usuario.model';
+import {ProfileModel} from '../../../../core/models/profiles/profiles.model';
 
 @Component({
   selector: 'app-solicitudes-create',
@@ -44,36 +45,6 @@ export class SolicitudesCreateComponent implements OnInit {
       this.solicitud.createdAt = today;
       this.solicitud.updatedAt = null;
 
-      /*
-      this.historicoItem.usuarioId = this.usuarioSesion;
-      this.historicoItem.accion = this.usuarioSesion.nombre + " ha creado la solicitud";
-      this.historicoItem.createdAt = today;
-      let historico = [];
-      historico.push(this.historicoItem);
-
-      this.solicitud.historico = historico;
-      
-
-      switch(true){
-        case ([2,3,4,15].indexOf(this.solicitud.tipoSolicitudId) > -1):
-          this.solicitud.vinculaciones[0].createdAt = today;
-          break;
-        case (this.solicitud.tipoSolicitudId == 8):
-          this.solicitud.asistenciaEventos[0].createdAt = today;
-          break;
-        case (this.solicitud.tipoSolicitudId == 16):
-          this.solicitud.promociones[0].tieneGravamen = this.solicitud.promociones[0].tieneGravamen === null ? false : this.solicitud.promociones[0].tieneGravamen;
-          this.solicitud.promociones[0].coordenadas = JSON.stringify(this.solicitud.promociones[0].coordenadas);
-          this.solicitud.promociones[0].tipoPropiedad = JSON.stringify(this.solicitud.promociones[0].tipoPropiedad);
-          this.solicitud.promociones[0].createdAt = today;
-          break;
-        case (this.solicitud.tipoSolicitudId == 13):
-          this.solicitud.naves[0].caracteristicas = JSON.stringify(this.solicitud.naves[0].caracteristicas);
-          this.solicitud.naves[0].createdAt = today;
-          break
-        default: break;
-      }
-      */
       await this.solicitudesService.createSolicitud(this.solicitud).subscribe((solicitud) => {
         this.lib.printSnackbar(12,2,'solicitud',null,5,true,'solicitudes',null);
       }, (error) => {

@@ -35,23 +35,20 @@
               <textarea matInput formControlName="comentario" rows="5" placeholder="Comentarios"></textarea>
             </mat-form-field>
           </div>
-        </div> 
+        </div>
 
         <div class="row">
           <div class="col-12">
-            <h4>Usuario responsable</h4>
-          </div>
-          <div class="col-12 col-sm-6 col-md-66">
             <mat-form-field appearance="fill">
-              <mat-label>Usuario responsable</mat-label>
-              <mat-select formControlName="usuarioEncargadoId" [compareWith]="scriptGL.objectComparisonFunction" required>
-                <input class="matSelectFilter" placeholder="Buscar responsable" (keyup)="applyResponsablesFilter($event.target.value)"/>
+              <mat-label>Responsable</mat-label>
+              <mat-select formControlName="perfilId" [compareWith]="scriptGL.objectComparisonFunction" *ngIf="profiles">
+                <input class="matSelectFilter" placeholder="Buscar responsable" />
                 <mat-option [value]="null">Ninguno</mat-option>
-                <mat-option *ngFor="let responsable of responsablesFiltro;" [value]="responsable">{{responsable.nombre + ", " + responsable.perfiles[0].nombre }}</mat-option>
+                <mat-option *ngFor="let p of profiles;" [value]="p">{{p.nombre + ", " + p.nombre }}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-        </div>        
+        </div>
 
       </div>
     </div>
