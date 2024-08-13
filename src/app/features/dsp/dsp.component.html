@@ -1,0 +1,83 @@
+<div>
+  <shared-dashboard-title [title]="'DSP'">{{titulo}}</shared-dashboard-title>
+  {{titulo}}
+  <a  [routerLink]="['/dsp/nuevo']" mat-fab color="primary" class="btn-registrar" matTooltip="Nuevo registro">
+      <mat-icon>add</mat-icon>
+  </a>
+  <div class="mat-elevation-z8">
+      <div class="row">
+          <div class="col-12" align="end">
+              <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+                  <mat-icon>help</mat-icon></button>
+          </div>
+      </div>
+      <div class="row justify-content-between">
+          <div class="col-12">
+              <shared-main-filter 
+              [myData]="'Mis DSP'"
+              [filterModule]="'dsp'"
+              (setRequestFilter)="setRequestFilter($event)">
+              </shared-main-filter>
+          </div>
+      </div>
+
+      <div class="row">
+          <div class="col-12">
+              <div class="table-container">
+                  <table>
+                      <thead>
+                          <tr>
+                              <th>Sol. SEFIPLAN</th>
+                              <th>Número DSP</th>
+                              <th>Recepción</th>
+                              <th>Importe</th>
+                              <th>Descripción</th>
+                              <th>Concepto</th>
+                              <th>Vigencia</th>
+                              <th>Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let project of dataset">
+                              <td>{{ formatDate(project.solicitudSefiplan) }}</td>
+                              <td style="min-width:300px;">{{ project.numeroDSP }}</td>
+                              <td style="min-width:150px;">{{ project.recepcion ? formatDate(project.recepcion) : '-' }}</td> 
+                              <td style="min-width:150px;">{{ project.importe }}</td>
+                              <td style="min-width:200px;">{{ project.descripcion  }}</td>
+                              <td style="min-width:200px;">{{ project.concepto }}</td>
+                              <td style="min-width:200px;">{{ formatDate(project.vigencia) }}</td>
+                              <td align="center">
+                                  <button mat-icon-button [matMenuTriggerFor]="options" matTooltip="Acciones disponibles"><mat-icon>menu</mat-icon></button>
+                                  <mat-menu #options="matMenu" xPosition="before">
+                                      <h4 style="margin: 5px 3px;text-align: center !important;">Acciones</h4>
+                                      <mat-divider></mat-divider>
+                                      <a  [routerLink]="['/dsp/'+project.id+'/editar']" mat-menu-item color="primary" matTooltip="Editar registro"><mat-icon>edit</mat-icon>Editar</a>  
+                                      <mat-divider></mat-divider>
+                                      <span mat-menu-item color="primary" (click)="handleClickDelete(project)" matTooltip="Eliminarregistro"><mat-icon>delete</mat-icon>Eliminar></span>          
+                        
+                                  </mat-menu>
+                              </td>
+                          </tr>
+                          <tr>
+                              <td colspan="10" *ngIf="dataset && dataset.length === 0" align="center">
+                                  <span>No hay registros para mostrar</span>
+                              </td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+          </div>
+      </div>
+
+
+      <div class="row">
+          <div class="col-12">
+              <mat-paginator (page)="handlePageEvent($event)" [length]="length" [pageSize]="pageSize"
+                  [disabled]="disabled" [showFirstLastButtons]="showFirstLastButtons"
+                  [pageSizeOptions]="showPageSizeOptions ? pageSizeOptions : []" [hidePageSize]="hidePageSize"
+                  [pageIndex]="pageIndex" aria-label="Select page">
+              </mat-paginator>
+          </div>
+      </div>
+  </div>
+</div>

@@ -104,12 +104,12 @@ const routes: Routes = [
         data: { expectedRol: '/proyectos', titulo: 'Seguimiento a proyectos', empresaid: '0' },
         loadChildren: './features/proyectos/proyectos.module#ProyectosModule'
       },
-      {
-        path: 'DSP',
-        canActivate: [AuthGuard],
-        data: { expectedRol: '/DSP', titulo: 'Seguimiento de trámites administrativos', empresaid: '1' },
-        loadChildren: './features/proyectos/proyectos.module#ProyectosModule'
-      },
+       {
+        path: 'dsp',
+        //canActivate: [AuthGuard],
+        //data: { expectedRol: '/DSP', titulo: 'Seguimiento de trámites administrativos', empresaid: '1' },
+        loadChildren: 'src/app/features/dsp/dsp.module#DspModule'
+      } ,
       {
         path: 'Mesas',
         canActivate: [AuthGuard],
@@ -207,6 +207,12 @@ const routes: Routes = [
         loadChildren: './features/system/system.module#SystemModule',
         //data: { expectedRol: '/' },
       },
+      /* {
+        path: '',
+        loadChildren: 'src/app/features/dsp/dsp.module#DspModule'
+      }, */
+
+
     ]
   },
   {

@@ -1,0 +1,203 @@
+<div>
+  <shared-dashboard-title [title]="'Editar DSP'"></shared-dashboard-title>
+  
+  <div class="mat-elevation-z8">
+    <mat-card>
+      <mat-card-content>
+        <div class="row">
+          <div class="col-12" style="text-align:right;">
+            <button mat-button matTooltip="Mostrar ayudas del módulo" (click)="showHelpSection()">Ayuda
+              <mat-icon>help</mat-icon></button>
+          </div>
+          <div class="col-12">
+            <small>Los campos marcados con asterisco (*) son requeridos</small>
+            <hr>
+          </div>
+        </div>
+  
+        <form [formGroup]="formEdit" #form="ngForm" (ngSubmit)="onSubmitForm()">
+          <div class="row">
+  
+            <div class="col-12">
+              <h3>Datos generales</h3>
+              <hr>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Solicitud SEFIPLAN</mat-label>
+                <input matInput [matDatepicker]="solicitudSefiplan" formControlName="solicitudSefiplan">
+                <mat-datepicker-toggle matSuffix [for]="solicitudSefiplan"></mat-datepicker-toggle>
+                <mat-datepicker #solicitudSefiplan></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Autorización</mat-label>
+                <input matInput [matDatepicker]="autorizacion" formControlName="autorizacion">
+                <mat-datepicker-toggle matSuffix [for]="autorizacion"></mat-datepicker-toggle>
+                <mat-datepicker #autorizacion></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Recepción</mat-label>
+                <input matInput [matDatepicker]="recepcion" formControlName="recepcion">
+                <mat-datepicker-toggle matSuffix [for]="recepcion"></mat-datepicker-toggle>
+                <mat-datepicker #recepcion></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Número DSP</mat-label>
+                <input matInput placeholder="Número DSP" formControlName="numeroDSP" required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Importe</mat-label>
+                <input matInput type="number" placeholder="0.00" formControlName="importe" required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Descripción</mat-label>
+                <input matInput placeholder="Descripción" formControlName="descripcion" required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Concepto</mat-label>
+                <input matInput placeholder="Concepto" formControlName="concepto" required>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Código Presupuestal</mat-label>
+                <input matInput placeholder="cp" formControlName="codigoPresupuestal" required>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Vigencia</mat-label>
+                <input matInput [matDatepicker]="vigencia" formControlName="vigencia">
+                <mat-datepicker-toggle matSuffix [for]="vigencia"></mat-datepicker-toggle>
+                <mat-datepicker #vigencia></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>Solicitud</mat-label>
+                <input matInput [matDatepicker]="solicitud" formControlName="solicitud">
+                <mat-datepicker-toggle matSuffix [for]="solicitud"></mat-datepicker-toggle>
+                <mat-datepicker #solicitud></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>solicitudProrroga</mat-label>
+                <input matInput [matDatepicker]="solicitudProrroga" formControlName="solicitudProrroga">
+                <mat-datepicker-toggle matSuffix [for]="solicitudProrroga"></mat-datepicker-toggle>
+                <mat-datepicker #solicitudProrroga></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>oficioProrroga</mat-label>
+                <input matInput [matDatepicker]="oficioProrroga" formControlName="oficioProrroga">
+                <mat-datepicker-toggle matSuffix [for]="oficioProrroga"></mat-datepicker-toggle>
+                <mat-datepicker #oficioProrroga></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>autorizacionProrroga</mat-label>
+                <input matInput [matDatepicker]="autorizacionProrroga" formControlName="autorizacionProrroga">
+                <mat-datepicker-toggle matSuffix [for]="autorizacionProrroga"></mat-datepicker-toggle>
+                <mat-datepicker #autorizacionProrroga></mat-datepicker>
+              </mat-form-field>
+            </div>
+  
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+              <mat-form-field appearance="fill">
+                <mat-label>recepcionProrroga</mat-label>
+                <input matInput [matDatepicker]="recepcionProrroga" formControlName="recepcionProrroga">
+                <mat-datepicker-toggle matSuffix [for]="recepcionProrroga"></mat-datepicker-toggle>
+                <mat-datepicker #recepcionProrroga></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="row multimedia-container">
+              <div class="col-12 col-md-6">
+                <small>* Solo se permite la carga de archivos en formato jpg, png, gif</small>
+              </div>
+              <div class="col-12 col-md-6" align="end">
+                <input hidden (change)="onImagenUploaded($event.target, imagenPreview)" accept="image/png,image/jpg,image/jpeg,image/gif" #imagenInput type="file" id="archivoimagen">
+                <button type="button" mat-button matTooltip="Cargar archivo"
+                  (click)="imagenInput.click()"><mat-icon>cloud_upload</mat-icon> Cargar documento</button>
+              </div>
+              <div class="col-12 multimedia-content">
+                <div *ngIf="imagenPreview !== null" class="pdf-container">
+                  <mat-list role="list">
+                    <mat-list-item role="listitem">
+                      <div class="row" style="width:100%;">
+                        <div class="col-1">
+                          <mat-icon (click)="onClickPreviewImagen(imagenPreview.uri)" style="cursor:pointer;"
+                            matTooltip="Clic para vista previa">description</mat-icon>
+                        </div>
+                        <div class="col-9">
+                          <div style="text-align:justify;">
+                            <span>Documento relacionado</span>
+                            <div *ngIf="imagenPreview.uri.includes('base64')">
+                              <small (click)="onClickPreviewImagen(imagenPreview.uri)" style="cursor:pointer;">({{
+                                imagenPreview.fileData.name }})</small>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-2" align="end">
+                          <button type="button" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Acciones" title="Acciones">
+                            <mat-icon>more_vert</mat-icon>
+                          </button>
+                          <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="onClickPreviewImagen(imagenPreview.uri)"><mat-icon>visibility</mat-icon>
+                              Vista previa</button>
+                          </mat-menu>
+                        </div>
+                      </div>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+                <mat-icon style="width:10rem;height:10rem;font-size:10rem !important;"
+                  *ngIf="imagenPreview === null">description</mat-icon>
+              </div>
+            </div> 
+            
+            
+          </div>
+
+  
+          <!-- <br> -->
+  
+          <div class="row">
+            <div class="col-12" align="end">
+              <button type="button" mat-raised-button color="primary" (click)="onSubmitForm()">Guardar</button>
+              <a [routerLink]="['/dsp']" mat-raised-button color="warn">Cancelar</a>
+            </div>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
