@@ -13,8 +13,9 @@ export class DspService {
     private http: HttpClient
   ) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(`${this.url}`);
+  getAll(search : string = '' ): Observable<any> {
+
+    return this.http.get(`${this.url}?search=${search}`);
   }
 
   getById(id : number){

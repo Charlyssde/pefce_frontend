@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatBottomSheet, MatDialog, MatPaginator, MatTableDataSource, PageEvent } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { error, log } from 'console';
 import { DspService } from 'src/app/common/dsp.service';
+import { ScriptsGlobalService } from 'src/app/common/scripts-global.service';
 import { AreasEnum } from 'src/app/core/enums/areas.enum';
 import { EstatusProyectoEnum } from 'src/app/core/enums/estatus-proyecto.enum';
 import { PrioridadProyectoEnum } from 'src/app/core/enums/prioridad-proyecto.enum';
@@ -57,6 +59,9 @@ export class DspComponent implements OnInit {
 
   dataSource = null;
 
+  selectSearch = new FormControl('');
+  valueSearch = new FormControl('');
+
 
   constructor(
     private dspService: DspService,
@@ -65,6 +70,7 @@ export class DspComponent implements OnInit {
     private alerts: Alerts,
     private route: ActivatedRoute,
     private coreAuthService: CoreAuthService,
+    public scriptGL: ScriptsGlobalService,
   ) { 
 
 
@@ -89,9 +95,34 @@ export class DspComponent implements OnInit {
   pageEvent: PageEvent;
 
   setRequestFilter(mainRequestFilter: MainRequestFilter){
-    this.mainRequestFilter = mainRequestFilter;
-    this.mainRequestFilter.size = this.pageSize;
-    this.setQueryParamsRequest(this.mainRequestFilter);
+    if(!mainRequestFilter.filtro) {
+      this.dspService.getAll().subscribe((response) => {
+        if (response) {
+          this.pageDataset = response;
+          this.length = response.length
+          this.pageIndex = this.pageDataset.currentPage;
+  
+          this.dataset = response;        
+  
+        }
+      }, (error) => {
+        this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+      });
+      return
+    }
+    this.dspService.getAll(mainRequestFilter.filtro).subscribe((response) => {
+      if (response) {
+        this.pageDataset = response;
+        this.length = response.length
+        this.pageIndex = this.pageDataset.currentPage;
+
+        this.dataset = response;        
+
+      }
+    }, (error) => {
+      this.alerts.printSnackbar(15, null, null, error.error, 5, false, null, null);
+    });
+      
   }
 
   handlePageEvent(e: PageEvent) {
@@ -146,6 +177,10 @@ export class DspComponent implements OnInit {
       console.log(response);
       this.pages()
     }, error => this.pages())
+  }
+
+  applyFilter() {
+    
   }
      
 }
